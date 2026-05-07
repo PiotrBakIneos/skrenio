@@ -48,7 +48,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .nav-link:hover{color:var(--text)}
 .nav-cta{background:var(--grad);color:#fff;padding:8px 20px;border-radius:8px;font-size:.85rem;font-weight:600;text-decoration:none;transition:all .2s;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}
 .nav-cta:hover{background:var(--blue);transform:translateY(-1px)}
-@media(max-width:640px){.nav-links{display:none}}
+@media(max-width:640px){.nav-links{display:none}#nav-license-input{display:none!important}#nav-license-active{display:none!important}}
 
 /* ── HERO ─── */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 2rem 80px;position:relative;overflow:hidden}
@@ -182,7 +182,7 @@ footer a:hover{color:var(--text2)}
 /* ══════════════════════════════════════════
    TOOL APP (unified pipeline)
 ══════════════════════════════════════════ */
-#app-view{display:none;min-height:100vh;background:var(--bg);padding-top:68px}
+#app-view{display:none;min-height:100vh;background:var(--bg);padding-top:105px}
 .app-inner{max-width:1000px;margin:0 auto;padding:3rem 1.5rem 5rem}
 
 /* APP HEADER */
@@ -447,6 +447,40 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
   </div>
   <button class="nav-cta" onclick="showApp()">Zacznij za darmo →</button>
 </nav>
+
+<!-- ═══ PERSISTENT LICENSE BAR — always visible below nav ═══ -->
+<div id="global-license-bar" style="position:fixed;top:68px;left:0;right:0;z-index:190;background:var(--surface);border-bottom:1px solid var(--border);padding:6px 2rem;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 1px 3px rgba(15,23,42,.06)">
+  <!-- No license: show input -->
+  <div id="glb-input" style="display:flex;align-items:center;gap:8px">
+    <span style="font-size:.75rem;color:var(--text3);white-space:nowrap">🔑 Kod licencji:</span>
+    <input id="glb-key" type="text" placeholder="SKR-XXXX-XXXX" maxlength="20"
+      style="width:160px;padding:5px 10px;background:var(--bg2);border:1px solid var(--border2);border-radius:7px;color:var(--text);font-family:monospace;font-size:.78rem;outline:none;letter-spacing:.05em;transition:border-color .2s"
+      onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border2)'"
+      oninput="this.value=this.value.toUpperCase()"
+      onkeydown="if(event.key==='Enter') activateGlobalLicense()">
+    <button onclick="activateGlobalLicense()"
+      style="padding:5px 14px;background:var(--grad);color:#fff;border:none;border-radius:7px;font-weight:700;font-size:.75rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap">
+      Aktywuj
+    </button>
+    <span id="glb-error" style="font-size:.72rem;color:var(--red);display:none">Nieprawidłowy kod</span>
+  </div>
+  <!-- Has license: show status -->
+  <div id="glb-active" style="display:none;align-items:center;gap:10px">
+    <span style="font-size:.75rem;font-weight:700;color:#16A34A">✓ Licencja aktywna</span>
+    <span id="glb-key-display" style="font-family:monospace;font-size:.72rem;color:var(--text2)"></span>
+    <button onclick="deactivateLicense()" style="font-size:.72rem;color:var(--text3);background:none;border:1px solid var(--border2);border-radius:5px;padding:2px 8px;cursor:pointer">Usuń</button>
+  </div>
+
+  <!-- Transfer panel — shown when seats are full -->
+  <div id="glb-transfer" style="display:none;align-items:center;gap:10px;background:rgba(217,119,6,.08);border:1px solid rgba(217,119,6,.25);border-radius:8px;padding:6px 14px;width:100%;justify-content:center">
+    <span style="font-size:.75rem;color:#D97706">⚠ To urządzenie nie jest zarejestrowane.</span>
+    <button onclick="confirmTransfer()" style="font-size:.75rem;font-weight:700;color:#fff;background:#D97706;border:none;border-radius:6px;padding:4px 14px;cursor:pointer">Przenieś licencję na to urządzenie</button>
+    <span style="font-size:.72rem;color:var(--text3)">Poprzednie urządzenie straci dostęp</span>
+    <button onclick="document.getElementById('glb-transfer').style.display='none'" style="font-size:.72rem;color:var(--text3);background:none;border:none;cursor:pointer;margin-left:4px">✕</button>
+  </div>
+</div>
+<!-- push page content below the license bar -->
+<div style="height:37px"></div>
 
 <!-- ═══════════════════════ HOMEPAGE ═══════════════════════ -->
 <div id="home-view">
@@ -1110,10 +1144,24 @@ let _lastScreen = null, _lastQuestions = null;
 
 // ── License key ──────────────────────────────────────────────
 const LICENSE_KEY = 'skrenio_license';
+const DEVICE_KEY  = 'skrenio_device_token';
+
 function getLicense(){ return localStorage.getItem(LICENSE_KEY)||''; }
 function setLicense(k){ localStorage.setItem(LICENSE_KEY, k.trim().toUpperCase()); }
-function clearLicense(){ localStorage.removeItem(LICENSE_KEY); }
+function clearLicense(){ localStorage.removeItem(LICENSE_KEY); localStorage.removeItem(DEVICE_KEY); }
 function hasLicense(){ return !!getLicense(); }
+
+function getDeviceToken(){
+  let t = localStorage.getItem(DEVICE_KEY);
+  if(!t){
+    // Generate a random 32-char token on first use
+    const arr = new Uint8Array(16);
+    crypto.getRandomValues(arr);
+    t = Array.from(arr).map(b=>b.toString(16).padStart(2,'0')).join('');
+    localStorage.setItem(DEVICE_KEY, t);
+  }
+  return t;
+}
 
 // ── Usage helpers ────────────────────────────────────────────
 function getUsage(){ return parseInt(localStorage.getItem(USAGE_KEY)||'0'); }
@@ -1127,6 +1175,18 @@ function updateUsageBar(){
   document.getElementById('udot-1').className = 'usage-dot' + (used>=1?' used':'');
   document.getElementById('udot-2').className = 'usage-dot' + (used>=2?' used':'');
   const t = document.getElementById('usage-text');
+
+  // Sync global license bar
+  const glbInput  = document.getElementById('glb-input');
+  const glbActive = document.getElementById('glb-active');
+  const glbDisp   = document.getElementById('glb-key-display');
+  if(hasLicense()){
+    if(glbInput)  glbInput.style.display  = 'none';
+    if(glbActive){ glbActive.style.display = 'flex'; if(glbDisp) glbDisp.textContent = getLicense(); }
+  } else {
+    if(glbInput)  glbInput.style.display  = 'flex';
+    if(glbActive) glbActive.style.display = 'none';
+  }
 
   if(hasLicense()){
     document.getElementById('license-bar').style.display = 'flex';
@@ -1151,24 +1211,127 @@ function updateUsageBar(){
   }
 }
 
-function activateLicense(){
-  const val = (document.getElementById('license-input').value||'').trim().toUpperCase();
+async function activateLicense(){
+  const inp = document.getElementById('license-input');
+  const val = (inp?.value||'').trim().toUpperCase();
   const errEl = document.getElementById('license-error');
-  errEl.style.display = 'none';
+  if(errEl) errEl.style.display = 'none';
   if(!val || val.length < 8){
-    errEl.textContent = 'Wpisz poprawny kod licencji (min. 8 znaków).';
-    errEl.style.display = 'block';
+    if(errEl){ errEl.textContent = 'Wpisz poprawny kod licencji.'; errEl.style.display = 'block'; }
     return;
   }
-  setLicense(val);
-  document.getElementById('license-input').value = '';
-  updateUsageBar();
+  await doActivate(val, errEl, inp);
 }
 
 function deactivateLicense(){
   if(!confirm('Usunąć licencję z tego urządzenia?')) return;
   clearLicense();
   updateUsageBar();
+}
+
+async function activateNavLicense(){
+  const inp = document.getElementById('nav-key-input');
+  const val = (inp?.value||'').trim().toUpperCase();
+  if(!val || val.length < 8) return;
+  await doActivate(val, null, inp);
+}
+
+// Shared activation logic — validates key server-side and registers device
+async function doActivate(key, errEl, inputEl){
+  if(inputEl) inputEl.disabled = true;
+
+  try {
+    const resp = await fetch('/api/activate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key, deviceToken: getDeviceToken() })
+    });
+    const data = await resp.json();
+
+    if(!resp.ok){
+      // Seats full — offer transfer option
+      if(data.code === 'SEATS_FULL'){
+        if(inputEl) inputEl.disabled = false;
+        showTransferPrompt(key, data.plan, data.seats, errEl);
+        return;
+      }
+      if(errEl){ errEl.textContent = data.error || 'Nieprawidłowy klucz.'; errEl.style.display = 'block'; }
+      else alert(data.error || 'Nieprawidłowy klucz licencji.');
+      return;
+    }
+
+    // Success
+    setLicense(key);
+    if(inputEl) inputEl.value = '';
+    updateUsageBar();
+
+    const glbErr = document.getElementById('glb-error');
+    if(glbErr){ glbErr.style.color='var(--green)'; glbErr.textContent=`✓ Licencja aktywna — Plan ${data.plan||''}`; glbErr.style.display='inline'; setTimeout(()=>{ glbErr.style.display='none'; glbErr.style.color='var(--red)'; }, 4000); }
+  } catch(e) {
+    // Network error — save locally, server validates on next call
+    setLicense(key);
+    if(inputEl) inputEl.value = '';
+    updateUsageBar();
+  } finally {
+    if(inputEl) inputEl.disabled = false;
+  }
+}
+
+let _pendingTransferKey = null;
+
+function showTransferPrompt(key, plan, seats, errEl){
+  // Store key for when user confirms, show inline UI
+  _pendingTransferKey = key;
+  const panel = document.getElementById('glb-transfer');
+  if(panel) panel.style.display = 'flex';
+  // Scroll to top so they see the bar
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function confirmTransfer(){
+  const key = _pendingTransferKey || getLicense();
+  if(!key) return;
+  const panel = document.getElementById('glb-transfer');
+  if(panel) panel.style.display = 'none';
+
+  try {
+    const resp = await fetch('/api/transfer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key, deviceToken: getDeviceToken() })
+    });
+    const data = await resp.json();
+
+    if(!resp.ok){
+      const glbErr = document.getElementById('glb-error');
+      if(glbErr){ glbErr.style.color='var(--red)'; glbErr.textContent = data.error; glbErr.style.display='inline'; }
+      return;
+    }
+
+    // Transfer successful — register and activate
+    setLicense(key);
+    _pendingTransferKey = null;
+    updateUsageBar();
+    const glbErr = document.getElementById('glb-error');
+    if(glbErr){ glbErr.style.color='var(--green)'; glbErr.textContent='✓ Licencja przeniesiona — to urządzenie jest teraz aktywne.'; glbErr.style.display='inline'; setTimeout(()=>{ glbErr.style.display='none'; glbErr.style.color='var(--red)'; }, 5000); }
+  } catch(e) {
+    const glbErr = document.getElementById('glb-error');
+    if(glbErr){ glbErr.style.color='var(--red)'; glbErr.textContent='Błąd sieci. Spróbuj ponownie.'; glbErr.style.display='inline'; }
+  }
+}
+
+async function activateGlobalLicense(){
+  const inp = document.getElementById('glb-key');
+  const val = (inp?.value||'').trim().toUpperCase();
+  const err = document.getElementById('glb-error');
+  err.style.display = 'none';
+  if(!val || val.length < 8){
+    err.style.display = 'inline';
+    inp.style.borderColor = 'var(--red)';
+    setTimeout(()=>{ inp.style.borderColor = 'var(--border2)'; err.style.display='none'; }, 2000);
+    return;
+  }
+  await doActivate(val, err, inp);
 }
 
 // ── View switching ───────────────────────────────────────────
@@ -1347,7 +1510,7 @@ document.getElementById('anon-toggle').addEventListener('change', async function
     for(let i=0; i<uploadedCvTexts.length; i+=CHUNK){
       const chunk = uploadedCvTexts.slice(i, i+CHUNK);
       const chunkText = chunk.map(cv=>`--- CV: ${cv.name} ---\n${cv.text.trim()}`).join('\n\n');
-      const resp = await fetch('/api/anonymize',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cvsText:chunkText})});
+      const resp = await fetch('/api/anonymize',{method:'POST',headers:{'Content-Type':'application/json','x-license-key':getLicense(),'x-device-token':getDeviceToken()},body:JSON.stringify({cvsText:chunkText})});
       if(!resp.ok){ const e=await resp.json().catch(()=>({})); throw new Error(e.error||`HTTP ${resp.status}`); }
       const data = await resp.json();
       const u = data.usunieto||{};
@@ -1469,10 +1632,21 @@ async function executeAnalysis(jobDesc, cvsText){
 async function callAPI(url, body){
   const resp = await fetch(url, {
     method:'POST',
-    headers:{'Content-Type':'application/json'},
+    headers:{'Content-Type':'application/json','x-license-key':getLicense(),'x-device-token':getDeviceToken()},
     body: JSON.stringify(body)
   });
-  if(!resp.ok){ const e=await resp.json().catch(()=>({})); throw new Error(e.error||`HTTP ${resp.status}`); }
+  if(!resp.ok){
+    const e = await resp.json().catch(()=>({}));
+    // Device not registered — show transfer panel instead of generic error
+    if(resp.status === 402 && e.error && e.error.includes('urządzenie nie jest zarejestrowane')){
+      _pendingTransferKey = getLicense();
+      const panel = document.getElementById('glb-transfer');
+      if(panel) panel.style.display = 'flex';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      throw new Error('To urządzenie nie jest zarejestrowane. Użyj przycisku "Przenieś licencję" powyżej.');
+    }
+    throw new Error(e.error||`HTTP ${resp.status}`);
+  }
   return resp.json();
 }
 
@@ -1882,7 +2056,7 @@ if (_ranonToggle) _ranonToggle.addEventListener('change', async function(){
   spinner.style.display = 'block';
   this.disabled = true;
   try {
-    const resp = await fetch('/api/anonymize', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({cvsText: cvText})});
+    const resp = await fetch('/api/anonymize', {method:'POST', headers:{'Content-Type':'application/json','x-license-key':getLicense(),'x-device-token':getDeviceToken()}, body: JSON.stringify({cvsText: cvText})});
     if (!resp.ok) { const e = await resp.json().catch(()=>({})); throw new Error(e.error || `HTTP ${resp.status}`); }
     const data = await resp.json();
     _ranonOriginalText = cvText; // save original only after successful call
@@ -2026,7 +2200,7 @@ async function runReverse() {
   try {
     const resp = await fetch('/api/reverse', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-license-key': getLicense(), 'x-device-token': getDeviceToken() },
       body: JSON.stringify({ cvText: cv, jobsText: jobs })
     });
     if (!resp.ok) { const e = await resp.json().catch(() => ({})); throw new Error(e.error || `HTTP ${resp.status}`); }
