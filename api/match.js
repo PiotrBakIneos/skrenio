@@ -144,12 +144,18 @@ async function analyzeOneCv(jobDesc, cvText) {
 
 export default async function handler(req, res) {
   const origin = req.headers['origin'] || '';
-  const allowed = process.env.ALLOWED_ORIGIN || 'https://skrenio.pl';
-  if (origin && origin !== allowed && !origin.endsWith('.vercel.app')) {
+  // Allow: configured origin, any vercel.app preview, localhost dev
+  const allowed = (process.env.ALLOWED_ORIGIN || 'https://skrenio.com').split(',').map(s => s.trim());
+  const originOk = !origin
+    || allowed.some(a => origin === a)
+    || origin.endsWith('.vercel.app')
+    || origin.startsWith('http://localhost')
+    || origin.startsWith('http://127.0.0.1');
+  if (!originOk) {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
-  // Block headless/bot user-agents with no browser signature
+  // Block headless/bot user-agents
   const ua = req.headers['user-agent'] || '';
   if (!ua || ua.toLowerCase().includes('python-requests') || ua.toLowerCase().includes('curl/') || ua.toLowerCase().includes('go-http') || ua.toLowerCase().includes('axios/')) {
     return res.status(403).json({ error: 'Forbidden' });
