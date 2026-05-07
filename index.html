@@ -628,32 +628,70 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
     <div class="section-tag">Cennik</div>
     <h2 class="section-h2 f-sora">Zacznij za darmo,<br>skaluj kiedy chcesz</h2>
     <p class="section-sub" style="margin:0 auto 0">Bez karty kredytowej. Bez ukrytych opłat.</p>
-    <div class="pricing-grid">
+    <div class="pricing-grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));max-width:1000px;margin:0 auto">
+
+      <!-- FREE -->
       <div class="plan">
         <div class="plan-name">Bezpłatny</div>
         <div class="plan-price">0 <small>PLN</small></div>
         <div class="plan-period">na zawsze</div>
         <ul class="plan-features">
-          <li>2 bezpłatne analizy</li>
-          <li>Ranking, pytania i analiza dopasowania</li>
+          <li>2 analizy próbne</li>
+          <li>Ranking + pytania + dopasowanie</li>
           <li>Do 10 CV naraz</li>
           <li>Eksport CSV</li>
         </ul>
         <button class="plan-btn plan-btn-ghost" onclick="showApp()">Zacznij za darmo</button>
       </div>
-      <div class="plan featured">
-        <div class="plan-badge">Najpopularniejszy</div>
-        <div class="plan-name">Startup</div>
-        <div class="plan-price">99 <small>PLN</small></div>
-        <div class="plan-period">/ miesiąc · dla 1-5 rekruterów</div>
+
+      <!-- SOLO -->
+      <div class="plan">
+        <div class="plan-name">Solo</div>
+        <div class="plan-price">149 <small>PLN</small></div>
+        <div class="plan-period">/ miesiąc · 1 rekruter</div>
         <ul class="plan-features">
-          <li>Nieograniczone analizy</li>
+          <li>50 analiz miesięcznie</li>
           <li>Do 10 CV / analiza</li>
+          <li>Dopasuj CV do ofert</li>
           <li>Anonimizacja RODO</li>
           <li>Eksport CSV</li>
           <li>Wsparcie e-mail</li>
         </ul>
-        <button class="plan-btn plan-btn-primary" onclick="openPurchaseModal()">Zamów dostęp →</button>
+        <button class="plan-btn plan-btn-ghost" onclick="openPurchaseModal('solo')">Zamów Solo →</button>
+      </div>
+
+      <!-- AGENCJA — featured -->
+      <div class="plan featured">
+        <div class="plan-badge">Najpopularniejszy</div>
+        <div class="plan-name">Agencja</div>
+        <div class="plan-price">299 <small>PLN</small></div>
+        <div class="plan-period">/ miesiąc · do 5 rekruterów</div>
+        <ul class="plan-features">
+          <li>200 analiz miesięcznie</li>
+          <li>Do 10 CV / analiza</li>
+          <li>Dopasuj CV do ofert</li>
+          <li>Anonimizacja RODO</li>
+          <li>Eksport CSV</li>
+          <li>Priorytetowe wsparcie</li>
+        </ul>
+        <button class="plan-btn plan-btn-primary" onclick="openPurchaseModal('agencja')">Zamów Agencja →</button>
+      </div>
+
+      <!-- UNLIMITED -->
+      <div class="plan">
+        <div class="plan-name">Unlimited</div>
+        <div class="plan-price">499 <small>PLN</small></div>
+        <div class="plan-period">/ miesiąc · bez limitu użytkowników</div>
+        <ul class="plan-features">
+          <li>600 analiz miesięcznie</li>
+          <li>Do 10 CV / analiza</li>
+          <li>Dopasuj CV do ofert</li>
+          <li>Anonimizacja RODO</li>
+          <li>Eksport CSV</li>
+          <li>Dedykowane wsparcie</li>
+          <li>Faktura VAT</li>
+        </ul>
+        <button class="plan-btn plan-btn-ghost" onclick="openPurchaseModal('unlimited')">Zamów Unlimited →</button>
       </div>
 
     </div>
@@ -719,25 +757,24 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
       <button onclick="deactivateLicense()" style="margin-left:auto;font-size:.72rem;color:var(--text3);background:none;border:none;cursor:pointer;text-decoration:underline">Usuń</button>
     </div>
 
-    <!-- LICENSE ACTIVATION — always visible -->
-    <div id="license-form" style="margin-bottom:1.25rem">
-      <div id="license-toggle-row" style="display:flex;align-items:center;gap:8px">
-        <span style="font-size:.78rem;color:var(--text3)">Masz kod licencji?</span>
-        <button onclick="toggleLicenseInput()" id="license-toggle-btn"
-          style="font-size:.75rem;color:var(--blue);background:none;border:none;cursor:pointer;font-weight:600;text-decoration:underline;padding:0">
-          Wpisz kod →
-        </button>
+    <!-- LICENSE ACTIVATION — always visible, prominent -->
+    <div id="license-form" style="margin-bottom:1.25rem;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1rem 1.25rem">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span style="font-size:1rem">🔑</span>
+        <span style="font-size:.85rem;font-weight:700;color:var(--text)">Kod licencji</span>
+        <span style="font-size:.73rem;color:var(--text3);margin-left:auto">Otrzymasz go po zakupie na email</span>
       </div>
-      <div id="license-input-row" style="display:none;margin-top:8px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem">
-        <div style="font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:8px">🔑 Aktywuj licencję</div>
-        <div style="display:flex;gap:8px">
-          <input id="license-input" type="text" placeholder="SKR-XXXX-XXXX" maxlength="20"
-            style="flex:1;padding:9px 12px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:monospace;font-size:.82rem;outline:none;letter-spacing:.05em"
-            oninput="this.value=this.value.toUpperCase()"
-            onkeydown="if(event.key==='Enter') activateLicense()">
-          <button onclick="activateLicense()" style="padding:9px 18px;background:var(--grad);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.8rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap">Aktywuj</button>
-        </div>
-        <div id="license-error" style="display:none;margin-top:6px;font-size:.75rem;color:var(--red)"></div>
+      <div style="display:flex;gap:8px">
+        <input id="license-input" type="text" placeholder="SKR-XXXX-XXXX" maxlength="20"
+          style="flex:1;padding:10px 12px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:monospace;font-size:.85rem;outline:none;letter-spacing:.06em;transition:border-color .2s"
+          onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border2)'"
+          oninput="this.value=this.value.toUpperCase()"
+          onkeydown="if(event.key==='Enter') activateLicense()">
+        <button onclick="activateLicense()" style="padding:10px 20px;background:var(--grad);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap">Aktywuj</button>
+      </div>
+      <div id="license-error" style="display:none;margin-top:6px;font-size:.75rem;color:var(--red)"></div>
+      <div style="margin-top:8px;font-size:.73rem;color:var(--text3)">
+        Nie masz kodu? <button onclick="navScrollTo('pricing')" style="background:none;border:none;color:var(--blue);cursor:pointer;font-weight:600;font-size:.73rem;padding:0;text-decoration:underline">Zobacz cennik →</button>
       </div>
     </div>
 
@@ -930,10 +967,10 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
     <button class="purchase-close" onclick="closePurchaseModal()">✕</button>
     <div id="purchase-form-wrap">
       <div class="purchase-header">
-        <div class="purchase-plan-name">Plan Startup</div>
-        <div class="purchase-title">Nieograniczone analizy rekrutacyjne</div>
+        <div class="purchase-plan-name" id="modal-plan-name">Plan Solo</div>
+        <div class="purchase-title" id="modal-plan-desc">50 analiz miesięcznie · 1 rekruter</div>
         <div class="purchase-price-row">
-          <span class="purchase-price">99 PLN</span>
+          <span class="purchase-price" id="modal-plan-price">149 PLN</span>
           <span class="purchase-period">/ miesiąc · bez karty kredytowej</span>
         </div>
       </div>
@@ -1100,6 +1137,7 @@ function updateUsageBar(){
   }
 
   document.getElementById('license-bar').style.display = 'none';
+  document.getElementById('license-form').style.display = 'block';
   document.getElementById('usage-bar').style.display = 'flex';
 
   if(isDevMode() || hasTrial()){
@@ -1113,27 +1151,17 @@ function updateUsageBar(){
   }
 }
 
-function toggleLicenseInput(){
-  const row = document.getElementById('license-input-row');
-  const btn = document.getElementById('license-toggle-btn');
-  const visible = row.style.display !== 'none';
-  row.style.display = visible ? 'none' : 'block';
-  btn.textContent = visible ? 'Wpisz kod →' : 'Zwiń ↑';
-  if(!visible) document.getElementById('license-input').focus();
-}
-
 function activateLicense(){
-  const val = document.getElementById('license-input').value.trim().toUpperCase();
+  const val = (document.getElementById('license-input').value||'').trim().toUpperCase();
   const errEl = document.getElementById('license-error');
   errEl.style.display = 'none';
   if(!val || val.length < 8){
-    errEl.textContent = 'Wpisz poprawny kod licencji.';
+    errEl.textContent = 'Wpisz poprawny kod licencji (min. 8 znaków).';
     errEl.style.display = 'block';
     return;
   }
   setLicense(val);
   document.getElementById('license-input').value = '';
-  document.getElementById('license-input-row').style.display = 'none';
   updateUsageBar();
 }
 
@@ -1633,7 +1661,19 @@ function resetPipeline(){
 // ══════════════════════════════════════════════════════════════
 //  PURCHASE MODAL
 // ══════════════════════════════════════════════════════════════
-function openPurchaseModal(){
+const PLANS = {
+  solo:      { name: 'Plan Solo',      desc: '50 analiz miesięcznie · 1 rekruter',           price: '149 PLN' },
+  agencja:   { name: 'Plan Agencja',   desc: '200 analiz miesięcznie · do 5 rekruterów',      price: '299 PLN' },
+  unlimited: { name: 'Plan Unlimited', desc: '600 analiz miesięcznie · bez limitu rekruterów', price: '499 PLN' },
+};
+let _selectedPlan = 'solo';
+
+function openPurchaseModal(plan){
+  _selectedPlan = plan || 'solo';
+  const p = PLANS[_selectedPlan] || PLANS.solo;
+  document.getElementById('modal-plan-name').textContent  = p.name;
+  document.getElementById('modal-plan-desc').textContent  = p.desc;
+  document.getElementById('modal-plan-price').textContent = p.price;
   document.getElementById('purchase-form-wrap').style.display = '';
   document.getElementById('purchase-success').style.display = 'none';
   document.getElementById('purchase-error').style.display = 'none';
@@ -1655,24 +1695,25 @@ async function submitPurchase(){
   if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ errEl.textContent = 'Podaj prawidłowy adres email.'; errEl.style.display='block'; return; }
   if(!company){ errEl.textContent = 'Podaj nazwę firmy.'; errEl.style.display='block'; return; }
 
-  // mailto fallback — opens email client with pre-filled data
-  const subject = encodeURIComponent('Skrenio — zapytanie o Plan Startup');
+  // mailto — opens email client with pre-filled data including selected plan
+  const planInfo = PLANS[_selectedPlan] || PLANS.solo;
+  const subject = encodeURIComponent('Skrenio — zapytanie o ' + planInfo.name);
   const body = encodeURIComponent(
     'Dzień dobry,\n\n' +
-    'Chciałbym/chciałabym uzyskać dostęp do Planu Startup Skrenio.\n\n' +
+    'Chciałbym/chciałabym uzyskać dostęp do ' + planInfo.name + ' (' + planInfo.price + '/mies.).\n\n' +
     'Imię i nazwisko: ' + name + '\n' +
     'Email: ' + email + '\n' +
     'Firma: ' + company + '\n\n' +
     'Proszę o informację dotyczącą aktywacji i płatności.\n\nPozdrawiam'
   );
-  window.open('mailto:kontakt@znalezieni.pl?subject=' + subject + '&body=' + body, '_blank');
+  window.open('mailto:kontakt@skrenio.com?subject=' + subject + '&body=' + body, '_blank');
 
   // Show success state
   document.getElementById('purchase-form-wrap').style.display = 'none';
   document.getElementById('purchase-success-name').textContent = name;
   document.getElementById('purchase-success-email').textContent = email;
   document.getElementById('purchase-success').style.display = 'block';
-  if(typeof gtag==='function') gtag('event','purchase_intent',{plan:'startup'});
+  if(typeof gtag==='function') gtag('event','purchase_intent',{plan: _selectedPlan});
 }
 
 document.getElementById('purchase-overlay').addEventListener('click', function(e){
