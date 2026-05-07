@@ -1,0 +1,1897 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skrenio — AI Screening dla Rekruterów</title>
+<meta name="description" content="Analizuj CV kandydatów w 30 sekund. Ranking, dopasowanie, pytania screeningowe. Bez rejestracji. RODO-compliant.">
+<meta property="og:title" content="Skrenio — AI Screening dla Rekruterów">
+<meta property="og:description" content="Analizuj CV kandydatów w 30 sekund. Ranking, dopasowanie, pytania screeningowe.">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- GA consent default BEFORE GA script — RODO compliance -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied' });
+</script>
+
+<style>
+:root {
+  --bg:#F8FAFC; --bg2:#F1F5F9; --bg3:#E2E8F0; --surface:#FFFFFF; --surface2:#F8FAFC;
+  --blue:#6D28D9; --blue2:#5B21B6; --blue-glow:rgba(109,40,217,.2);
+  --grad:linear-gradient(135deg,#7C3AED 0%,#3B82F6 60%,#EC4899 100%);
+  --grad-soft:linear-gradient(135deg,rgba(124,58,237,.1) 0%,rgba(59,130,246,.08) 100%);
+  --mint:#7C3AED; --mint-dim:rgba(124,58,237,.08);
+  --green:#16A34A; --green-dim:rgba(22,163,74,.08); --green-border:rgba(22,163,74,.25);
+  --amber:#D97706; --amber-dim:rgba(217,119,6,.08); --amber-border:rgba(217,119,6,.25);
+  --red:#DC2626; --red-dim:rgba(220,38,38,.08); --red-border:rgba(220,38,38,.25);
+  --text:#0F172A; --text2:#475569; --text3:#94A3B8;
+  --border:rgba(15,23,42,.08); --border2:rgba(15,23,42,.14);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ── TYPOGRAPHY ─── */
+.f-sora{font-family:'Sora',sans-serif}
+
+/* ── NAV ─── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 2rem;height:68px;display:flex;align-items:center;justify-content:space-between;background:rgba(248,250,252,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:0 1px 3px rgba(15,23,42,.06)}
+.nav-logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none}
+.nav-logo img{height:32px;width:auto;object-fit:contain}
+
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-link{font-size:.85rem;color:var(--text2);text-decoration:none;transition:color .2s;font-weight:500}
+.nav-link:hover{color:var(--text)}
+.nav-cta{background:var(--grad);color:#fff;padding:8px 20px;border-radius:8px;font-size:.85rem;font-weight:600;text-decoration:none;transition:all .2s;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}
+.nav-cta:hover{background:var(--blue);transform:translateY(-1px)}
+@media(max-width:640px){.nav-links{display:none}}
+
+/* ── HERO ─── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 2rem 80px;position:relative;overflow:hidden}
+.hero-glow{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse at center,rgba(79,70,229,.07) 0%,transparent 70%);pointer-events:none}
+.hero-glow2{position:absolute;top:35%;left:30%;width:300px;height:300px;background:radial-gradient(ellipse at center,rgba(79,70,229,.04) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(124,58,237,.07);border:1px solid rgba(124,58,237,.2);border-radius:100px;padding:6px 16px;font-size:.78rem;font-weight:600;color:var(--blue);margin-bottom:2rem;letter-spacing:.03em}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--blue);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero-h1{font-family:'Sora',sans-serif;font-size:clamp(2.6rem,6vw,4.2rem);font-weight:800;line-height:1.1;letter-spacing:-.04em;margin-bottom:1.5rem;max-width:800px}
+.hero-h1 .grad{background:linear-gradient(135deg,#7C3AED 0%,#3B82F6 60%,#EC4899 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.1rem;color:var(--text2);max-width:520px;line-height:1.7;margin-bottom:2.5rem}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.btn-primary{background:var(--grad);color:#fff;padding:14px 28px;border-radius:10px;font-size:.95rem;font-weight:600;border:none;cursor:pointer;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{background:var(--blue);transform:translateY(-2px);box-shadow:0 12px 32px var(--blue-glow)}
+.btn-ghost{background:transparent;color:var(--text2);padding:14px 28px;border-radius:10px;font-size:.95rem;font-weight:600;border:1px solid var(--border2);cursor:pointer;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif}
+.btn-ghost:hover{border-color:var(--blue);color:var(--text)}
+.hero-metrics{display:flex;gap:40px;margin-top:4rem;flex-wrap:wrap;justify-content:center}
+.metric{text-align:center}
+.metric-num{font-family:'Sora',sans-serif;font-size:2rem;font-weight:800;color:var(--text)}
+.metric-num span{color:var(--blue)}
+.metric-label{font-size:.78rem;color:var(--text3);margin-top:2px;font-weight:500}
+
+/* ── SOCIAL PROOF ─── */
+.logos-bar{padding:2.5rem 2rem;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.logos-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:3rem;flex-wrap:wrap;justify-content:center}
+.logos-label{font-size:.75rem;font-weight:600;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.logos-list{display:flex;gap:2.5rem;align-items:center;flex-wrap:wrap;justify-content:center}
+.logo-item{font-family:'Sora',sans-serif;font-size:.95rem;font-weight:700;color:var(--text3);opacity:.6;transition:opacity .2s}
+.logo-item:hover{opacity:1}
+
+/* ── SECTIONS ─── */
+section{padding:100px 2rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-tag{font-size:.75rem;font-weight:700;color:var(--blue);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1rem}
+.section-h2{font-family:'Sora',sans-serif;font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:1rem}
+.section-sub{font-size:1rem;color:var(--text2);max-width:520px;line-height:1.7}
+
+/* ── DASHBOARD MOCKUP ─── */
+.mockup-wrap{max-width:1000px;margin:3.5rem auto 0;background:var(--surface);border:1px solid var(--border2);border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(15,23,42,.1)}
+.mockup-bar{background:var(--bg2);padding:.75rem 1.25rem;display:flex;align-items:center;gap:.6rem;border-bottom:1px solid var(--border)}
+.dot{width:11px;height:11px;border-radius:50%}
+.dot-r{background:#EF4444}.dot-y{background:#F59E0B}.dot-g{background:#22C55E}
+.mockup-url{margin-left:.75rem;background:rgba(15,23,42,.05);border-radius:6px;padding:4px 14px;font-size:.72rem;color:var(--text3);font-family:monospace}
+.mockup-body{padding:1.5rem}
+.mockup-grid{display:grid;grid-template-columns:220px 1fr;gap:1.25rem}
+.mockup-sidebar{background:var(--bg2);border-radius:12px;padding:1rem}
+.sidebar-nav-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:.78rem;color:var(--text2);margin-bottom:2px;cursor:default}
+.sidebar-nav-item.active{background:rgba(124,58,237,.1);color:var(--mint)}
+.sidebar-icon{width:16px;height:16px;opacity:.6;flex-shrink:0}
+.sidebar-nav-item.active .sidebar-icon{opacity:1}
+.mockup-main{display:flex;flex-direction:column;gap:1rem}
+.mockup-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.mstat{background:var(--bg2);border-radius:12px;padding:1rem 1.25rem}
+.mstat-num{font-family:'Sora',sans-serif;font-size:1.6rem;font-weight:800}
+.mstat-label{font-size:.72rem;color:var(--text3);margin-top:2px}
+.mstat-change{font-size:.7rem;font-weight:600;margin-top:4px}
+.up{color:var(--green)}.down{color:var(--red)}
+.candidates-list{background:var(--bg2);border-radius:12px;padding:1rem 1.25rem}
+.cl-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.cl-title{font-family:'Sora',sans-serif;font-size:.88rem;font-weight:700}
+.cl-badge{background:var(--blue);color:#fff;padding:2px 10px;border-radius:100px;font-size:.68rem;font-weight:700}
+.cand-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.cand-row:last-child{border-bottom:none}
+.cand-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--blue) 0%,#7C3AED 100%);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#fff;flex-shrink:0}
+.cand-name{flex:1;font-size:.78rem;font-weight:600}
+.cand-role{font-size:.68rem;color:var(--text3)}
+.cand-score{display:flex;align-items:center;gap:6px}
+.score-bar-wrap{width:60px;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.score-bar{height:100%;border-radius:2px}
+.score-pct{font-size:.7rem;font-weight:700;font-family:'Sora',sans-serif;min-width:30px;text-align:right}
+.cand-tag{font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:4px}
+.tag-yes{background:var(--green-dim);color:var(--green)}
+.tag-maybe{background:var(--amber-dim);color:var(--amber)}
+.tag-no{background:var(--red-dim);color:var(--red)}
+@media(max-width:700px){.mockup-grid{grid-template-columns:1fr}.mockup-sidebar{display:none}.mockup-stats{grid-template-columns:1fr 1fr}}
+
+/* ── BENEFITS ─── */
+.benefits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
+.benefit-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;position:relative;overflow:hidden;transition:border-color .25s,transform .25s}
+.benefit-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--mint));opacity:0;transition:opacity .25s}
+.benefit-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.benefit-card:hover::before{opacity:1}
+.benefit-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.25rem}
+.bi-blue{background:rgba(59,130,246,.15)}
+.bi-mint{background:rgba(79,70,229,.08)}
+.bi-purple{background:rgba(139,92,246,.15)}
+.benefit-title{font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:.5rem}
+.benefit-desc{font-size:.875rem;color:var(--text2);line-height:1.65}
+@media(max-width:860px){.benefits-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.benefits-grid{grid-template-columns:1fr}}
+
+/* ── HOW IT WORKS ─── */
+.how-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3.5rem;position:relative}
+.how-wrap::before{content:'';position:absolute;top:28px;left:calc(33% - 1px);right:calc(33% - 1px);height:1px;background:linear-gradient(90deg,transparent,var(--blue),var(--mint),var(--blue),transparent);opacity:.4}
+.how-step{text-align:center}
+.how-num{width:56px;height:56px;border-radius:50%;background:var(--surface);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-family:'Sora',sans-serif;font-weight:800;font-size:1.1rem;color:var(--blue);position:relative;z-index:1}
+.how-title{font-family:'Sora',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.5rem}
+.how-desc{font-size:.85rem;color:var(--text2);line-height:1.65}
+@media(max-width:640px){.how-wrap{grid-template-columns:1fr}.how-wrap::before{display:none}}
+
+/* ── PRICING ─── */
+.pricing-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:3.5rem;align-items:start;max-width:720px;margin-left:auto;margin-right:auto}
+.plan{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2rem;position:relative}
+.plan.featured{border-color:var(--mint);background:var(--grad-soft)}
+.plan-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;padding:4px 16px;border-radius:100px;font-size:.72rem;font-weight:700;white-space:nowrap}
+.plan-name{font-family:'Sora',sans-serif;font-size:1rem;font-weight:700;color:var(--text2);margin-bottom:.75rem}
+.plan-price{font-family:'Sora',sans-serif;font-size:2.5rem;font-weight:800;margin-bottom:.25rem;color:var(--text)}
+.plan-price small{font-size:.9rem;font-weight:500;color:var(--text3)}
+.plan-period{font-size:.78rem;color:var(--text3);margin-bottom:1.5rem}
+.plan-features{list-style:none;margin-bottom:1.75rem;display:flex;flex-direction:column;gap:.6rem}
+.plan-features li{font-size:.85rem;color:var(--text2);display:flex;align-items:flex-start;gap:.5rem}
+.plan-features li::before{content:'✓';color:var(--mint);font-weight:700;flex-shrink:0;margin-top:.05rem}
+.plan-btn{width:100%;padding:12px;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;border:none}
+.plan-btn-primary{background:var(--blue);color:#fff}
+.plan-btn-primary:hover{background:var(--blue2)}
+.plan-btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2)!important;border:none}
+.plan-btn-ghost:hover{border-color:var(--blue)!important;color:var(--text)}
+@media(max-width:600px){.pricing-grid{grid-template-columns:1fr;max-width:400px;margin-left:auto;margin-right:auto}}
+
+/* ── FINAL CTA ─── */
+.final-cta{text-align:center;padding:100px 2rem;background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%)}
+.final-cta .section-h2{margin:0 auto 1rem}
+.final-cta .section-sub{margin:0 auto 2.5rem}
+
+/* ── FOOTER ─── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem;text-align:center}
+footer .f-text{font-size:.78rem;color:var(--text3);line-height:1.8}
+footer a{color:var(--text3);text-decoration:none;transition:color .2s}
+footer a:hover{color:var(--text2)}
+
+/* ══════════════════════════════════════════
+   TOOL APP (unified pipeline)
+══════════════════════════════════════════ */
+#app-view{display:none;min-height:100vh;background:var(--bg);padding-top:68px}
+.app-inner{max-width:1000px;margin:0 auto;padding:3rem 1.5rem 5rem}
+
+/* APP HEADER */
+.app-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;padding-bottom:1.75rem;border-bottom:1px solid var(--border)}
+.app-title{font-family:'Sora',sans-serif;font-size:1.6rem;font-weight:800;letter-spacing:-.03em}
+.app-title span{color:var(--mint)}
+.btn-back{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text2);padding:8px 16px;border-radius:8px;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif}
+.btn-back:hover{background:rgba(255,255,255,.1);color:var(--text)}
+
+/* USAGE COUNTER */
+.usage-bar{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;display:flex;align-items:center;gap:12px;margin-bottom:2rem}
+.usage-dots{display:flex;gap:6px}
+.usage-dot{width:10px;height:10px;border-radius:50%;background:var(--border2)}
+.usage-dot.used{background:var(--mint)}
+.usage-text{font-size:.8rem;color:var(--text2);flex:1}
+.usage-text strong{color:var(--text)}
+
+/* UNIFIED FORM */
+.pipeline-form{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2rem;margin-bottom:2rem}
+.form-section{margin-bottom:1.75rem}
+.form-section:last-child{margin-bottom:0}
+.form-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.75rem;display:flex;align-items:center;gap:6px}
+.form-label span{background:var(--blue);color:#fff;border-radius:4px;padding:1px 7px;font-size:.65rem}
+
+/* UPLOAD ZONES */
+.upload-zone{border:1.5px dashed rgba(59,130,246,.3);border-radius:12px;padding:1.5rem;background:rgba(59,130,246,.03);cursor:pointer;transition:all .2s;text-align:center}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--blue);background:rgba(59,130,246,.07)}
+.upload-icon{font-size:1.75rem;margin-bottom:.5rem}
+.upload-text{font-size:.82rem;color:var(--text2)}
+.upload-text strong{color:var(--text)}
+.upload-limit{font-size:.72rem;color:var(--text3);margin-top:3px}
+
+/* FILE CHIPS */
+.file-chips{display:flex;flex-direction:column;gap:6px;margin-top:.75rem}
+.file-chip{display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:.78rem;transition:border-color .2s}
+.file-chip .fn{flex:1;color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-chip .fs{font-size:.7rem;color:var(--text3);white-space:nowrap}
+.file-chip .fr{background:none;border:none;cursor:pointer;color:var(--text3);font-size:.9rem;padding:0 2px;transition:color .2s}
+.file-chip .fr:hover{color:var(--red)}
+.file-chip.processing{border-color:var(--amber-border)}
+.file-chip.done{border-color:var(--green-border)}
+.file-chip.error{border-color:var(--red-border)}
+
+/* ANON TOGGLE */
+.anon-row{display:flex;align-items:center;gap:12px;padding:1rem 1.25rem;background:rgba(79,70,229,.04);border:1px solid rgba(79,70,229,.12);border-radius:12px;margin-bottom:1.5rem}
+.toggle-wrap{position:relative;width:40px;height:22px;flex-shrink:0}
+.toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.toggle-slider{position:absolute;inset:0;background:var(--border2);border-radius:11px;cursor:pointer;transition:.3s}
+.toggle-slider::before{content:'';position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+input:checked+.toggle-slider{background:var(--mint)}
+input:checked+.toggle-slider::before{transform:translateX(18px)}
+.anon-label{flex:1;font-size:.82rem;color:var(--text2)}
+.anon-label strong{color:var(--text);display:block;margin-bottom:1px}
+.anon-spinner{width:14px;height:14px;border:2px solid var(--border2);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;display:none;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ANON CONFIRM */
+.anon-confirm{background:var(--green-dim);border:1px solid var(--green-border);border-radius:8px;padding:10px 14px;font-size:.78rem;color:var(--green);margin-bottom:1rem;display:none;line-height:1.6}
+.truncation-warn{background:var(--amber-dim);border:1px solid var(--amber-border);border-radius:8px;padding:8px 14px;font-size:.78rem;color:var(--amber);margin-bottom:1rem;display:none}
+
+/* ANALYZE BUTTON */
+.analyze-btn{width:100%;padding:16px;background:var(--grad);color:#fff;border:none;border-radius:12px;font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:700;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:10px;letter-spacing:-.01em}
+.analyze-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 16px 40px var(--blue-glow)}
+.analyze-btn:disabled{background:var(--bg3);color:var(--text3);cursor:not-allowed;transform:none;box-shadow:none}
+.analyze-btn .btn-arrow{font-size:1.1rem;transition:transform .2s}
+.analyze-btn:not(:disabled):hover .btn-arrow{transform:translateX(4px)}
+.btn-spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+
+/* ERROR */
+.error-box{background:var(--red-dim);border:1px solid var(--red-border);color:var(--red);padding:10px 16px;border-radius:10px;font-size:.82rem;margin-bottom:1rem;display:none;line-height:1.5}
+
+/* LOADING OVERLAY */
+.loading-panel{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:3.5rem;text-align:center;display:none;margin-bottom:2rem}
+.loading-steps{display:flex;flex-direction:column;gap:.75rem;margin-top:1.5rem;max-width:360px;margin-left:auto;margin-right:auto}
+.loading-step{display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--text3);transition:color .3s}
+.loading-step.active{color:var(--text2)}
+.loading-step.done{color:var(--green)}
+.step-dot{width:8px;height:8px;border-radius:50%;background:var(--border2);flex-shrink:0;transition:background .3s}
+.loading-step.active .step-dot{background:var(--blue);animation:pulse 1s infinite}
+.loading-step.done .step-dot{background:var(--green)}
+.big-spinner{width:44px;height:44px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+.loading-title{font-family:'Sora',sans-serif;font-size:1rem;font-weight:700;color:var(--text)}
+.loading-sub{font-size:.82rem;color:var(--text2);margin-top:.5rem}
+
+/* ══ RESULTS ══ */
+.results-panel{display:none}
+.results-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem}
+.results-title-h{font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:700}
+.new-analysis-btn{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text2);padding:8px 16px;border-radius:8px;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif}
+.new-analysis-btn:hover{background:rgba(255,255,255,.1);color:var(--text)}
+
+/* COLLAPSIBLE SECTION */
+.result-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;margin-bottom:1.25rem;overflow:hidden;transition:border-color .2s}
+.result-section:hover{border-color:var(--border2)}
+.result-section-header{display:flex;align-items:center;gap:12px;padding:1.25rem 1.5rem;cursor:pointer;user-select:none}
+.result-section-icon{font-size:1.1rem}
+.result-section-title{font-family:'Sora',sans-serif;font-size:.95rem;font-weight:700;flex:1}
+.result-section-count{font-size:.72rem;font-weight:700;background:var(--blue);color:#fff;padding:2px 10px;border-radius:100px}
+.result-section-count.loading{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border)}
+.result-section-count.error{background:var(--red-dim);color:var(--red);border:1px solid var(--red-border)}
+.result-section-chevron{font-size:.85rem;color:var(--text3);transition:transform .25s}
+.result-section.open .result-section-chevron{transform:rotate(180deg)}
+.result-section-body{display:none;padding:0 1.5rem 1.5rem}
+.result-section.open .result-section-body{display:block}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem}
+.stat-card{border-radius:10px;padding:12px 16px;text-align:center;border:1px solid}
+.stat-num{font-family:'Sora',sans-serif;font-size:1.8rem;font-weight:800}
+.stat-label{font-size:.7rem;font-weight:700;letter-spacing:.04em;margin-top:2px}
+
+/* CANDIDATE CARDS */
+.candidate-card{background:var(--bg2);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:.875rem;border:1px solid var(--border);border-left:3px solid;transition:border-color .2s}
+.candidate-card:hover{border-color:var(--border2)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.cname{font-family:'Sora',sans-serif;font-size:1rem;font-weight:700}
+.csummary{font-size:.8rem;color:var(--text2);margin-top:3px;line-height:1.5}
+.card-badges{display:flex;gap:8px;align-items:center;flex-shrink:0;margin-left:12px}
+.badge{padding:4px 12px;border-radius:6px;font-size:.72rem;font-weight:700;border:1px solid}
+.card-body{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+.col-label{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px;opacity:.7}
+.si,.wi{font-size:.8rem;padding:2px 0;line-height:1.5}
+.progress-wrap{margin-top:8px}
+.progress-bar{height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;max-width:240px}
+.progress-fill{height:100%;border-radius:3px;transition:width .6s}
+.progress-label{font-size:.7rem;color:var(--text3);margin-top:3px}
+.red-flag{margin-top:10px;background:var(--red-dim);border:1px solid var(--red-border);border-radius:6px;padding:7px 12px;font-size:.76rem;color:var(--red);font-weight:600}
+
+/* QUESTION CARDS */
+.question-card{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:.875rem}
+.q-num{font-size:.68rem;font-weight:700;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+.q-text{font-family:'Sora',sans-serif;font-size:.95rem;color:var(--text);line-height:1.55;margin-bottom:10px}
+.q-meta{display:flex;gap:6px;flex-wrap:wrap}
+.q-tag{font-size:.68rem;font-weight:600;padding:2px 8px;border-radius:4px}
+.q-bias{background:var(--red-dim);color:var(--red)}
+.q-why{background:rgba(59,130,246,.1);color:var(--blue);font-weight:400}
+
+/* EXPORT */
+.export-btn{background:var(--green-dim);border:1px solid var(--green-border);color:var(--green);padding:7px 16px;border-radius:7px;font-size:.76rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s}
+.export-btn:hover{background:rgba(34,197,94,.2)}
+
+/* ZGODNOŚĆ — prominent match score */
+.zgodnosc-block{display:flex;align-items:center;gap:14px;margin:10px 0 4px}
+.zgodnosc-pct{font-family:'Sora',sans-serif;font-size:2rem;font-weight:800;line-height:1}
+.zgodnosc-label{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.6;margin-bottom:2px}
+.zgodnosc-bar{flex:1;height:6px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;max-width:180px}
+.zgodnosc-fill{height:100%;border-radius:3px;transition:width .6s}
+
+/* BRAKUJE — missing skills block */
+.brakuje-block{margin-top:10px}
+.brakuje-label{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);margin-bottom:5px;opacity:.85}
+.brakuje-item{font-size:.8rem;padding:2px 0;line-height:1.5;color:var(--amber)}
+
+/* AI ACT DISCLAIMER */
+.ai-disclaimer{margin-top:12px;padding:8px 12px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:7px;font-size:.72rem;color:var(--text3);line-height:1.55}
+
+
+/* ══ PURCHASE MODAL ══ */
+#purchase-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(12px);z-index:10000;align-items:center;justify-content:center;padding:2rem}
+#purchase-overlay.active{display:flex}
+.purchase-modal{background:var(--surface);border:1px solid var(--border2);border-radius:24px;padding:2.5rem;max-width:520px;width:100%;position:relative;box-shadow:0 8px 60px rgba(15,23,42,.15)}
+.purchase-close{position:absolute;top:1.25rem;right:1.5rem;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--text3);line-height:1;transition:color .2s}
+.purchase-close:hover{color:var(--text)}
+.purchase-header{margin-bottom:1.75rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border)}
+.purchase-plan-name{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:.4rem}
+.purchase-title{font-family:'Sora',sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:-.03em;color:var(--text)}
+.purchase-price-row{display:flex;align-items:baseline;gap:.5rem;margin-top:.4rem}
+.purchase-price{font-family:'Sora',sans-serif;font-size:2rem;font-weight:800;color:var(--text)}
+.purchase-period{font-size:.82rem;color:var(--text3)}
+.purchase-features{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.75rem}
+.purchase-features li{font-size:.82rem;color:var(--text2);display:flex;align-items:center;gap:.5rem}
+.purchase-features li::before{content:'✓';color:var(--green);font-weight:800;flex-shrink:0}
+.purchase-fields{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.25rem}
+.purchase-field{display:flex;flex-direction:column;gap:.3rem}
+.purchase-label{font-size:.72rem;font-weight:700;color:var(--text3);letter-spacing:.05em;text-transform:uppercase}
+.purchase-input{width:100%;padding:11px 14px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:.875rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s}
+.purchase-input:focus{border-color:var(--blue)}
+.purchase-input::placeholder{color:var(--text3)}
+.purchase-submit{width:100%;padding:14px;background:var(--grad);color:#fff;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:-.01em}
+.purchase-submit:hover{transform:translateY(-2px);box-shadow:0 12px 32px var(--blue-glow)}
+.purchase-note{font-size:.72rem;color:var(--text3);text-align:center;margin-top:.75rem;line-height:1.6}
+.purchase-error{color:var(--red);font-size:.78rem;margin-bottom:.75rem;display:none;background:var(--red-dim);border:1px solid var(--red-border);padding:8px 12px;border-radius:7px}
+.purchase-success{display:none;text-align:center;padding:1rem 0}
+.purchase-success-icon{font-size:2.5rem;margin-bottom:.75rem}
+.purchase-success-title{font-family:'Sora',sans-serif;font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
+.purchase-success-msg{font-size:.85rem;color:var(--text2);line-height:1.7}
+
+/* ══ EMAIL GATE MODAL ══ */
+#gate-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(12px);z-index:10000;align-items:center;justify-content:center;padding:2rem}
+#gate-overlay.active{display:flex}
+.gate-modal{background:var(--surface);border:1px solid var(--border2);border-radius:24px;padding:2.5rem;max-width:480px;width:100%;text-align:center;position:relative;box-shadow:0 8px 60px rgba(15,23,42,.15)}
+.gate-lock{font-size:2.5rem;margin-bottom:1.25rem}
+.gate-title{font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.75rem}
+.gate-sub{font-size:.875rem;color:var(--text2);line-height:1.65;margin-bottom:2rem}
+.gate-benefits{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.75rem;text-align:left}
+.gate-benefit{display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--text2)}
+.gate-benefit::before{content:'✓';color:var(--green);font-weight:800;flex-shrink:0}
+.gate-input{width:100%;padding:13px 16px;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-size:.9rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;margin-bottom:.875rem;transition:border-color .2s}
+.gate-input:focus{border-color:var(--blue)}
+.gate-input::placeholder{color:var(--text3)}
+.gate-submit{width:100%;padding:14px;background:var(--grad);color:#fff;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s}
+.gate-submit:hover{transform:translateY(-2px);box-shadow:0 12px 32px var(--blue-glow)}
+.gate-note{font-size:.72rem;color:var(--text3);margin-top:.875rem;line-height:1.6}
+.gate-success{display:none;text-align:center}
+.gate-success-icon{font-size:2.5rem;margin-bottom:.75rem}
+
+/* ══ COOKIE BANNER ══ */
+#cookie-banner{position:fixed;bottom:0;left:0;right:0;background:rgba(248,250,252,.98);backdrop-filter:blur(20px);color:var(--text2);font-size:.8rem;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;z-index:9999;box-shadow:0 -1px 0 var(--border),0 -4px 20px rgba(15,23,42,.06);flex-wrap:wrap;border-top:1px solid var(--border)}
+#cookie-banner p{margin:0;line-height:1.6;flex:1;min-width:200px}
+#cookie-banner a{color:var(--blue);text-decoration:underline;cursor:pointer}
+.cookie-btns{display:flex;gap:10px;flex-shrink:0}
+.btn-cookie-accept{background:var(--blue);color:#fff;border:none;padding:9px 20px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:background .2s}
+.btn-cookie-accept:hover{background:var(--blue2)}
+.btn-cookie-reject{background:transparent;color:var(--text3);border:1px solid var(--border2);padding:9px 16px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;cursor:pointer;transition:all .2s}
+.btn-cookie-reject:hover{border-color:var(--border2);color:var(--text2)}
+
+/* ══ PRIVACY MODAL ══ */
+#privacy-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);backdrop-filter:blur(8px);z-index:10500;overflow-y:auto;padding:2rem 1rem}
+#privacy-modal{background:var(--surface);border:1px solid var(--border2);max-width:720px;margin:0 auto;border-radius:20px;padding:2.5rem;position:relative;font-size:.85rem;color:var(--text2);line-height:1.75;box-shadow:0 8px 40px rgba(15,23,42,.12)}
+#privacy-modal h1{font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:1.25rem}
+#privacy-modal h2{font-family:'Sora',sans-serif;font-size:.95rem;font-weight:700;color:var(--text);margin:1.5rem 0 .5rem}
+#privacy-modal p,#privacy-modal li{margin-bottom:.5rem;color:var(--text2)}
+#privacy-modal ul{padding-left:1.4rem}
+#privacy-modal a{color:var(--blue)}
+.btn-close-priv{position:absolute;top:1.25rem;right:1.5rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--text3);line-height:1;transition:color .2s}
+.btn-close-priv:hover{color:var(--text)}
+
+/* ══ SCROLLBAR ══ */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+
+@media(max-width:640px){
+  .hero-h1{font-size:2.2rem}
+  .hero-metrics{gap:24px}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .card-body{grid-template-columns:1fr}
+  .app-header{flex-direction:column;align-items:flex-start;gap:12px}
+  #privacy-modal{padding:1.5rem}
+}
+</style>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-695CTY5XED"></script>
+<script>
+  gtag('js', new Date());
+  gtag('config', 'G-695CTY5XED', { anonymize_ip: true });
+</script>
+</head>
+<body>
+
+<!-- ═══════════════════════ NAV ═══════════════════════ -->
+<nav class="nav" id="main-nav">
+  <a class="nav-logo" href="#" onclick="showHome();return false">
+    <img src="data:image/png;base64,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" alt="Skrenio" style="height:36px;width:auto;object-fit:contain">
+    <img src="data:image/png;base64,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" alt="skrenio AI HR Solutions" style="height:28px;width:auto;object-fit:contain;margin-left:6px">
+  </a>
+  <div class="nav-links">
+    <a href="#benefits" class="nav-link">Możliwości</a>
+    <a href="#how" class="nav-link">Jak działa</a>
+    <a href="#pricing" class="nav-link">Cennik</a>
+  </div>
+  <button class="nav-cta" onclick="showApp()">Zacznij za darmo →</button>
+</nav>
+
+<!-- ═══════════════════════ HOMEPAGE ═══════════════════════ -->
+<div id="home-view">
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-badge">✦ Nowa era rekrutacji w Polsce</div>
+  <h1 class="hero-h1 f-sora">Screening kandydatów<br><span class="grad">w 60 sekund z AI</span></h1>
+  <p class="hero-sub">Wgraj ogłoszenie i CV — dostaniesz ranking, pytania screeningowe i analizę dopasowania. Albo wgraj swoje CV i sprawdź, do których ofert najlepiej pasujesz.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="showApp()">Analizuj rekrutację za darmo <span>→</span></button>
+    <a class="btn-ghost" href="#how">Zobacz jak działa</a>
+  </div>
+  <div class="hero-metrics">
+    <div class="metric"><div class="metric-num">60<span>s</span></div><div class="metric-label">Czas analizy</div></div>
+    <div class="metric"><div class="metric-num">10<span>×</span></div><div class="metric-label">Szybsza selekcja</div></div>
+    <div class="metric"><div class="metric-num">4<span>w1</span></div><div class="metric-label">Narzędzia w pakiecie</div></div>
+    <div class="metric"><div class="metric-num">100<span>%</span></div><div class="metric-label">AI · Bez biasów</div></div>
+  </div>
+</section>
+
+
+
+<!-- PRODUCT PREVIEW -->
+<section id="preview" style="background:var(--bg2)">
+  <div class="section-inner">
+    <div class="section-tag">Podgląd platformy</div>
+    <h2 class="section-h2 f-sora">Cztery narzędzia AI.<br>Jeden prosty interfejs.</h2>
+    <p class="section-sub">Ranking kandydatów, pytania screeningowe, analiza dopasowania i odwrócony matching — CV do ofert. Bez rejestracji, bez konfiguracji.</p>
+    <div class="mockup-wrap">
+      <div class="mockup-bar">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        <div class="mockup-url">skrenio.pl — Analiza rekrutacji</div>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-grid">
+          <div class="mockup-sidebar">
+            <div style="font-size:.65rem;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Rekrutacje</div>
+            <div class="sidebar-nav-item active">
+              <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Senior Developer
+            </div>
+            <div class="sidebar-nav-item">
+              <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+              Marketing Manager
+            </div>
+            <div class="sidebar-nav-item">
+              <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 0 0-2 2v6c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              Head of People
+            </div>
+            <div style="height:1px;background:var(--border);margin:12px 0"></div>
+            <div style="font-size:.65rem;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Statystyki</div>
+            <div style="font-size:.75rem;color:var(--text2);margin-bottom:4px">3 aktywne rekrutacje</div>
+            <div style="font-size:.75rem;color:var(--text2)">23 kandydatów</div>
+          </div>
+          <div class="mockup-main">
+            <div class="mockup-stats">
+              <div class="mstat"><div class="mstat-num" style="color:var(--green)">8</div><div class="mstat-label">Kandydatów</div><div class="mstat-change up">↑ 3 nowe</div></div>
+              <div class="mstat"><div class="mstat-num" style="color:var(--blue)">87%</div><div class="mstat-label">Najlepsza ocena</div><div class="mstat-change up">↑ AI ranking</div></div>
+              <div class="mstat"><div class="mstat-num" style="color:var(--mint)">12s</div><div class="mstat-label">Czas analizy</div><div class="mstat-change down">↓ vs 2h ręcznie</div></div>
+            </div>
+            <div class="candidates-list">
+              <div class="cl-header">
+                <span class="cl-title">Ranking kandydatów</span>
+                <span class="cl-badge">AI</span>
+              </div>
+              <div class="cand-row">
+                <div class="cand-avatar">MK</div>
+                <div style="flex:1"><div class="cand-name">Monika K.</div><div class="cand-role">8 lat · Head of People</div></div>
+                <div class="cand-score"><div class="score-bar-wrap"><div class="score-bar" style="width:92%;background:var(--green)"></div></div><span class="score-pct" style="color:var(--green)">92%</span></div>
+                <span class="cand-tag tag-yes">ZAPROŚ</span>
+              </div>
+              <div class="cand-row">
+                <div class="cand-avatar">AW</div>
+                <div style="flex:1"><div class="cand-name">Aleksandra W.</div><div class="cand-role">6 lat · HRBP · CD Projekt</div></div>
+                <div class="cand-score"><div class="score-bar-wrap"><div class="score-bar" style="width:84%;background:var(--green)"></div></div><span class="score-pct" style="color:var(--green)">84%</span></div>
+                <span class="cand-tag tag-yes">ZAPROŚ</span>
+              </div>
+              <div class="cand-row">
+                <div class="cand-avatar">BS</div>
+                <div style="flex:1"><div class="cand-name">Bartosz S.</div><div class="cand-role">5 lat · People Partner</div></div>
+                <div class="cand-score"><div class="score-bar-wrap"><div class="score-bar" style="width:76%;background:var(--blue)"></div></div><span class="score-pct" style="color:var(--blue)">76%</span></div>
+                <span class="cand-tag tag-maybe">ROZWAŻ</span>
+              </div>
+              <div class="cand-row">
+                <div class="cand-avatar">MW</div>
+                <div style="flex:1"><div class="cand-name">Marek W.</div><div class="cand-role">3 lata · HR Manager</div></div>
+                <div class="cand-score"><div class="score-bar-wrap"><div class="score-bar" style="width:31%;background:var(--red)"></div></div><span class="score-pct" style="color:var(--red)">31%</span></div>
+                <span class="cand-tag tag-no">ODRZUĆ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section id="benefits">
+  <div class="section-inner">
+    <div class="section-tag">Dlaczego Skrenio</div>
+    <h2 class="section-h2 f-sora">Rekrutuj mądrze,<br>nie ciężko</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon bi-blue">⚡</div>
+        <div class="benefit-title f-sora">10× szybsza selekcja</div>
+        <div class="benefit-desc">Zamiast godzin na przeglądanie CV — 60 sekund i masz pełny ranking z uzasadnieniem. Skupiasz się tylko na rozmowach.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-mint">🛡️</div>
+        <div class="benefit-title f-sora">Zero biasów rekrutacyjnych</div>
+        <div class="benefit-desc">Pytania screeningowe wygenerowane z myślą o równości szans. Bez pytań o wiek, płeć czy stan cywilny. Zgodność z prawem UE.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-purple">🎯</div>
+        <div class="benefit-title f-sora">Precyzyjne dopasowanie</div>
+        <div class="benefit-desc">AI porównuje każde CV z wymaganiami roli punkt po punkcie. Dowiadujesz się co kandydat ma, a czego mu brakuje — konkrety, nie ogólniki.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-blue">🔒</div>
+        <div class="benefit-title f-sora">RODO od pierwszego dnia</div>
+        <div class="benefit-desc">Anonimizacja CV jednym klikiem. Dane kandydatów nie są przechowywane po analizie. Przetwarzanie na podstawie umowy DPA z Anthropic.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-mint">📊</div>
+        <div class="benefit-title f-sora">Eksport do CSV</div>
+        <div class="benefit-desc">Wyniki każdej analizy możesz pobrać jako CSV i wrzucić do ATS, arkusza lub raportu dla managera. Zero przepisywania.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-purple">🤖</div>
+        <div class="benefit-title f-sora">Trzy analizy naraz</div>
+        <div class="benefit-desc">Ranking kandydatów, pytania screeningowe i analiza dopasowania uruchamiają się równolegle. Jeden przycisk — komplet danych.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="background:var(--bg2)">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-tag">Jak to działa</div>
+    <h2 class="section-h2 f-sora">Trzy kroki do najlepszego kandydata</h2>
+    <p class="section-sub" style="margin:0 auto">Żadnej instalacji. Żadnej konfiguracji. Wystarczy przeglądarka.</p>
+    <div class="how-wrap">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <div class="how-title f-sora">Wgraj materiały</div>
+        <div class="how-desc">Wrzuć PDF z ogłoszeniem i CV kandydatów (do 10 naraz). Opcjonalnie zanonimizuj przed analizą.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <div class="how-title f-sora">AI analizuje</div>
+        <div class="how-desc">Trzy moduły AI działają równolegle: ranking, pytania screeningowe, analiza luk. Wyniki w ~60 sekund.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <div class="how-title f-sora">Zaproś najlepszych</div>
+        <div class="how-desc">Przefiltruj, eksportuj do CSV i zaproś na rozmowę tylko tych kandydatów, którzy naprawdę pasują.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-tag">Cennik</div>
+    <h2 class="section-h2 f-sora">Zacznij za darmo,<br>skaluj kiedy chcesz</h2>
+    <p class="section-sub" style="margin:0 auto 0">Bez karty kredytowej. Bez ukrytych opłat.</p>
+    <div class="pricing-grid">
+      <div class="plan">
+        <div class="plan-name">Bezpłatny</div>
+        <div class="plan-price">0 <small>PLN</small></div>
+        <div class="plan-period">na zawsze</div>
+        <ul class="plan-features">
+          <li>2 bezpłatne analizy</li>
+          <li>Ranking + pytania + dopasowanie</li>
+          <li>Do 10 CV naraz</li>
+          <li>Eksport CSV</li>
+        </ul>
+        <button class="plan-btn plan-btn-ghost" onclick="showApp()">Zacznij za darmo</button>
+      </div>
+      <div class="plan featured">
+        <div class="plan-badge">Najpopularniejszy</div>
+        <div class="plan-name">Startup</div>
+        <div class="plan-price">99 <small>PLN</small></div>
+        <div class="plan-period">/ miesiąc · dla 1-5 rekruterów</div>
+        <ul class="plan-features">
+          <li>Nieograniczone analizy</li>
+          <li>Do 10 CV / analiza</li>
+          <li>Anonimizacja RODO</li>
+          <li>Eksport CSV</li>
+          <li>Wsparcie e-mail</li>
+        </ul>
+        <button class="plan-btn plan-btn-primary" onclick="openPurchaseModal()">Zamów dostęp →</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="final-cta">
+  <div class="section-tag" style="text-align:center">Zacznij już dziś</div>
+  <h2 class="section-h2 f-sora" style="text-align:center;max-width:600px;margin-left:auto;margin-right:auto">Twoja następna rekrutacja zasługuje na AI</h2>
+  <p class="section-sub" style="text-align:center;margin-left:auto;margin-right:auto">Dwie bezpłatne analizy. Żadnej rejestracji. Zacznij w 10 sekund.</p>
+  <div style="display:flex;justify-content:center;margin-top:2.5rem">
+    <button class="btn-primary" onclick="showApp()" style="font-size:1rem;padding:16px 36px">Analizuj rekrutację za darmo →</button>
+  </div>
+</div>
+
+<footer>
+  <div class="f-text">
+    Narzędzie wspiera proces rekrutacji — ostateczna decyzja należy zawsze do rekrutera. Skrenio nie przechowuje żadnych danych aplikacyjnych.<br>
+    © 2026 Skrenio ·
+    <a href="mailto:kontakt@znalezieni.pl">kontakt@znalezieni.pl</a> ·
+    <a href="#" onclick="openPrivacy();return false">Polityka prywatności</a>
+  </div>
+</footer>
+
+</div><!-- /#home-view -->
+
+<!-- ═══════════════════════ APP VIEW ═══════════════════════ -->
+<div id="app-view">
+  <div class="app-inner">
+
+    <div class="app-header">
+      <div>
+        <div class="app-title f-sora">Analiza rekrutacji <span>AI</span></div>
+        <div style="font-size:.8rem;color:var(--text3);margin-top:3px">Ranking · Pytania screeningowe · Analiza dopasowania</div>
+      </div>
+      <button class="btn-back" onclick="showHome()">← Wróć</button>
+    </div>
+
+    <!-- MODE TABS -->
+    <div id="mode-tabs" style="display:flex;gap:8px;margin-bottom:1.25rem;background:var(--bg2);border-radius:12px;padding:6px;border:1px solid var(--border)">
+      <button id="tab-pipeline" onclick="switchMode('pipeline')" style="flex:1;padding:9px 16px;border-radius:8px;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:600;background:linear-gradient(135deg,#7C3AED,#3B82F6);color:#fff;transition:all .2s">
+        🏆 Ranking kandydatów
+      </button>
+      <button id="tab-reverse" onclick="switchMode('reverse')" style="flex:1;padding:9px 16px;border-radius:8px;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:600;background:transparent;color:var(--text2);transition:all .2s">
+        🎯 Dopasuj CV do ofert
+      </button>
+    </div>
+
+    <!-- USAGE BAR -->
+    <div class="usage-bar" id="usage-bar">
+      <div class="usage-dots">
+        <div class="usage-dot" id="udot-1"></div>
+        <div class="usage-dot" id="udot-2"></div>
+      </div>
+      <div class="usage-text" id="usage-text">Załaduj pliki i uruchom analizę.</div>
+    </div>
+
+    <!-- ERROR BOX -->
+    <div class="error-box" id="main-error"></div>
+
+    <!-- PIPELINE FORM -->
+    <div class="pipeline-form" id="pipeline-form">
+
+      <!-- Job PDF -->
+      <div class="form-section">
+        <div class="form-label">📋 Ogłoszenie o pracę <span>PDF lub wklej tekst</span></div>
+        <div class="upload-zone" id="job-zone" onclick="document.getElementById('job-file-input').click()" ondragover="dzOver(event,'job-zone')" ondragleave="dzLeave('job-zone')" ondrop="dzDrop(event,'job-zone','job')">
+          <input type="file" id="job-file-input" accept=".pdf" style="display:none">
+          <div class="upload-icon">📄</div>
+          <div class="upload-text"><strong>Kliknij lub przeciągnij PDF</strong></div>
+          <div class="upload-limit">Maks. 5 MB · 30 stron</div>
+        </div>
+        <div id="job-file-chips" class="file-chips"></div>
+        <textarea id="job-desc" rows="4" placeholder="...lub wklej tu treść ogłoszenia" style="width:100%;margin-top:.75rem;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;line-height:1.65;resize:vertical;outline:none;transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+      </div>
+
+      <!-- CVs PDF -->
+      <div class="form-section">
+        <div class="form-label">👥 CV kandydatów <span>do 10 plików PDF</span></div>
+        <div class="upload-zone" id="cv-zone" onclick="document.getElementById('cv-file-input').click()" ondragover="dzOver(event,'cv-zone')" ondragleave="dzLeave('cv-zone')" ondrop="dzDrop(event,'cv-zone','cvs')">
+          <input type="file" id="cv-file-input" accept=".pdf" multiple style="display:none">
+          <div class="upload-icon">👥</div>
+          <div class="upload-text"><strong>Kliknij lub przeciągnij CV</strong></div>
+          <div class="upload-limit">Maks. 10 plików · 5 MB każdy</div>
+        </div>
+        <div id="cv-file-chips" class="file-chips"></div>
+        <div id="cv-count-info" style="font-size:.75rem;color:var(--text3);margin-top:.5rem;display:none"></div>
+        <textarea id="cvs-text" rows="5" placeholder="...lub wklej tu CV kandydatów (każde oddzielone linią ---)" style="width:100%;margin-top:.75rem;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;line-height:1.65;resize:vertical;outline:none;transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+      </div>
+
+      <!-- ANON TOGGLE -->
+      <div class="anon-row">
+        <label class="toggle-wrap">
+          <input type="checkbox" id="anon-toggle">
+          <span class="toggle-slider"></span>
+        </label>
+        <div class="anon-label">
+          <strong>Anonimizacja RODO</strong>
+          Usuń imiona, emaile, telefony i adresy z CV przed analizą (zalecane)
+        </div>
+        <div class="anon-spinner" id="anon-spinner"></div>
+      </div>
+      <div class="anon-confirm" id="anon-confirm"></div>
+      <div class="truncation-warn" id="trunc-warn" style="display:none">⚠ Tekst ogłoszenia lub CV został skrócony, aby zmieścić się w limicie analizy.</div>
+
+      <!-- ANALYZE BTN -->
+      <button class="analyze-btn" id="analyze-btn" onclick="runPipeline()">
+        <div class="btn-spinner" id="btn-spinner"></div>
+        <span id="analyze-label">Analizuj rekrutację</span>
+        <span class="btn-arrow" id="analyze-arrow">→</span>
+      </button>
+    </div>
+
+    <!-- LOADING -->
+    <div class="loading-panel" id="loading-panel">
+      <div class="big-spinner"></div>
+      <div class="loading-title">Analizuję rekrutację…</div>
+      <div class="loading-sub">Trzy moduły AI pracują równolegle</div>
+      <div class="loading-steps">
+        <div class="loading-step" id="lstep-0"><div class="step-dot"></div>Analiza i ranking kandydatów</div>
+        <div class="loading-step" id="lstep-1"><div class="step-dot"></div>Generowanie pytań screeningowych</div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-panel" id="results-panel">
+      <div class="results-top">
+        <div class="results-title-h f-sora">Wyniki analizy rekrutacji</div>
+        <button class="new-analysis-btn" onclick="resetPipeline()">+ Nowa analiza</button>
+      </div>
+
+      <!-- Section 1: Ranking -->
+      <div class="result-section" id="sec-screen">
+        <div class="result-section-header" onclick="toggleSection('sec-screen')">
+          <span class="result-section-icon">🏆</span>
+          <span class="result-section-title f-sora">Ranking kandydatów</span>
+          <span class="result-section-count loading" id="sec-screen-count">Ładuję…</span>
+          <span class="result-section-chevron">▼</span>
+        </div>
+        <div class="result-section-body" id="sec-screen-body"></div>
+      </div>
+
+      <!-- Section 2: Questions -->
+      <div class="result-section" id="sec-questions">
+        <div class="result-section-header" onclick="toggleSection('sec-questions')">
+          <span class="result-section-icon">❓</span>
+          <span class="result-section-title f-sora">Pytania screeningowe</span>
+          <span class="result-section-count loading" id="sec-questions-count">Ładuję…</span>
+          <span class="result-section-chevron">▼</span>
+        </div>
+        <div class="result-section-body" id="sec-questions-body"></div>
+      </div>
+
+    </div>
+
+  <!-- ═══ TOOL 4: REVERSE MATCH FORM ═══ -->
+  <div id="reverse-form" style="display:none">
+
+    <div class="pipeline-form">
+
+      <!-- Single CV upload -->
+      <div class="form-section">
+        <div class="form-label">👤 Twoje CV <span>PDF lub wklej tekst</span></div>
+        <div class="upload-zone" id="rcv-zone" onclick="document.getElementById('rcv-file-input').click()" ondragover="dzOver(event,'rcv-zone')" ondragleave="dzLeave('rcv-zone')" ondrop="rdzDrop(event)">
+          <input type="file" id="rcv-file-input" accept=".pdf" style="display:none">
+          <div class="upload-icon">📄</div>
+          <div class="upload-text"><strong>Kliknij lub przeciągnij PDF z CV</strong></div>
+          <div class="upload-limit">Maks. 5 MB · 30 stron · 1 plik</div>
+        </div>
+        <div id="rcv-file-chips" class="file-chips"></div>
+        <textarea id="rcv-text" rows="4" placeholder="...lub wklej tu treść swojego CV" style="width:100%;margin-top:.75rem;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;line-height:1.65;resize:vertical;outline:none;transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+      </div>
+
+      <!-- Multiple job postings -->
+      <div class="form-section">
+        <div class="form-label">📋 Ogłoszenia o pracę <span>do 10 · PDF lub wklej tekst</span></div>
+        <div class="upload-zone" id="rjobs-zone" onclick="document.getElementById('rjobs-file-input').click()" ondragover="dzOver(event,'rjobs-zone')" ondragleave="dzLeave('rjobs-zone')" ondrop="rjobsDrop(event)">
+          <input type="file" id="rjobs-file-input" accept=".pdf" multiple style="display:none">
+          <div class="upload-icon">📋</div>
+          <div class="upload-text"><strong>Kliknij lub przeciągnij ogłoszenia PDF</strong></div>
+          <div class="upload-limit">Maks. 10 plików · 5 MB każdy</div>
+        </div>
+        <div id="rjobs-file-chips" class="file-chips"></div>
+        <div id="rjobs-count-info" style="font-size:.75rem;color:var(--text3);margin-top:.5rem;display:none"></div>
+        <textarea id="rjobs-text" rows="5" placeholder="...lub wklej ogłoszenia oddzielone separatorem:&#10;--- Ogłoszenie: Nazwa stanowiska ---&#10;(treść ogłoszenia)&#10;--- Ogłoszenie: Druga rola ---&#10;(treść ogłoszenia)" style="width:100%;margin-top:.75rem;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;line-height:1.65;resize:vertical;outline:none;transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+      </div>
+
+      <div class="truncation-warn" id="rtrunc-warn" style="display:none">⚠ Tekst CV lub ogłoszenia został skrócony, aby zmieścić się w limicie analizy.</div>
+      <div class="error-box" id="reverse-error" style="display:none"></div>
+
+      <button class="analyze-btn" id="ranalyze-btn" onclick="runReverse()">
+        <div class="btn-spinner" id="rbtn-spinner"></div>
+        <span id="ranalyze-label">Dopasuj CV do ofert</span>
+        <span class="btn-arrow" id="ranalyze-arrow">→</span>
+      </button>
+    </div>
+
+    <!-- LOADING -->
+    <div class="loading-panel" id="rloading-panel" style="display:none">
+      <div class="big-spinner"></div>
+      <div class="loading-title">Analizuję dopasowanie…</div>
+      <div class="loading-sub">Każde ogłoszenie analizowane osobno</div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-panel" id="rresults-panel" style="display:none">
+      <div class="results-top">
+        <div class="results-title-h f-sora">Ranking ofert dla Twojego CV</div>
+        <button class="new-analysis-btn" onclick="resetReverse()">+ Nowa analiza</button>
+      </div>
+      <div class="result-section open" id="sec-reverse">
+        <div class="result-section-header" onclick="toggleSection('sec-reverse')">
+          <span class="result-section-icon">🎯</span>
+          <span class="result-section-title f-sora">Dopasowanie do ofert</span>
+          <span class="result-section-count loading" id="sec-reverse-count">Ładuję…</span>
+          <span class="result-section-chevron">▼</span>
+        </div>
+        <div class="result-section-body" id="sec-reverse-body"></div>
+      </div>
+    </div>
+
+  </div><!-- /#reverse-form -->
+
+  </div><!-- /.app-inner -->
+</div><!-- /#app-view -->
+
+
+<!-- ═══════════════════════ PURCHASE MODAL ═══════════════════════ -->
+<div id="purchase-overlay">
+  <div class="purchase-modal">
+    <button class="purchase-close" onclick="closePurchaseModal()">✕</button>
+    <div id="purchase-form-wrap">
+      <div class="purchase-header">
+        <div class="purchase-plan-name">Plan Startup</div>
+        <div class="purchase-title">Nieograniczone analizy rekrutacyjne</div>
+        <div class="purchase-price-row">
+          <span class="purchase-price">99 PLN</span>
+          <span class="purchase-period">/ miesiąc · bez karty kredytowej</span>
+        </div>
+      </div>
+      <ul class="purchase-features">
+        <li>Nieograniczone analizy przez cały miesiąc</li>
+        <li>Do 10 CV jednocześnie per analiza</li>
+        <li>Ranking + pytania screeningowe + dopasowanie</li>
+        <li>Anonimizacja RODO w zestawie</li>
+        <li>Eksport CSV bez limitu</li>
+        <li>Wsparcie e-mail w ciągu 24h</li>
+      </ul>
+      <div class="purchase-fields">
+        <div class="purchase-field">
+          <label class="purchase-label">Imię i nazwisko</label>
+          <input class="purchase-input" id="p-name" type="text" placeholder="Jan Kowalski">
+        </div>
+        <div class="purchase-field">
+          <label class="purchase-label">Firmowy adres email</label>
+          <input class="purchase-input" id="p-email" type="email" placeholder="jan@twojafirma.pl">
+        </div>
+        <div class="purchase-field">
+          <label class="purchase-label">Nazwa firmy</label>
+          <input class="purchase-input" id="p-company" type="text" placeholder="Nazwa Sp. z o.o.">
+        </div>
+      </div>
+      <div class="purchase-error" id="purchase-error"></div>
+      <button class="purchase-submit" onclick="submitPurchase()">Wyślij zapytanie o dostęp →</button>
+      <div class="purchase-note">Odezwiemy się w ciągu 24h z instrukcją płatności i aktywacją.<br>Bez automatycznych opłat — ręczna aktywacja każdego okresu.</div>
+    </div>
+    <div class="purchase-success" id="purchase-success">
+      <div class="purchase-success-icon">🎉</div>
+      <div class="purchase-success-title f-sora">Zapytanie wysłane!</div>
+      <div class="purchase-success-msg">Dziękujemy, <span id="purchase-success-name"></span>!<br>Odezwiemy się na <strong id="purchase-success-email"></strong><br>w ciągu 24 godzin roboczych z informacją o aktywacji.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ EMAIL GATE MODAL ═══════════════════════ -->
+<div id="gate-overlay">
+  <div class="gate-modal">
+    <div id="gate-form-wrap">
+      <div class="gate-lock">🔒</div>
+      <div class="gate-title f-sora">Darmowy limit wykorzystany</div>
+      <div class="gate-sub">Podaj email i korzystaj bezpłatnie przez 30 dni. Bez karty kredytowej.</div>
+      <div class="gate-benefits">
+        <div class="gate-benefit">Nieograniczone analizy przez 30 dni</div>
+        <div class="gate-benefit">Ranking + pytania + dopasowanie</div>
+        <div class="gate-benefit">Anonimizacja RODO w zestawie</div>
+        <div class="gate-benefit">Eksport CSV bez limitu</div>
+      </div>
+      <input class="gate-input" id="gate-email" type="email" placeholder="twoj@email.pl" autocomplete="email">
+      <div id="gate-error" style="color:var(--red);font-size:.78rem;margin-bottom:.75rem;display:none"></div>
+      <button class="gate-submit" onclick="submitGate()">Uzyskaj 30 dni bezpłatnie →</button>
+      <div class="gate-note">Twój email zostanie wysłany na kontakt@znalezieni.pl. Bez spamu. Możesz się wypisać w dowolnej chwili.</div>
+    </div>
+    <div class="gate-success" id="gate-success-wrap">
+      <div class="gate-success-icon">🎉</div>
+      <div class="gate-title f-sora">Gotowe!</div>
+      <div class="gate-sub" id="gate-success-msg">Dziękujemy! Uruchamiamy analizę…</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ COOKIE BANNER ═══════════════════════ -->
+<div id="cookie-banner" style="display:none">
+  <p>Ta strona używa plików cookie do celów analitycznych (Google Analytics). Nie zbieramy danych osobowych bez Twojej zgody. <a onclick="openPrivacy();return false" href="#">Polityka prywatności</a>.</p>
+  <div class="cookie-btns">
+    <button class="btn-cookie-reject" onclick="rejectCookies()">Tylko niezbędne</button>
+    <button class="btn-cookie-accept" onclick="acceptCookies()">Akceptuję</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════ PRIVACY MODAL ═══════════════════════ -->
+<div id="privacy-overlay" onclick="if(event.target===this)closePrivacy()">
+  <div id="privacy-modal">
+    <button class="btn-close-priv" onclick="closePrivacy()">✕</button>
+    <h1>Polityka Prywatności</h1>
+    <p><strong>Ostatnia aktualizacja:</strong> 2026-01-01</p>
+    <p>Niniejsza Polityka Prywatności opisuje zasady przetwarzania danych osobowych i stosowania plików cookie w serwisie <strong>skrenio.pl</strong>, zgodnie z Rozporządzeniem (UE) 2016/679 (RODO) oraz ustawą Prawo telekomunikacyjne.</p>
+    <h2>1. Administrator danych</h2>
+    <p>Administratorem danych osobowych jest właściciel serwisu skrenio.pl. Kontakt: <a href="mailto:kontakt@znalezieni.pl">kontakt@znalezieni.pl</a>.</p>
+    <h2>2. Jakie dane przetwarzamy</h2>
+    <ul>
+      <li><strong>Dane analityczne:</strong> anonimowe dane o sesji (Google Analytics) — wyłącznie po wyrażeniu zgody. IP są anonimizowane.</li>
+      <li><strong>Pliki użytkownika:</strong> CV i ogłoszenia są przesyłane do API wyłącznie w celu jednorazowej analizy. Serwis <strong>nie przechowuje</strong> tych plików po zakończeniu sesji. Dane są przesyłane do Anthropic PBC (USA) na podstawie umowy DPA z SCC.</li>
+      <li><strong>Adres email (opcjonalnie):</strong> przetwarzany wyłącznie jeśli użytkownik poda go w formularzu dostępu próbnego lub skontaktuje się z nami.</li>
+    </ul>
+    <h2>3. Pliki cookie</h2>
+    <ul>
+      <li><strong>Niezbędne:</strong> zapamiętanie limitu analiz (localStorage). Nie wymagają zgody.</li>
+      <li><strong>Analityczne (za zgodą):</strong> Google Analytics (G-695CTY5XED) — anonimizowane, 26 miesięcy.</li>
+    </ul>
+    <h2>4. Odbiorcy danych</h2>
+    <ul>
+      <li>Google LLC (Analytics) — USA, SCC.</li>
+      <li>Anthropic PBC — treść ogłoszeń i CV przesyłane do API; dane nie są przechowywane po zakończeniu żądania.</li>
+    </ul>
+    <h2>5. Prawa użytkownika</h2>
+    <p>Prawo do dostępu, sprostowania, usunięcia, ograniczenia przetwarzania i sprzeciwu. Skargi: UODO, ul. Stawki 2, 00-193 Warszawa.</p>
+    <h2>6. Kontakt</h2>
+    <p><a href="mailto:kontakt@znalezieni.pl">kontakt@znalezieni.pl</a></p>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  STATE & CONSTANTS
+// ══════════════════════════════════════════════════════════════
+const USAGE_KEY  = 'znalezieni_usage_count';
+const TRIAL_KEY  = 'znalezieni_trial_email';
+const DEV_KEY    = 'znalezieni_dev_mode';   // set to '1' in console to bypass limit
+const FREE_LIMIT = 2;
+
+let uploadedJobText = '';
+let uploadedCvTexts = []; // [{name, text}]
+let pipelineRunning = false;
+let _lastScreen = null, _lastQuestions = null;
+
+// ── Usage helpers ────────────────────────────────────────────
+function getUsage(){ return parseInt(localStorage.getItem(USAGE_KEY)||'0'); }
+function incUsage(){ if(!isDevMode()) localStorage.setItem(USAGE_KEY, getUsage()+1); }
+function hasTrial(){ return !!localStorage.getItem(TRIAL_KEY); }
+function isDevMode(){ return localStorage.getItem(DEV_KEY)==='1'; }
+function isLimited(){ return !isDevMode() && getUsage() >= FREE_LIMIT && !hasTrial(); }
+
+function updateUsageBar(){
+  const used = getUsage();
+  const limited = isLimited();
+  document.getElementById('udot-1').className = 'usage-dot' + (used>=1?' used':'');
+  document.getElementById('udot-2').className = 'usage-dot' + (used>=2?' used':'');
+  const t = document.getElementById('usage-text');
+  if(hasTrial()){
+    t.innerHTML = '<strong>Tryb próbny aktywny</strong> — analizy bez limitu przez 30 dni.';
+  } else if(used===0){
+    t.innerHTML = 'Masz <strong>2 bezpłatne analizy</strong>. Nie wymagamy rejestracji.';
+  } else if(used===1){
+    t.innerHTML = 'Wykorzystano <strong>1 z 2</strong> bezpłatnych analiz.';
+  } else {
+    t.innerHTML = '<strong>Limit bezpłatnych analiz wyczerpany.</strong> Podaj email aby kontynuować.';
+  }
+}
+
+// ── View switching ───────────────────────────────────────────
+function showHome(){
+  document.getElementById('home-view').style.display = 'block';
+  document.getElementById('app-view').style.display = 'none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showApp(){
+  document.getElementById('home-view').style.display = 'none';
+  document.getElementById('app-view').style.display = 'block';
+  // Ensure pipeline mode is active on every entry from homepage
+  switchMode('pipeline');
+  updateUsageBar();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── Escape helper ────────────────────────────────────────────
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── Input trimmer ────────────────────────────────────────────
+function trimInput(text, maxChars){
+  if(!text||text.length<=maxChars) return {text,trimmed:false};
+  const cut = text.lastIndexOf(' ', maxChars);
+  return {text: text.slice(0, cut>0?cut:maxChars)+'\n[...tekst skrócony...]', trimmed:true};
+}
+
+// ── PDF extractor ────────────────────────────────────────────
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+async function extractPdfText(file){
+  if(file.size>5*1024*1024) throw new Error('Plik za duży — maks. 5 MB.');
+  const ab = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({data:ab}).promise;
+  if(pdf.numPages>30) throw new Error('PDF ma za wiele stron — maks. 30.');
+  let text='';
+  for(let i=1;i<=pdf.numPages;i++){
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    text += content.items.map(it=>it.str).join(' ')+'\n';
+  }
+  return text;
+}
+function sid(n){ return n.replace(/[^a-zA-Z0-9]/g,'_'); }
+
+// ══════════════════════════════════════════════════════════════
+//  DRAG & DROP ZONE HELPERS
+// ══════════════════════════════════════════════════════════════
+function dzOver(e,id){ e.preventDefault(); document.getElementById(id).classList.add('drag-over'); }
+function dzLeave(id){ document.getElementById(id).classList.remove('drag-over'); }
+function dzDrop(e,id,type){
+  e.preventDefault(); document.getElementById(id).classList.remove('drag-over');
+  const files = Array.from(e.dataTransfer.files).filter(f=>f.name.toLowerCase().endsWith('.pdf'));
+  if(type==='job'){ if(files[0]) handleJobFile(files[0]); }
+  else { handleCvFiles(files); }
+}
+
+// ── File input listeners ─────────────────────────────────────
+document.getElementById('job-file-input').addEventListener('change', e=>{ if(e.target.files[0]) handleJobFile(e.target.files[0]); });
+document.getElementById('cv-file-input').addEventListener('change', e=>handleCvFiles(Array.from(e.target.files)));
+
+// ── Job file handler ─────────────────────────────────────────
+async function handleJobFile(file){
+  const chips = document.getElementById('job-file-chips');
+  chips.innerHTML = `<div class="file-chip processing"><span>📋</span><span class="fn">${esc(file.name)}</span><span class="fs">🔄 Odczytuję…</span></div>`;
+  document.getElementById('job-file-input').value='';
+  try{
+    const text = await extractPdfText(file);
+    uploadedJobText = text.trim();
+    document.getElementById('job-desc').value = uploadedJobText;
+    chips.innerHTML = `<div class="file-chip done"><span>📋</span><span class="fn">${esc(file.name)}</span><span class="fs">✓ Załadowano</span><button class="fr" onclick="clearJobFile()">✕</button></div>`;
+  } catch(err){
+    chips.innerHTML = `<div class="file-chip error"><span>📋</span><span class="fn">${esc(file.name)}</span><span class="fs">✗ ${esc(err.message)}</span></div>`;
+  }
+}
+function clearJobFile(){
+  document.getElementById('job-file-chips').innerHTML='';
+  document.getElementById('job-desc').value='';
+  uploadedJobText='';
+}
+
+// ── CV files handler ─────────────────────────────────────────
+async function handleCvFiles(files){
+  const MAX=10;
+  const err = document.getElementById('main-error');
+  for(const file of files){
+    if(uploadedCvTexts.length >= MAX){
+      err.textContent='Maksymalnie 10 CV — usuń jedno żeby dodać kolejne.';
+      err.style.display='block'; break;
+    }
+    const chipId = 'cv-'+sid(file.name);
+    const container = document.getElementById('cv-file-chips');
+    const chip = document.createElement('div');
+    chip.id = chipId; chip.className='file-chip processing';
+    const safeName = file.name.replace(/'/g,"\\'");
+    chip.innerHTML = `<span>📄</span><span class="fn" title="${esc(file.name)}">${esc(file.name)}</span><span class="fs">🔄 Odczytuję…</span><button class="fr" onclick="removeCvFile('${sid(file.name)}','${safeName}')">✕</button>`;
+    container.appendChild(chip);
+    try{
+      const text = await extractPdfText(file);
+      chip.className='file-chip done';
+      chip.querySelector('.fs').textContent='✓ Gotowy';
+      const sn = (function(n){
+        n = n.replace(/\.pdf$/i,'');          // strip extension
+        n = n.replace(/^[\d_\-\s]+/, '');     // strip leading numbers/underscores
+        n = n.replace(/_/g, ' ');              // underscores to spaces
+        n = n.replace(/\s+/g, ' ').trim();    // collapse whitespace
+        return n;
+      })(file.name);
+      uploadedCvTexts.push({name:sn, text});
+      appendCvText(sn, text);
+      updateCvCount();
+    } catch(e){
+      chip.className='file-chip error';
+      chip.querySelector('.fs').textContent='✗ '+e.message;
+    }
+  }
+  document.getElementById('cv-file-input').value='';
+}
+function removeCvFile(chipId, name){
+  const chip = document.getElementById('cv-'+chipId);
+  if(chip) chip.remove();
+  const cleanName = name.replace(/\.pdf$/i,'');
+  uploadedCvTexts = uploadedCvTexts.filter(f=>f.name!==cleanName);
+  rebuildCvTextarea(); // FIX: rebuild from array, not append-only
+  updateCvCount();
+}
+function appendCvText(name, text){
+  // text already pushed to uploadedCvTexts by caller — just rebuild
+  rebuildCvTextarea();
+}
+function rebuildCvTextarea(){
+  const ta = document.getElementById('cvs-text');
+  ta.value = uploadedCvTexts.map(cv=>`--- CV: ${cv.name} ---\n${cv.text.trim()}`).join('\n\n');
+}
+function updateCvCount(){
+  const el = document.getElementById('cv-count-info');
+  if(uploadedCvTexts.length>0){
+    el.textContent = `${uploadedCvTexts.length}/10 CV załadowanych`;
+    el.style.display='block';
+  } else {
+    el.style.display='none';
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  ANONYMIZATION
+// ══════════════════════════════════════════════════════════════
+let anonDone = false;
+
+document.getElementById('anon-toggle').addEventListener('change', async function(){
+  if(!this.checked){ anonDone=false; document.getElementById('anon-confirm').style.display='none'; return; }
+  if(!uploadedCvTexts.length){ this.checked=false; showError('Dodaj CV przed anonimizacją.'); return; }
+  const spinner = document.getElementById('anon-spinner');
+  spinner.style.display='block'; this.disabled=true;
+  try{
+    // FIX: anonymize in chunks of 3 CVs to avoid timeout with 10 CVs
+    const CHUNK = 3;
+    const totals = {imiona:0, emaile:0, telefony:0, adresy:0};
+    const anonCvs = [];
+
+    for(let i=0; i<uploadedCvTexts.length; i+=CHUNK){
+      const chunk = uploadedCvTexts.slice(i, i+CHUNK);
+      const chunkText = chunk.map(cv=>`--- CV: ${cv.name} ---\n${cv.text.trim()}`).join('\n\n');
+      const resp = await fetch('/api/anonymize',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cvsText:chunkText})});
+      if(!resp.ok){ const e=await resp.json().catch(()=>({})); throw new Error(e.error||`HTTP ${resp.status}`); }
+      const data = await resp.json();
+      const u = data.usunieto||{};
+      totals.imiona  += u.imiona||0;
+      totals.emaile  += u.emaile||0;
+      totals.telefony+= u.telefony||0;
+      totals.adresy  += u.adresy||0;
+      // Parse anonymized chunk back into individual CVs and update array
+      const anonText = data.anonymizedText||'';
+      const sepRe = /---\s*CV(?:\s+\d+)?:\s*(.+?)\s*---/gi;
+      const sepMatches = [...anonText.matchAll(sepRe)];
+      if(sepMatches.length===0){
+        // single CV in chunk
+        anonCvs.push({name: chunk[0].name, text: anonText.trim()});
+      } else {
+        for(let j=0;j<sepMatches.length;j++){
+          const name = sepMatches[j][1].trim();
+          const start = sepMatches[j].index + sepMatches[j][0].length;
+          const end = j+1<sepMatches.length ? sepMatches[j+1].index : anonText.length;
+          anonCvs.push({name, text: anonText.slice(start,end).trim()});
+        }
+      }
+    }
+
+    // Replace uploadedCvTexts with anonymized versions and rebuild textarea
+    uploadedCvTexts = anonCvs;
+    rebuildCvTextarea();
+    anonDone = true;
+
+    const parts=[];
+    if(totals.imiona)   parts.push(`${totals.imiona} imion/nazwisk`);
+    if(totals.emaile)   parts.push(`${totals.emaile} emaili`);
+    if(totals.telefony) parts.push(`${totals.telefony} telefonów`);
+    if(totals.adresy)   parts.push(`${totals.adresy} adresów`);
+    const conf = document.getElementById('anon-confirm');
+    conf.innerHTML = `✓ <strong>Zanonimizowano pomyślnie.</strong> Usunięto: ${parts.length?parts.join(', '):'brak danych osobowych do usunięcia'}.`;
+    conf.style.display='block';
+  } catch(err){
+    this.checked=false; anonDone=false;
+    showError('Błąd anonimizacji: '+err.message);
+  } finally{
+    spinner.style.display='none'; this.disabled=false;
+  }
+});
+
+// ══════════════════════════════════════════════════════════════
+//  PIPELINE ORCHESTRATION
+// ══════════════════════════════════════════════════════════════
+async function runPipeline(){
+  if(pipelineRunning) return;
+
+  const jobDesc = document.getElementById('job-desc').value.trim();
+  const cvsText = document.getElementById('cvs-text').value.trim();
+
+  hideError();
+  if(!jobDesc){ showError('Wklej ogłoszenie o pracę lub wgraj PDF.'); return; }
+  if(!cvsText){ showError('Dodaj co najmniej jedno CV kandydata.'); return; }
+
+  // Check limit
+  if(isLimited()){
+    openGate();
+    return;
+  }
+
+  await executeAnalysis(jobDesc, cvsText);
+}
+
+async function executeAnalysis(jobDesc, cvsText){
+  pipelineRunning = true;
+
+  // Trim inputs — limits match server-side maxima (15000 job, 80000 cvs)
+  const {text:jd, trimmed:jTrimmed} = trimInput(jobDesc, 14000);
+  const {text:cvs, trimmed:cTrimmed} = trimInput(cvsText, 75000);
+  if(jTrimmed||cTrimmed) document.getElementById('trunc-warn').style.display='block';
+
+  // UI: show loading
+  setAnalyzing(true);
+  showResults(false);
+  document.getElementById('loading-panel').style.display='block';
+  document.getElementById('results-panel').style.display='block';
+
+  // Animate steps
+  setStep(0,'active'); setStep(1,'active');
+
+  // Run 2 in parallel — screen now includes match data
+  const [screenRes, questRes] = await Promise.allSettled([
+    callAPI('/api/screen', {jobDesc:jd, cvsText:cvs}),
+    callAPI('/api/questions', {jobDesc:jd})
+  ]);
+
+  // Hide loading
+  document.getElementById('loading-panel').style.display='none';
+  setAnalyzing(false);
+  pipelineRunning = false;
+
+  // Increment usage
+  incUsage();
+  updateUsageBar();
+
+  // Render results
+  renderScreen(screenRes);
+  renderQuestions(questRes);
+
+  // Open first section
+  openSection('sec-screen');
+
+  // Scroll to results
+  document.getElementById('results-panel').scrollIntoView({behavior:'smooth', block:'start'});
+
+  if(typeof gtag==='function') gtag('event','pipeline_complete');
+}
+
+async function callAPI(url, body){
+  const resp = await fetch(url, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(body)
+  });
+  if(!resp.ok){ const e=await resp.json().catch(()=>({})); throw new Error(e.error||`HTTP ${resp.status}`); }
+  return resp.json();
+}
+
+// ── Step indicators ──────────────────────────────────────────
+function setStep(idx, state){
+  const el = document.getElementById('lstep-'+idx);
+  el.className = 'loading-step '+state;
+}
+
+// ── UI helpers ───────────────────────────────────────────────
+function setAnalyzing(on){
+  const btn = document.getElementById('analyze-btn');
+  const lbl = document.getElementById('analyze-label');
+  const arr = document.getElementById('analyze-arrow');
+  const sp  = document.getElementById('btn-spinner');
+  btn.disabled = on;
+  sp.style.display = on?'block':'none';
+  lbl.textContent = on?'Analizuję…':'Analizuj rekrutację';
+  arr.style.display = on?'none':'';
+}
+function showResults(v){
+  document.getElementById('results-panel').style.display = v?'':'none';
+}
+function showError(msg){
+  const e=document.getElementById('main-error');
+  e.textContent=msg; e.style.display='block';
+}
+function hideError(){ document.getElementById('main-error').style.display='none'; }
+
+// ── Collapsible sections ─────────────────────────────────────
+function toggleSection(id){
+  const s = document.getElementById(id);
+  s.classList.toggle('open');
+}
+function openSection(id){
+  document.getElementById(id).classList.add('open');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  RENDER: SCREEN (Ranking)
+// ══════════════════════════════════════════════════════════════
+function renderScreen(result){
+  const body  = document.getElementById('sec-screen-body');
+  const count = document.getElementById('sec-screen-count');
+  if(result.status==='rejected'){
+    count.textContent='Błąd'; count.className='result-section-count error';
+    body.innerHTML=`<div class="error-box" style="display:block">Błąd analizy: ${esc(result.reason?.message||'Nieznany błąd')}</div>`;
+    return;
+  }
+  const kandydaci = result.value?.kandydaci||[];
+  _lastScreen = kandydaci;
+  count.textContent = kandydaci.length+' kandydatów';
+  count.className = 'result-section-count';
+
+  const counts={'ZAPROŚ':0,'ROZWAŻ':0,'ODRZUĆ':0};
+  kandydaci.forEach(k=>{ if(counts[k.rekomendacja]!==undefined) counts[k.rekomendacja]++; });
+
+  let html=`
+  <div style="display:flex;justify-content:flex-end;margin-bottom:1rem">
+    <button class="export-btn" onclick="exportScreenCSV()">↓ Eksportuj CSV</button>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card" style="background:var(--green-dim);border-color:var(--green-border)"><div class="stat-num" style="color:var(--green)">${counts['ZAPROŚ']}</div><div class="stat-label" style="color:var(--green)">Zaproś</div></div>
+    <div class="stat-card" style="background:var(--amber-dim);border-color:var(--amber-border)"><div class="stat-num" style="color:var(--amber)">${counts['ROZWAŻ']}</div><div class="stat-label" style="color:var(--amber)">Rozważ</div></div>
+    <div class="stat-card" style="background:var(--red-dim);border-color:var(--red-border)"><div class="stat-num" style="color:var(--red)">${counts['ODRZUĆ']}</div><div class="stat-label" style="color:var(--red)">Odrzuć</div></div>
+  </div>`;
+
+  const order={'ZAPROŚ':0,'ROZWAŻ':1,'ODRZUĆ':2};
+  const sorted=[...kandydaci].sort((a,b)=>(order[a.rekomendacja]??3)-(order[b.rekomendacja]??3)||(b.procent_dopasowania-a.procent_dopasowania));
+
+  sorted.forEach((k,i)=>{
+    const c = screenColor(k.rekomendacja);
+    const pct = k.procent_dopasowania||Math.round((k.wynik||0)*10);
+    const barColor = pct>=70?'var(--green)':pct>=40?'var(--amber)':'var(--red)';
+    const str=(k.mocne_strony||[]).map(m=>`<div class="si" style="color:var(--green)">✓ ${esc(m)}</div>`).join('');
+    const brakuje=(k.czego_brakuje||[]).map(s=>`<div class="brakuje-item">✗ ${esc(s)}</div>`).join('');
+    const flag=k.czerwona_flaga?`<div class="red-flag">⚠ ${esc(k.czerwona_flaga)}</div>`:'';
+    html+=`<div class="candidate-card" style="border-left-color:${c.border};border-color:var(--border)">
+      <div class="card-top">
+        <div style="flex:1">
+          <div class="cname">${i+1}. ${esc(k.imie_nazwisko)}</div>
+          <div class="csummary">${esc(k.podsumowanie)}</div>
+          <div class="zgodnosc-block">
+            <div>
+              <div class="zgodnosc-label">ZGODNOŚĆ</div>
+              <div class="zgodnosc-pct" style="color:${barColor}">${pct}%</div>
+            </div>
+            <div class="zgodnosc-bar"><div class="zgodnosc-fill" style="width:${pct}%;background:${barColor}"></div></div>
+          </div>
+        </div>
+        <div class="card-badges">
+          <div class="badge" style="background:${c.bg};color:${c.color};border-color:${c.border}">${esc(k.rekomendacja)}</div>
+          <div class="badge" style="background:var(--surface2);color:var(--text);border-color:var(--border)">${k.wynik}/10</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div>${str?`<div class="col-label" style="color:var(--green)">Mocne strony</div>${str}`:''}</div>
+        <div>
+          ${brakuje?`<div class="brakuje-block"><div class="brakuje-label">BRAKUJE</div>${brakuje}</div>`:''}
+          ${flag}
+        </div>
+      </div>
+      <div class="ai-disclaimer">⚠️ Wynik wygenerowany przez AI. Narzędzie wspiera proces rekrutacji — ostateczna decyzja należy zawsze do rekrutera. Kandydaci powinni być poinformowani o wykorzystaniu AI w procesie rekrutacji.</div>
+    </div>`;
+  });
+  body.innerHTML=html;
+}
+function screenColor(rec){
+  if(rec==='ZAPROŚ') return {bg:'var(--green-dim)',color:'var(--green)',border:'var(--green-border)'};
+  if(rec==='ROZWAŻ') return {bg:'var(--amber-dim)',color:'var(--amber)',border:'var(--amber-border)'};
+  return {bg:'var(--red-dim)',color:'var(--red)',border:'var(--red-border)'};
+}
+function exportScreenCSV(){
+  if(!_lastScreen) return;
+  const h='Kandydat,Wynik,Dopasowanie %,Rekomendacja,Mocne strony,Czego brakuje,Czerwona flaga,Podsumowanie\n';
+  const rows=_lastScreen.map(k=>`"${k.imie_nazwisko}","${k.wynik}/10","${k.procent_dopasowania||''}%","${k.rekomendacja}","${(k.mocne_strony||[]).join('; ')}","${(k.czego_brakuje||[]).join('; ')}","${k.czerwona_flaga||'-'}","${k.podsumowanie}"`).join('\n');
+  downloadCSV('\uFEFF'+h+rows,'ranking_kandydatow.csv');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  RENDER: QUESTIONS
+// ══════════════════════════════════════════════════════════════
+function renderQuestions(result){
+  const body  = document.getElementById('sec-questions-body');
+  const count = document.getElementById('sec-questions-count');
+  if(result.status==='rejected'){
+    count.textContent='Błąd'; count.className='result-section-count error';
+    body.innerHTML=`<div class="error-box" style="display:block">Błąd pytań: ${esc(result.reason?.message||'Nieznany błąd')}</div>`;
+    return;
+  }
+  const pytania = result.value?.pytania||[];
+  _lastQuestions = pytania;
+  count.textContent = pytania.length+' pytań';
+  count.className = 'result-section-count';
+
+  let html=`<div style="display:flex;justify-content:flex-end;margin-bottom:1rem"><button class="export-btn" onclick="exportQuestionsCSV()">↓ Eksportuj CSV</button></div>`;
+  pytania.forEach((p,i)=>{
+    const biasy=(p.eliminuje_biasy||[]).map(b=>`<span class="q-tag q-bias">🛡️ ${esc(b)}</span>`).join('');
+    html+=`<div class="question-card">
+      <div class="q-num">Pytanie ${i+1}</div>
+      <div class="q-text">${esc(p.pytanie)}</div>
+      <div class="q-meta">${biasy}<span class="q-tag q-why">${esc(p.uzasadnienie)}</span></div>
+      <div class="ai-disclaimer" style="margin-top:10px">⚠️ Pytanie wygenerowane przez AI. Przed użyciem w rekrutacji zweryfikuj zgodność z polityką firmy i przepisami prawa.</div>
+    </div>`;
+  });
+  body.innerHTML=html;
+}
+function exportQuestionsCSV(){
+  if(!_lastQuestions) return;
+  const h='Nr,Pytanie,Eliminuje biasy,Uzasadnienie\n';
+  const rows=_lastQuestions.map((p,i)=>`"${i+1}","${p.pytanie}","${(p.eliminuje_biasy||[]).join(', ')}","${p.uzasadnienie}"`).join('\n');
+  downloadCSV('\uFEFF'+h+rows,'pytania_screeningowe.csv');
+}
+
+// ── CSV download helper ──────────────────────────────────────
+function downloadCSV(data, filename){
+  const blob=new Blob([data],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=filename;a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  PIPELINE RESET
+// ══════════════════════════════════════════════════════════════
+function resetPipeline(){
+  document.getElementById('job-desc').value='';
+  document.getElementById('cvs-text').value='';
+  document.getElementById('job-file-chips').innerHTML='';
+  document.getElementById('cv-file-chips').innerHTML='';
+  uploadedJobText=''; uploadedCvTexts=[];
+  anonDone=false;
+  document.getElementById('anon-toggle').checked=false;
+  document.getElementById('anon-confirm').style.display='none';
+  document.getElementById('trunc-warn').style.display='none';
+  document.getElementById('cv-count-info').style.display='none';
+  document.getElementById('results-panel').style.display='none';
+  document.getElementById('loading-panel').style.display='none';
+  hideError();
+  setAnalyzing(false);
+  updateUsageBar();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+
+// ══════════════════════════════════════════════════════════════
+//  PURCHASE MODAL
+// ══════════════════════════════════════════════════════════════
+function openPurchaseModal(){
+  document.getElementById('purchase-form-wrap').style.display = '';
+  document.getElementById('purchase-success').style.display = 'none';
+  document.getElementById('purchase-error').style.display = 'none';
+  document.getElementById('p-name').value = '';
+  document.getElementById('p-email').value = '';
+  document.getElementById('p-company').value = '';
+  document.getElementById('purchase-overlay').classList.add('active');
+}
+function closePurchaseModal(){
+  document.getElementById('purchase-overlay').classList.remove('active');
+}
+async function submitPurchase(){
+  const name    = document.getElementById('p-name').value.trim();
+  const email   = document.getElementById('p-email').value.trim();
+  const company = document.getElementById('p-company').value.trim();
+  const errEl   = document.getElementById('purchase-error');
+  errEl.style.display = 'none';
+  if(!name){ errEl.textContent = 'Podaj imię i nazwisko.'; errEl.style.display='block'; return; }
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ errEl.textContent = 'Podaj prawidłowy adres email.'; errEl.style.display='block'; return; }
+  if(!company){ errEl.textContent = 'Podaj nazwę firmy.'; errEl.style.display='block'; return; }
+
+  // mailto fallback — opens email client with pre-filled data
+  const subject = encodeURIComponent('Skrenio — zapytanie o Plan Startup');
+  const body = encodeURIComponent(
+    'Dzień dobry,\n\n' +
+    'Chciałbym/chciałabym uzyskać dostęp do Planu Startup Skrenio.\n\n' +
+    'Imię i nazwisko: ' + name + '\n' +
+    'Email: ' + email + '\n' +
+    'Firma: ' + company + '\n\n' +
+    'Proszę o informację dotyczącą aktywacji i płatności.\n\nPozdrawiam'
+  );
+  window.open('mailto:kontakt@znalezieni.pl?subject=' + subject + '&body=' + body, '_blank');
+
+  // Show success state
+  document.getElementById('purchase-form-wrap').style.display = 'none';
+  document.getElementById('purchase-success-name').textContent = name;
+  document.getElementById('purchase-success-email').textContent = email;
+  document.getElementById('purchase-success').style.display = 'block';
+  if(typeof gtag==='function') gtag('event','purchase_intent',{plan:'startup'});
+}
+
+document.getElementById('purchase-overlay').addEventListener('click', function(e){
+  if(e.target === this) closePurchaseModal();
+});
+
+// ══════════════════════════════════════════════════════════════
+//  EMAIL GATE
+// ══════════════════════════════════════════════════════════════
+let _pendingJobDesc='', _pendingCvsText='';
+
+function openGate(){
+  _pendingJobDesc = document.getElementById('job-desc').value.trim();
+  _pendingCvsText = document.getElementById('cvs-text').value.trim();
+  document.getElementById('gate-form-wrap').style.display='';
+  document.getElementById('gate-success-wrap').style.display='none';
+  document.getElementById('gate-email').value='';
+  document.getElementById('gate-error').style.display='none';
+  document.getElementById('gate-overlay').classList.add('active');
+}
+
+function closeGate(){
+  document.getElementById('gate-overlay').classList.remove('active');
+}
+
+async function submitGate(){
+  const email = document.getElementById('gate-email').value.trim();
+  const errEl  = document.getElementById('gate-error');
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    errEl.textContent='Podaj prawidłowy adres email.'; errEl.style.display='block'; return;
+  }
+  errEl.style.display='none';
+
+  // Save trial state
+  localStorage.setItem(TRIAL_KEY, email);
+
+  // Mailto fallback
+  const subject = encodeURIComponent('Skrenio — dostęp próbny 30 dni');
+  const body    = encodeURIComponent(`Email: ${email}\nProszę o aktywację 30-dniowego dostępu próbnego do skrenio.pl`);
+  window.open(`mailto:kontakt@znalezieni.pl?subject=${subject}&body=${body}`,'_blank');
+
+  // Show success
+  document.getElementById('gate-form-wrap').style.display='none';
+  document.getElementById('gate-success-wrap').style.display='block';
+  document.getElementById('gate-success-msg').textContent='Dziękujemy! Uruchamiamy analizę…';
+
+  // Close and run after short delay
+  setTimeout(async ()=>{
+    closeGate();
+    updateUsageBar();
+    if(_pendingJobDesc && _pendingCvsText){
+      await executeAnalysis(_pendingJobDesc, _pendingCvsText);
+    }
+  }, 1800);
+}
+
+// Close gate on overlay click
+document.getElementById('gate-overlay').addEventListener('click', function(e){
+  if(e.target===this) closeGate();
+});
+
+// ══════════════════════════════════════════════════════════════
+//  COOKIE CONSENT
+// ══════════════════════════════════════════════════════════════
+const CONSENT_KEY='znalezieni_cookie_consent';
+
+function loadAnalytics(){ if(typeof gtag==='function') gtag('consent','update',{analytics_storage:'granted'}); }
+function blockAnalytics(){ if(typeof gtag==='function') gtag('consent','update',{analytics_storage:'denied'}); }
+
+function acceptCookies(){
+  localStorage.setItem(CONSENT_KEY,'accepted');
+  document.getElementById('cookie-banner').style.display='none';
+  loadAnalytics();
+}
+function rejectCookies(){
+  localStorage.setItem(CONSENT_KEY,'rejected');
+  document.getElementById('cookie-banner').style.display='none';
+  blockAnalytics();
+}
+function openPrivacy(){ document.getElementById('privacy-overlay').style.display='block'; document.body.style.overflow='hidden'; }
+function closePrivacy(){ document.getElementById('privacy-overlay').style.display='none'; document.body.style.overflow=''; }
+
+document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ closePrivacy(); closeGate(); closePurchaseModal(); } });
+
+(function initConsent(){
+  const stored=localStorage.getItem(CONSENT_KEY);
+  if(!stored) document.getElementById('cookie-banner').style.display='flex';
+  else if(stored==='accepted') loadAnalytics();
+  else blockAnalytics();
+})();
+
+// Init
+updateUsageBar();
+
+// ══════════════════════════════════════════════════════════════
+//  TOOL 4 — REVERSE MATCH
+// ══════════════════════════════════════════════════════════════
+
+let reverseRunning = false;
+let uploadedCvReverseText = '';
+let uploadedJobTexts = [];   // [{title, text}]
+let _lastReverse = null;
+
+// ── Mode switcher ────────────────────────────────────────────
+function switchMode(mode) {
+  const isPipeline = mode === 'pipeline';
+  // Pipeline elements
+  document.getElementById('pipeline-form').style.display   = isPipeline ? '' : 'none';
+  document.getElementById('loading-panel').style.display   = 'none';
+  document.getElementById('results-panel').style.display   = 'none';
+  // Reverse elements
+  document.getElementById('reverse-form').style.display    = isPipeline ? 'none' : '';
+  // Tab styles
+  const tabPipe = document.getElementById('tab-pipeline');
+  const tabRev  = document.getElementById('tab-reverse');
+  tabPipe.style.background = isPipeline ? 'linear-gradient(135deg,#7C3AED,#3B82F6)' : 'transparent';
+  tabPipe.style.color      = isPipeline ? '#fff'         : 'var(--text2)';
+  tabRev.style.background  = isPipeline ? 'transparent'  : 'linear-gradient(135deg,#7C3AED,#3B82F6)';
+  tabRev.style.color       = isPipeline ? 'var(--text2)' : '#fff';
+}
+
+// ── CV upload for reverse ────────────────────────────────────
+// Guard: elements inside reverse-form — safe to attach after DOM ready
+const _rcvInput = document.getElementById('rcv-file-input');
+if (_rcvInput) _rcvInput.addEventListener('change', e => {
+  if (e.target.files[0]) handleRcvFile(e.target.files[0]);
+});
+function rdzDrop(e) {
+  e.preventDefault(); document.getElementById('rcv-zone').classList.remove('drag-over');
+  const f = Array.from(e.dataTransfer.files).find(f => f.name.toLowerCase().endsWith('.pdf'));
+  if (f) handleRcvFile(f);
+}
+async function handleRcvFile(file) {
+  const chips = document.getElementById('rcv-file-chips');
+  chips.innerHTML = `<div class="file-chip processing"><span>📄</span><span class="fn">${esc(file.name)}</span><span class="fs">🔄 Odczytuję…</span></div>`;
+  document.getElementById('rcv-file-input').value = '';
+  try {
+    const text = await extractPdfText(file);
+    uploadedCvReverseText = text.trim();
+    document.getElementById('rcv-text').value = uploadedCvReverseText;
+    chips.innerHTML = `<div class="file-chip done"><span>📄</span><span class="fn">${esc(file.name)}</span><span class="fs">✓ Załadowano</span><button class="fr" onclick="clearRcvFile()">✕</button></div>`;
+  } catch(err) {
+    chips.innerHTML = `<div class="file-chip error"><span>📄</span><span class="fn">${esc(file.name)}</span><span class="fs">✗ ${esc(err.message)}</span></div>`;
+  }
+}
+function clearRcvFile() {
+  document.getElementById('rcv-file-chips').innerHTML = '';
+  document.getElementById('rcv-text').value = '';
+  uploadedCvReverseText = '';
+}
+
+// ── Job postings upload for reverse ─────────────────────────
+const _rjobsInput = document.getElementById('rjobs-file-input');
+if (_rjobsInput) _rjobsInput.addEventListener('change', e => handleRJobFiles(Array.from(e.target.files)));
+function rjobsDrop(e) {
+  e.preventDefault(); document.getElementById('rjobs-zone').classList.remove('drag-over');
+  handleRJobFiles(Array.from(e.dataTransfer.files).filter(f => f.name.toLowerCase().endsWith('.pdf')));
+}
+async function handleRJobFiles(files) {
+  const MAX = 10;
+  for (const file of files) {
+    if (uploadedJobTexts.length >= MAX) {
+      showError('Maksymalnie 10 ogłoszeń — usuń jedno żeby dodać kolejne.'); break;
+    }
+    const chipId = 'rjob-' + sid(file.name);
+    const container = document.getElementById('rjobs-file-chips');
+    const chip = document.createElement('div');
+    chip.id = chipId; chip.className = 'file-chip processing';
+    const safeName = file.name.replace(/'/g, "\'");
+    const title = (function(n){
+      n = n.replace(/\.pdf$/i,'');
+      n = n.replace(/^[\d_\-\s]+/, '');
+      n = n.replace(/_/g, ' ');
+      n = n.replace(/\s+/g, ' ').trim();
+      return n;
+    })(file.name);
+    chip.innerHTML = `<span>📋</span><span class="fn" title="${esc(file.name)}">${esc(file.name)}</span><span class="fs">🔄 Odczytuję…</span><button class="fr" onclick="removeRJobFile('${sid(file.name)}','${safeName}')">✕</button>`;
+    container.appendChild(chip);
+    try {
+      const text = await extractPdfText(file);
+      chip.className = 'file-chip done';
+      chip.querySelector('.fs').textContent = '✓ Gotowe';
+      uploadedJobTexts.push({ title, text });
+      rebuildJobsTextarea();
+      updateRJobsCount();
+    } catch(e) {
+      chip.className = 'file-chip error';
+      chip.querySelector('.fs').textContent = '✗ ' + e.message;
+    }
+  }
+  document.getElementById('rjobs-file-input').value = '';
+}
+function removeRJobFile(chipId, name) {
+  const chip = document.getElementById('rjob-' + chipId);
+  if (chip) chip.remove();
+  const title = name.replace(/\.pdf$/i, '');
+  uploadedJobTexts = uploadedJobTexts.filter(j => j.title !== title);
+  rebuildJobsTextarea();
+  updateRJobsCount();
+}
+function rebuildJobsTextarea() {
+  const ta = document.getElementById('rjobs-text');
+  ta.value = uploadedJobTexts.map(j => `--- Ogłoszenie: ${j.title} ---\n${j.text.trim()}`).join('\n\n');
+}
+function updateRJobsCount() {
+  const el = document.getElementById('rjobs-count-info');
+  if (uploadedJobTexts.length > 0) {
+    el.textContent = `${uploadedJobTexts.length}/10 ogłoszeń załadowanych`;
+    el.style.display = 'block';
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+// ── Run reverse analysis ─────────────────────────────────────
+async function runReverse() {
+  if (reverseRunning) return;
+
+  hideError();
+  const re = document.getElementById('reverse-error');
+  if(re){ re.style.display='none'; re.textContent=''; }
+  const cvText   = document.getElementById('rcv-text').value.trim();
+  const jobsText = document.getElementById('rjobs-text').value.trim();
+
+  if (!cvText)   { showError('Wgraj lub wklej swoje CV.'); return; }
+  if (!jobsText) { showError('Dodaj co najmniej jedno ogłoszenie o pracę.'); return; }
+
+  if (isLimited()) { openGate(); return; }
+
+  reverseRunning = true;
+  const {text: cv,   trimmed: cvTrimmed}   = trimInput(cvText,   18000);
+  const {text: jobs, trimmed: jobsTrimmed} = trimInput(jobsText, 75000);
+  if (cvTrimmed || jobsTrimmed) document.getElementById('rtrunc-warn').style.display = 'block';
+
+  // UI
+  document.getElementById('ranalyze-btn').disabled = true;
+  document.getElementById('rbtn-spinner').style.display = 'block';
+  document.getElementById('ranalyze-label').textContent = 'Analizuję…';
+  document.getElementById('ranalyze-arrow').style.display = 'none';
+  document.getElementById('rloading-panel').style.display = 'block';
+  document.getElementById('rresults-panel').style.display = 'none';
+  document.getElementById('sec-reverse-count').textContent = 'Ładuję…';
+  document.getElementById('sec-reverse-count').className = 'result-section-count loading';
+
+  try {
+    const resp = await fetch('/api/reverse', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cvText: cv, jobsText: jobs })
+    });
+    if (!resp.ok) { const e = await resp.json().catch(() => ({})); throw new Error(e.error || `HTTP ${resp.status}`); }
+    const data = await resp.json().catch(() => { throw new Error('Serwer zwrócił nieprawidłową odpowiedź — prawdopodobnie przekroczono limit czasu (10 ogłoszeń może być za dużo naraz).'); });
+    if (!data || !data.oferty) throw new Error('Brak wyników w odpowiedzi serwera.');
+
+    incUsage(); updateUsageBar();
+    renderReverse(data);
+    document.getElementById('rresults-panel').style.display = 'block';
+    document.getElementById('rresults-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (typeof gtag === 'function') gtag('event', 'reverse_complete');
+  } catch(err) {
+    const re = document.getElementById('reverse-error');
+    if(re){ re.textContent = err.message; re.style.display = 'block'; }
+    else showError(err.message);
+  } finally {
+    reverseRunning = false;
+    document.getElementById('rloading-panel').style.display = 'none';
+    document.getElementById('ranalyze-btn').disabled = false;
+    document.getElementById('rbtn-spinner').style.display = 'none';
+    document.getElementById('ranalyze-label').textContent = 'Dopasuj CV do ofert';
+    document.getElementById('ranalyze-arrow').style.display = '';
+  }
+}
+
+// ── Render reverse results ───────────────────────────────────
+function renderReverse(data) {
+  const body  = document.getElementById('sec-reverse-body');
+  const count = document.getElementById('sec-reverse-count');
+  const oferty = data.oferty || [];
+  _lastReverse = oferty;
+
+  count.textContent = oferty.length + ' ofert';
+  count.className = 'result-section-count';
+
+  const counts = { 'APLIKUJ': 0, 'ROZWAŻ': 0, 'POMIŃ': 0 };
+  oferty.forEach(o => { if (counts[o.rekomendacja] !== undefined) counts[o.rekomendacja]++; });
+
+  let html = `
+  <div style="display:flex;justify-content:flex-end;margin-bottom:1rem">
+    <button class="export-btn" onclick="exportReverseCSV()">↓ Eksportuj CSV</button>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card" style="background:var(--green-dim);border-color:var(--green-border)"><div class="stat-num" style="color:var(--green)">${counts['APLIKUJ']}</div><div class="stat-label" style="color:var(--green)">Aplikuj</div></div>
+    <div class="stat-card" style="background:var(--amber-dim);border-color:var(--amber-border)"><div class="stat-num" style="color:var(--amber)">${counts['ROZWAŻ']}</div><div class="stat-label" style="color:var(--amber)">Rozważ</div></div>
+    <div class="stat-card" style="background:var(--red-dim);border-color:var(--red-border)"><div class="stat-num" style="color:var(--red)">${counts['POMIŃ']}</div><div class="stat-label" style="color:var(--red)">Pomiń</div></div>
+  </div>`;
+
+  oferty.forEach((o, i) => {
+    const c = reverseColor(o.rekomendacja);
+    const pct = o.procent_dopasowania || 0;
+    const barColor = pct >= 70 ? 'var(--green)' : pct >= 40 ? 'var(--amber)' : 'var(--red)';
+    const pasuje  = (o.co_pasuje    || []).map(m => `<div class="si" style="color:var(--green)">✓ ${esc(m)}</div>`).join('');
+    const brakuje = (o.czego_brakuje || []).map(m => `<div class="brakuje-item">✗ ${esc(m)}</div>`).join('');
+
+    html += `<div class="candidate-card" style="border-left-color:${c.border};border-color:var(--border)">
+      <div class="card-top">
+        <div style="flex:1">
+          <div class="cname">${i + 1}. ${esc(o.tytul)}</div>
+          <div class="csummary">${esc(o.podsumowanie)}</div>
+          <div class="zgodnosc-block">
+            <div>
+              <div class="zgodnosc-label">ZGODNOŚĆ</div>
+              <div class="zgodnosc-pct" style="color:${barColor}">${pct}%</div>
+            </div>
+            <div class="zgodnosc-bar"><div class="zgodnosc-fill" style="width:${pct}%;background:${barColor}"></div></div>
+          </div>
+        </div>
+        <div class="card-badges">
+          <div class="badge" style="background:${c.bg};color:${c.color};border-color:${c.border}">${esc(o.rekomendacja)}</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div>${pasuje ? `<div class="col-label" style="color:var(--green)">Co pasuje</div>${pasuje}` : ''}</div>
+        <div>${brakuje ? `<div class="brakuje-block"><div class="brakuje-label">BRAKUJE</div>${brakuje}</div>` : ''}</div>
+      </div>
+      <div class="ai-disclaimer">⚠️ Wynik wygenerowany przez AI. Traktuj jako wskazówkę, nie jako ostateczną decyzję o aplikacji.</div>
+    </div>`;
+  });
+
+  body.innerHTML = html;
+}
+
+function reverseColor(rec) {
+  if (rec === 'APLIKUJ') return { bg: 'var(--green-dim)', color: 'var(--green)', border: 'var(--green-border)' };
+  if (rec === 'ROZWAŻ')  return { bg: 'var(--amber-dim)', color: 'var(--amber)', border: 'var(--amber-border)' };
+  return { bg: 'var(--red-dim)', color: 'var(--red)', border: 'var(--red-border)' };
+}
+
+function exportReverseCSV() {
+  if (!_lastReverse) return;
+  const h = 'Stanowisko,Dopasowanie %,Poziom,Rekomendacja,Co pasuje,Czego brakuje\n';
+  const rows = _lastReverse.map(o =>
+    `"${o.tytul}","${o.procent_dopasowania}%","${o.poziom}","${o.rekomendacja}","${(o.co_pasuje || []).join('; ')}","${(o.czego_brakuje || []).join('; ')}"`
+  ).join('\n');
+  downloadCSV('﻿' + h + rows, 'dopasowanie_ofert.csv');
+}
+
+function resetReverse() {
+  document.getElementById('rcv-text').value = '';
+  document.getElementById('rjobs-text').value = '';
+  document.getElementById('rcv-file-chips').innerHTML = '';
+  document.getElementById('rjobs-file-chips').innerHTML = '';
+  uploadedCvReverseText = ''; uploadedJobTexts = [];
+  document.getElementById('rtrunc-warn').style.display = 'none';
+  document.getElementById('rjobs-count-info').style.display = 'none';
+  document.getElementById('rresults-panel').style.display = 'none';
+  document.getElementById('rloading-panel').style.display = 'none';
+  hideError();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
