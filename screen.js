@@ -1,0 +1,218 @@
+const SYSTEM_PROMPT = `Jesteś ekspertem rekrutera z 15-letnim doświadczeniem w Polsce. Analizujesz CV kandydata względem ogłoszenia o pracę.
+
+Zwróć WYŁĄCZNIE obiekt JSON (bez żadnego tekstu przed ani po):
+
+{
+  "wynik": number (1-10),
+  "procent_dopasowania": number (0-100),
+  "rekomendacja": "ZAPROŚ" | "ROZWAŻ" | "ODRZUĆ",
+  "podsumowanie": "string (max 2 zdania — dlaczego pasuje lub nie, z łącznym stażem)",
+  "mocne_strony": ["string", "string", "string"],
+  "czego_brakuje": ["string", "string"],
+  "czerwona_flaga": "string lub null"
+}
+
+Zasady ogólne:
+- Bądź bezwzględnie szczery — HR potrzebuje prawdy, nie dyplomacji
+- wynik: 8-10 tylko dla naprawdę silnych dopasowań
+- procent_dopasowania: wyraź jako % spełnionych wymagań ogłoszenia. 80-100 tylko dla naprawdę silnych dopasowań, poniżej 40 dla słabych. Musi być spójny z wynik (wynik 8 ≈ 80%)
+- ZAPROŚ: procent_dopasowania ≥70, ROZWAŻ: 40-69, ODRZUĆ: <40
+- mocne_strony: max 3 krótkie frazy (nie całe zdania) — konkretne elementy CV spełniające wymagania
+- czego_brakuje: max 3 krótkie frazy — brakujące umiejętności lub doświadczenie ([] jeśli nic nie brakuje)
+- Odpowiadaj wyłącznie w JSON, zero dodatkowego tekstu
+- Nie używaj znaków specjalnych ani nowych linii wewnątrz wartości JSON string
+
+JĘZYKI — mapowanie na CEFR:
+Rozpoznaj polskie opisy i mapuj na poziom CEFR:
+- OJCZYSTY / NATIVE / MOTHER TONGUE → Native
+- BIEGŁY / PŁYNNY / C2 / C1 → C1-C2 (Advanced)
+- BARDZO DOBRY / ZAAWANSOWANY / B2 → B2 (Upper-intermediate)
+- DOBRY / KOMUNIKATYWNY / B1 → B1-B2 (Intermediate)
+- ŚREDNIO ZAAWANSOWANY / PODSTAWOWY / A2 / A1 → A1-B1 (Basic)
+W mocne_strony lub czego_brakuje zawsze podawaj poziom CEFR obok polskiego opisu z CV.
+Jeśli zadeklarowany poziom jest zawyżony względem CEFR, zaznacz to w czego_brakuje.
+
+DOŚWIADCZENIE — obliczanie stażu:
+1. Wypisz każdą rolę z datami (rok rozpoczęcia – rok zakończenia lub "obecnie")
+2. Wykryj nakładające się okresy — licz je tylko raz
+3. Jeśli daty są niejasne lub brakuje ich — NIE zgaduj, zaznacz "brak daty" w czerwona_flaga
+4. Całkowity staż podaj w podsumowanie jako: "Łączne doświadczenie: X lat (bez nakładań)"
+
+CZERWONE FLAGI — detekcja:
+Skanuj pełny tekst CV i wykryj:
+- Jawne preferencje PRZECIW wymaganiom roli
+- Samoopisane ograniczenia sprzeczne z wymaganiami stanowiska
+- Luki w zatrudnieniu powyżej 6 miesięcy bez wyjaśnienia
+- Zmiany pracy częściej niż co 12 miesięcy (więcej niż 3 razy)
+- Brak kluczowych wymagań z ogłoszenia
+W polu czerwona_flaga: zacytuj DOKŁADNY fragment z CV który wywołał flagę (w cudzysłowie), a po nim wyjaśnienie. Jeśli brak flag: null`;
+
+// Parse individual CVs from the combined cvsText block.
+// Handles separator: --- CV: <name> --- or --- CV 1: <name> ---
+// Falls back to treating entire block as one anonymous CV.
+function parseCVs(cvsText) {
+  const separatorRegex = /---\s*CV(?:\s+\d+)?:\s*(.+?)\s*---/gi;
+  const matches = [...cvsText.matchAll(separatorRegex)];
+
+  if (matches.length === 0) {
+    return [{ name: 'Kandydat', text: cvsText.trim() }];
+  }
+
+  const cvs = [];
+  for (let i = 0; i < matches.length; i++) {
+    const name = matches[i][1].trim();
+    const start = matches[i].index + matches[i][0].length;
+    const end = i + 1 < matches.length ? matches[i + 1].index : cvsText.length;
+    const text = cvsText.slice(start, end).trim();
+    if (text) cvs.push({ name, text });
+  }
+  return cvs;
+}
+
+function repairJson(str) {
+  const stack = [];
+  let inStr = false;
+  let escape = false;
+  for (const ch of str) {
+    if (escape) { escape = false; continue; }
+    if (ch === '\\' && inStr) { escape = true; continue; }
+    if (ch === '"') { inStr = !inStr; continue; }
+    if (inStr) continue;
+    if (ch === '{') stack.push('}');
+    else if (ch === '[') stack.push(']');
+    else if (ch === '}' || ch === ']') stack.pop();
+  }
+  return str + stack.reverse().join('');
+}
+
+async function callAnthropic(body, retries = 3, delayMs = 2000) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 55000);
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': process.env.ANTHROPIC_API_KEY,
+          'anthropic-version': '2023-06-01',
+        },
+        body: JSON.stringify(body),
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+      const data = await response.json();
+      if (response.status === 529 || (data.error && data.error.type === 'overloaded_error')) {
+        if (attempt < retries) {
+          await new Promise(r => setTimeout(r, delayMs * attempt));
+          continue;
+        }
+        throw new Error('Serwer jest chwilowo przeciążony. Spróbuj ponownie za 30 sekund.');
+      }
+      if (data.error) throw new Error(data.error.message);
+      return data;
+    } catch (err) {
+      clearTimeout(timeout);
+      if (err.name === 'AbortError') throw new Error('Przekroczono limit czasu. Spróbuj z mniejszą liczbą CV.');
+      throw err;
+    }
+  }
+}
+
+// Analyze a single CV in complete isolation — no label, no other candidates in context.
+async function analyzeOneCv(jobDesc, cvText) {
+  const data = await callAnthropic({
+    model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6',
+    max_tokens: 1500,
+    temperature: 0,          // BIAS FIX: deterministic, position-independent scoring
+    system: SYSTEM_PROMPT,
+    messages: [{
+      role: 'user',
+      // BIAS FIX: CV sent without any label or number — pure content only
+      content: `OGŁOSZENIE O PRACĘ:\n${jobDesc}\n\n========\n\nCV KANDYDATA:\n${cvText}`
+    }]
+  });
+
+  const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
+  const clean = text.replace(/```json|```/g, '').trim();
+  const start = clean.indexOf('{');
+  if (start === -1) throw new Error('Nieprawidłowa odpowiedź serwera.');
+  let jsonStr = clean.slice(start);
+  const end = jsonStr.lastIndexOf('}');
+  jsonStr = end === -1 ? repairJson(jsonStr) : jsonStr.slice(0, end + 1);
+  return JSON.parse(jsonStr);
+}
+
+export default async function handler(req, res) {
+  const origin = req.headers['origin'] || '';
+  const allowed = process.env.ALLOWED_ORIGIN || 'https://skrenio.pl';
+  if (origin && origin !== allowed && !origin.endsWith('.vercel.app')) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+
+  // Block headless/bot user-agents with no browser signature
+  const ua = req.headers['user-agent'] || '';
+  if (!ua || ua.toLowerCase().includes('python-requests') || ua.toLowerCase().includes('curl/') || ua.toLowerCase().includes('go-http') || ua.toLowerCase().includes('axios/')) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
+  const { jobDesc, cvsText } = req.body || {};
+  if (!jobDesc || !cvsText) return res.status(400).json({ error: 'Brak danych wejściowych.' });
+  if (jobDesc.length > 15000 || cvsText.length > 80000) return res.status(400).json({ error: 'Za dużo danych wejściowych.' });
+
+  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+    const ip = (req.headers['x-forwarded-for'] || 'unknown').split(',')[0].trim();
+    const key = `znalezieni_ip:${ip}`;
+    const upstashUrl = process.env.UPSTASH_REDIS_REST_URL;
+    const upstashToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+    try {
+      const countRes = await fetch(`${upstashUrl}/get/${key}`, {
+        headers: { Authorization: `Bearer ${upstashToken}` }
+      });
+      const countData = await countRes.json();
+      if (parseInt(countData.result || '0') >= 5) {
+        return res.status(429).json({ error: 'Limit 5 bezpłatnych analiz wykorzystany. Napisz na kontakt@znalezieni.pl.' });
+      }
+      await fetch(`${upstashUrl}/incr/${key}`, { headers: { Authorization: `Bearer ${upstashToken}` } });
+      await fetch(`${upstashUrl}/expire/${key}/2592000`, { headers: { Authorization: `Bearer ${upstashToken}` } });
+    } catch (_) {
+      console.error('Upstash unavailable — rate limiting skipped for screen');
+    }
+  }
+
+  try {
+    // BIAS FIX: Parse individual CVs, analyze each in complete isolation
+    const cvs = parseCVs(cvsText);
+
+    // Each CV analyzed independently — parallel execution, no shared context
+    const results = await Promise.all(
+      cvs.map(async (cv) => {
+        const result = await analyzeOneCv(jobDesc, cv.text);
+        // BIAS FIX: Name re-attached AFTER analysis — never sent to Claude
+        return {
+          imie_nazwisko: cv.name,
+          wynik: result.wynik,
+          procent_dopasowania: result.procent_dopasowania,
+          rekomendacja: result.rekomendacja,
+          podsumowanie: result.podsumowanie,
+          mocne_strony: result.mocne_strony,
+          czego_brakuje: result.czego_brakuje,
+          czerwona_flaga: result.czerwona_flaga,
+        };
+      })
+    );
+
+    // Sort by score descending
+    results.sort((a, b) => b.wynik - a.wynik);
+
+    return res.status(200).json({ kandydaci: results });
+  } catch (err) {
+    if (err instanceof SyntaxError) {
+      return res.status(500).json({ error: 'Nie udało się przetworzyć odpowiedzi AI. Spróbuj z mniejszą liczbą CV lub krótszymi opisami.' });
+    }
+    const status = err.message.includes('przeciążony') ? 503 : err.message.includes('limit czasu') ? 504 : 500;
+    return res.status(status).json({ error: err.message });
+  }
+}
