@@ -634,23 +634,54 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
 <section id="how" style="background:var(--bg2)">
   <div class="section-inner" style="text-align:center">
     <div class="section-tag">Jak to działa</div>
-    <h2 class="section-h2 f-sora">Trzy kroki do najlepszego kandydata</h2>
+    <h2 class="section-h2 f-sora">Dwa narzędzia — dwa przepływy</h2>
     <p class="section-sub" style="margin:0 auto">Żadnej instalacji. Żadnej konfiguracji. Wystarczy przeglądarka.</p>
+
+    <!-- Tool 1 -->
+    <div style="margin-top:2.5rem;margin-bottom:.75rem;display:flex;align-items:center;gap:12px;justify-content:center">
+      <div style="height:1px;width:60px;background:var(--border2)"></div>
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue)">🏆 Ranking kandydatów</span>
+      <div style="height:1px;width:60px;background:var(--border2)"></div>
+    </div>
     <div class="how-wrap">
       <div class="how-step">
         <div class="how-num">1</div>
-        <div class="how-title f-sora">Wgraj materiały</div>
-        <div class="how-desc">Wrzuć PDF z ogłoszeniem i CV kandydatów (do 10 naraz). Opcjonalnie zanonimizuj przed analizą.</div>
+        <div class="how-title f-sora">Wgraj ogłoszenie i CV</div>
+        <div class="how-desc">Wrzuć PDF z ogłoszeniem i CV kandydatów (do 10 naraz). Opcjonalnie zanonimizuj dane przed analizą jednym klikiem.</div>
       </div>
       <div class="how-step">
         <div class="how-num">2</div>
-        <div class="how-title f-sora">AI analizuje</div>
-        <div class="how-desc">AI analizuje równolegle ranking kandydatów, pytania screeningowe i analizę dopasowania. Wyniki w ~60 sekund.</div>
+        <div class="how-title f-sora">AI analizuje równolegle</div>
+        <div class="how-desc">Trzy analizy jednocześnie: ranking z % dopasowania, pytania screeningowe bez biasów i lista braków dla każdego kandydata. Wyniki w ~60 sekund.</div>
       </div>
       <div class="how-step">
         <div class="how-num">3</div>
         <div class="how-title f-sora">Zaproś najlepszych</div>
-        <div class="how-desc">Przefiltruj, eksportuj do CSV i zaproś na rozmowę tylko tych kandydatów, którzy naprawdę pasują.</div>
+        <div class="how-desc">Przefiltruj wyniki, eksportuj do CSV i zaproś na rozmowę tylko kandydatów z rekomendacją ZAPROŚ.</div>
+      </div>
+    </div>
+
+    <!-- Tool 2 -->
+    <div style="margin-top:3rem;margin-bottom:.75rem;display:flex;align-items:center;gap:12px;justify-content:center">
+      <div style="height:1px;width:60px;background:var(--border2)"></div>
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue)">🎯 Dopasuj CV do ofert</span>
+      <div style="height:1px;width:60px;background:var(--border2)"></div>
+    </div>
+    <div class="how-wrap">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <div class="how-title f-sora">Wgraj CV i oferty</div>
+        <div class="how-desc">Wrzuć jedno CV (swoje lub kandydata) i do 10 ogłoszeń o pracę. Opcjonalnie zanonimizuj CV przed wysłaniem do AI.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <div class="how-title f-sora">AI porównuje z każdą ofertą</div>
+        <div class="how-desc">Każde ogłoszenie analizowane osobno — bez wzajemnego wpływu na wyniki. Dla każdej roli: % dopasowania, co pasuje i czego brakuje.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <div class="how-title f-sora">Wybierz najlepsze oferty</div>
+        <div class="how-desc">Posortowany ranking ofert z rekomendacją APLIKUJ / ROZWAŻ / POMIŃ. Eksport do CSV dla rekrutera lub kandydata.</div>
       </div>
     </div>
   </div>
@@ -1338,6 +1369,7 @@ async function activateGlobalLicense(){
 function showHome(){
   document.getElementById('home-view').style.display = 'block';
   document.getElementById('app-view').style.display = 'none';
+  history.pushState({}, '', '/');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -1762,7 +1794,16 @@ function screenColor(rec){
 function exportScreenCSV(){
   if(!_lastScreen) return;
   const h='Kandydat,Wynik,Dopasowanie %,Rekomendacja,Mocne strony,Czego brakuje,Czerwona flaga,Podsumowanie\n';
-  const rows=_lastScreen.map(k=>`"${k.imie_nazwisko}","${k.wynik}/10","${k.procent_dopasowania||''}%","${k.rekomendacja}","${(k.mocne_strony||[]).join('; ')}","${(k.czego_brakuje||[]).join('; ')}","${k.czerwona_flaga||'-'}","${k.podsumowanie}"`).join('\n');
+  const rows=_lastScreen.map(k=>[
+    escCsv(k.imie_nazwisko),
+    escCsv((k.wynik||'')+'/10'),
+    escCsv((k.procent_dopasowania||'')+'%'),
+    escCsv(k.rekomendacja),
+    escCsv((k.mocne_strony||[]).join('; ')),
+    escCsv((k.czego_brakuje||[]).join('; ')),
+    escCsv(k.czerwona_flaga||'-'),
+    escCsv(k.podsumowanie)
+  ].join(',')).join('\n');
   downloadCSV('\uFEFF'+h+rows,'ranking_kandydatow.csv');
 }
 
@@ -1797,11 +1838,17 @@ function renderQuestions(result){
 function exportQuestionsCSV(){
   if(!_lastQuestions) return;
   const h='Nr,Pytanie,Eliminuje biasy,Uzasadnienie\n';
-  const rows=_lastQuestions.map((p,i)=>`"${i+1}","${p.pytanie}","${(p.eliminuje_biasy||[]).join(', ')}","${p.uzasadnienie}"`).join('\n');
+  const rows=_lastQuestions.map((p,i)=>[
+    escCsv(i+1),
+    escCsv(p.pytanie),
+    escCsv((p.eliminuje_biasy||[]).join('; ')),
+    escCsv(p.uzasadnienie)
+  ].join(',')).join('\n');
   downloadCSV('\uFEFF'+h+rows,'pytania_screeningowe.csv');
 }
 
 // ── CSV download helper ──────────────────────────────────────
+function escCsv(v){ return '"' + String(v||'').replace(/"/g, '""') + '"'; }
 function downloadCSV(data, filename){
   const blob=new Blob([data],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob);
@@ -2293,10 +2340,15 @@ function reverseColor(rec) {
 function exportReverseCSV() {
   if (!_lastReverse) return;
   const h = 'Stanowisko,Dopasowanie %,Poziom,Rekomendacja,Co pasuje,Czego brakuje\n';
-  const rows = _lastReverse.map(o =>
-    `"${o.tytul}","${o.procent_dopasowania}%","${o.poziom}","${o.rekomendacja}","${(o.co_pasuje || []).join('; ')}","${(o.czego_brakuje || []).join('; ')}"`
-  ).join('\n');
-  downloadCSV('﻿' + h + rows, 'dopasowanie_ofert.csv');
+  const rows = _lastReverse.map(o => [
+    escCsv(o.tytul),
+    escCsv(o.procent_dopasowania+'%'),
+    escCsv(o.poziom),
+    escCsv(o.rekomendacja),
+    escCsv((o.co_pasuje||[]).join('; ')),
+    escCsv((o.czego_brakuje||[]).join('; '))
+  ].join(',')).join('\n');
+  downloadCSV('\uFEFF' + h + rows, 'dopasowanie_ofert.csv');
 }
 
 function resetReverse() {
