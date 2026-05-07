@@ -457,7 +457,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
   <div class="hero-glow2"></div>
   <div class="hero-badge">✦ Nowa era rekrutacji w Polsce</div>
   <h1 class="hero-h1 f-sora">Screening kandydatów<br><span class="grad">w 60 sekund z AI</span></h1>
-  <p class="hero-sub">Wgraj ogłoszenie i CV — dostaniesz ranking, pytania screeningowe i analizę dopasowania. Albo wgraj swoje CV i sprawdź, do których ofert najlepiej pasujesz.</p>
+  <p class="hero-sub">Wgraj ogłoszenie i CV kandydatów — dostaniesz ranking, pytania screeningowe i analizę dopasowania. Albo sprawdź, do których ofert najlepiej pasuje Twoje CV.</p>
   <div class="hero-btns">
     <button class="btn-primary" onclick="showApp()">Analizuj rekrutację za darmo <span>→</span></button>
     <a class="btn-ghost" href="#how">Zobacz jak działa</a>
@@ -465,7 +465,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
   <div class="hero-metrics">
     <div class="metric"><div class="metric-num">60<span>s</span></div><div class="metric-label">Czas analizy</div></div>
     <div class="metric"><div class="metric-num">10<span>×</span></div><div class="metric-label">Szybsza selekcja</div></div>
-    <div class="metric"><div class="metric-num">4<span>w1</span></div><div class="metric-label">Narzędzia w pakiecie</div></div>
+    <div class="metric"><div class="metric-num">2<span>w1</span></div><div class="metric-label">Narzędzia w pakiecie</div></div>
     <div class="metric"><div class="metric-num">100<span>%</span></div><div class="metric-label">AI · Bez biasów</div></div>
   </div>
 </section>
@@ -476,12 +476,12 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
 <section id="preview" style="background:var(--bg2)">
   <div class="section-inner">
     <div class="section-tag">Podgląd platformy</div>
-    <h2 class="section-h2 f-sora">Cztery narzędzia AI.<br>Jeden prosty interfejs.</h2>
-    <p class="section-sub">Ranking kandydatów, pytania screeningowe, analiza dopasowania i odwrócony matching — CV do ofert. Bez rejestracji, bez konfiguracji.</p>
+    <h2 class="section-h2 f-sora">Dwa narzędzia AI.<br>Jeden prosty interfejs.</h2>
+    <p class="section-sub">Ranking i analiza kandydatów do roli lub dopasowanie CV do wielu ofert. Bez rejestracji, bez konfiguracji.</p>
     <div class="mockup-wrap">
       <div class="mockup-bar">
         <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
-        <div class="mockup-url">skrenio.pl — Analiza rekrutacji</div>
+        <div class="mockup-url">skrenio.com — AI HR Screening</div>
       </div>
       <div class="mockup-body">
         <div class="mockup-grid">
@@ -580,8 +580,8 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
       </div>
       <div class="benefit-card">
         <div class="benefit-icon bi-purple">🤖</div>
-        <div class="benefit-title f-sora">Trzy analizy naraz</div>
-        <div class="benefit-desc">Ranking kandydatów, pytania screeningowe i analiza dopasowania uruchamiają się równolegle. Jeden przycisk — komplet danych.</div>
+        <div class="benefit-title f-sora">Komplet danych za jednym razem</div>
+        <div class="benefit-desc">Ranking kandydatów, pytania screeningowe i analiza dopasowania uruchamiają się równolegle. Jeden przycisk — wszystko co potrzebujesz do decyzji.</div>
       </div>
     </div>
   </div>
@@ -602,7 +602,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
       <div class="how-step">
         <div class="how-num">2</div>
         <div class="how-title f-sora">AI analizuje</div>
-        <div class="how-desc">Trzy moduły AI działają równolegle: ranking, pytania screeningowe, analiza luk. Wyniki w ~60 sekund.</div>
+        <div class="how-desc">AI analizuje równolegle ranking kandydatów, pytania screeningowe i analizę dopasowania. Wyniki w ~60 sekund.</div>
       </div>
       <div class="how-step">
         <div class="how-num">3</div>
@@ -626,7 +626,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
         <div class="plan-period">na zawsze</div>
         <ul class="plan-features">
           <li>2 bezpłatne analizy</li>
-          <li>Ranking + pytania + dopasowanie</li>
+          <li>Ranking, pytania i analiza dopasowania</li>
           <li>Do 10 CV naraz</li>
           <li>Eksport CSV</li>
         </ul>
@@ -818,6 +818,19 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
         <div id="rcv-file-chips" class="file-chips"></div>
         <textarea id="rcv-text" rows="4" placeholder="...lub wklej tu treść swojego CV" style="width:100%;margin-top:.75rem;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;line-height:1.65;resize:vertical;outline:none;transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"></textarea>
       </div>
+
+      <!-- Anonymization toggle for reverse -->
+      <div class="anon-row" id="ranon-row">
+        <div>
+          <div style="font-size:.82rem;font-weight:600;color:var(--text)">Anonimizacja CV przed analizą</div>
+          <div style="font-size:.75rem;color:var(--text3);margin-top:2px">Usuwa imię, nazwisko, email, telefon i adres przed wysłaniem do AI</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+          <div class="spinner" id="ranon-spinner" style="display:none"></div>
+          <label class="toggle"><input type="checkbox" id="ranon-toggle"><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+      <div class="anon-confirm" id="ranon-confirm" style="display:none"></div>
 
       <!-- Multiple job postings -->
       <div class="form-section">
@@ -1660,6 +1673,43 @@ const _rcvInput = document.getElementById('rcv-file-input');
 if (_rcvInput) _rcvInput.addEventListener('change', e => {
   if (e.target.files[0]) handleRcvFile(e.target.files[0]);
 });
+
+// Anonymization for reverse CV
+const _ranonToggle = document.getElementById('ranon-toggle');
+if (_ranonToggle) _ranonToggle.addEventListener('change', async function(){
+  if (!this.checked) {
+    document.getElementById('ranon-confirm').style.display = 'none';
+    // Restore original CV text if we have it
+    const ta = document.getElementById('rcv-text');
+    if (uploadedCvReverseText) ta.value = uploadedCvReverseText;
+    return;
+  }
+  const cvText = document.getElementById('rcv-text').value.trim();
+  if (!cvText) { this.checked = false; showError('Dodaj CV przed anonimizacją.'); return; }
+  const spinner = document.getElementById('ranon-spinner');
+  spinner.style.display = 'block'; this.disabled = true;
+  try {
+    const resp = await fetch('/api/anonymize', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({cvsText: cvText})});
+    if (!resp.ok) { const e = await resp.json().catch(()=>({})); throw new Error(e.error || `HTTP ${resp.status}`); }
+    const data = await resp.json();
+    document.getElementById('rcv-text').value = data.anonymizedText;
+    const u = data.usunieto || {};
+    const parts = [];
+    if (u.imiona)    parts.push(`${u.imiona} imion/nazwisk`);
+    if (u.emaile)    parts.push(`${u.emaile} emaili`);
+    if (u.telefony)  parts.push(`${u.telefony} telefonów`);
+    if (u.adresy)    parts.push(`${u.adresy} adresów`);
+    const conf = document.getElementById('ranon-confirm');
+    conf.innerHTML = `✓ <strong>Zanonimizowano.</strong> Usunięto: ${parts.length ? parts.join(', ') : 'brak danych osobowych'}.`;
+    conf.style.display = 'block';
+  } catch(err) {
+    this.checked = false;
+    const re = document.getElementById('reverse-error');
+    if (re) { re.textContent = 'Błąd anonimizacji: ' + err.message; re.style.display = 'block'; }
+  } finally {
+    spinner.style.display = 'none'; this.disabled = false;
+  }
+});
 function rdzDrop(e) {
   e.preventDefault(); document.getElementById('rcv-zone').classList.remove('drag-over');
   const f = Array.from(e.dataTransfer.files).find(f => f.name.toLowerCase().endsWith('.pdf'));
@@ -1887,6 +1937,8 @@ function resetReverse() {
   uploadedCvReverseText = ''; uploadedJobTexts = [];
   document.getElementById('rtrunc-warn').style.display = 'none';
   document.getElementById('rjobs-count-info').style.display = 'none';
+  const _rt = document.getElementById('ranon-toggle'); if (_rt) { _rt.checked = false; _rt.disabled = false; }
+  document.getElementById('ranon-confirm').style.display = 'none';
   document.getElementById('rresults-panel').style.display = 'none';
   document.getElementById('rloading-panel').style.display = 'none';
   hideError();
