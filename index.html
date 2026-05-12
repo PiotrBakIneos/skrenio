@@ -1607,8 +1607,15 @@ document.getElementById('anon-toggle').addEventListener('change', async function
     conf.innerHTML = `✓ <strong>Zanonimizowano pomyślnie.</strong> Usunięto: ${parts.length?parts.join(', '):'brak danych osobowych do usunięcia'}.`;
     conf.style.display='block';
   } catch(err){
-    this.checked=false; anonDone=false;
-    showError('Błąd anonimizacji: '+err.message);
+    // Don't uncheck — keep toggle state, show error next to the toggle
+    anonDone=false;
+    const conf = document.getElementById('anon-confirm');
+    conf.innerHTML = `✗ <strong>Błąd anonimizacji:</strong> ${err.message}`;
+    conf.style.display='block';
+    conf.style.background='var(--red-dim)';
+    conf.style.borderColor='var(--red-border)';
+    conf.style.color='var(--red)';
+    this.checked=false;
   } finally{
     spinner.style.display='none'; this.disabled=false;
   }
