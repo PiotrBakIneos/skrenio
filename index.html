@@ -491,7 +491,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
   <div class="hero-glow2"></div>
   <div class="hero-badge">✦ Nowa era rekrutacji w Polsce</div>
   <h1 class="hero-h1 f-sora">Screening kandydatów<br><span class="grad">w 60 sekund z AI</span></h1>
-  <p class="hero-sub">Wgraj ogłoszenie i CV kandydatów — dostaniesz ranking, pytania screeningowe i analizę dopasowania. Albo sprawdź, do których ofert najlepiej pasuje Twoje CV.</p>
+  <p class="hero-sub">Wgraj ogłoszenie i CV kandydatów — AI wskaże mocne strony, luki i rekomendację dla każdego kandydata. Narzędzie wspiera decyzję rekrutera, nie zastępuje jej.</p>
   <div class="hero-btns">
     <button class="btn-primary" id="cta-hero" onclick="showApp()">Analizuj rekrutację za darmo <span>→</span></button>
     <a class="btn-ghost" href="#how">Zobacz jak działa</a>
@@ -500,7 +500,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
     <div class="metric"><div class="metric-num">60<span>s</span></div><div class="metric-label">Czas analizy</div></div>
     <div class="metric"><div class="metric-num">10<span>×</span></div><div class="metric-label">Szybsza selekcja</div></div>
     <div class="metric"><div class="metric-num">2<span>w1</span></div><div class="metric-label">Narzędzia w pakiecie</div></div>
-    <div class="metric"><div class="metric-num">100<span>%</span></div><div class="metric-label">AI · Bez biasów</div></div>
+    <div class="metric"><div class="metric-num">AI</div><div class="metric-label">Wspiera rekrutera</div></div>
   </div>
 </section>
 
@@ -534,7 +534,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
               <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
                 <div style="font-size:1.6rem;font-weight:800;color:#16A34A;line-height:1">87%</div>
                 <div style="flex:1;height:5px;background:var(--border2);border-radius:3px;max-width:120px"><div style="width:87%;height:100%;background:#16A34A;border-radius:3px"></div></div>
-                <span style="font-size:.65rem;font-weight:700;letter-spacing:.08em;color:var(--text3)">ZGODNOŚĆ</span>
+<span style="font-size:.65rem;font-weight:700;letter-spacing:.08em;color:var(--text3)">Orientacyjne dopasowanie</span>
               </div>
             </div>
             <span style="font-size:.72rem;font-weight:700;background:rgba(22,163,74,.1);color:#16A34A;border:1px solid rgba(22,163,74,.3);border-radius:6px;padding:4px 10px;white-space:nowrap">ZAPROŚ</span>
@@ -563,7 +563,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
               <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
                 <div style="font-size:1.6rem;font-weight:800;color:#D97706;line-height:1">61%</div>
                 <div style="flex:1;height:5px;background:var(--border2);border-radius:3px;max-width:120px"><div style="width:61%;height:100%;background:#D97706;border-radius:3px"></div></div>
-                <span style="font-size:.65rem;font-weight:700;letter-spacing:.08em;color:var(--text3)">ZGODNOŚĆ</span>
+<span style="font-size:.65rem;font-weight:700;letter-spacing:.08em;color:var(--text3)">Orientacyjne dopasowanie</span>
               </div>
             </div>
             <span style="font-size:.72rem;font-weight:700;background:rgba(217,119,6,.1);color:#D97706;border:1px solid rgba(217,119,6,.3);border-radius:6px;padding:4px 10px;white-space:nowrap">ROZWAŻ</span>
@@ -603,8 +603,8 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
       </div>
       <div class="benefit-card">
         <div class="benefit-icon bi-mint">🛡️</div>
-        <div class="benefit-title f-sora">Zero biasów rekrutacyjnych</div>
-        <div class="benefit-desc">Pytania screeningowe wygenerowane z myślą o równości szans. Bez pytań o wiek, płeć czy stan cywilny. Zgodność z prawem UE.</div>
+        <div class="benefit-title f-sora">Pytania bez dyskryminacji</div>
+        <div class="benefit-desc">Pytania screeningowe wygenerowane z myślą o równości szans — bez pytań o wiek, płeć czy stan cywilny. Zgodność z wymogami prawa pracy UE.</div>
       </div>
       <div class="benefit-card">
         <div class="benefit-icon bi-purple">🎯</div>
@@ -1789,7 +1789,7 @@ function renderScreen(result){
           <div class="csummary">${esc(k.podsumowanie)}</div>
           <div class="zgodnosc-block">
             <div>
-              <div class="zgodnosc-label">ZGODNOŚĆ</div>
+              <div class="zgodnosc-label">Orientacyjne dopasowanie</div>
               <div class="zgodnosc-pct" style="color:${barColor}">${pct}%</div>
             </div>
             <div class="zgodnosc-bar"><div class="zgodnosc-fill" style="width:${pct}%;background:${barColor}"></div></div>
@@ -1797,7 +1797,7 @@ function renderScreen(result){
         </div>
         <div class="card-badges">
           <div class="badge" style="background:${c.bg};color:${c.color};border-color:${c.border}">${esc(k.rekomendacja)}</div>
-          <div class="badge" style="background:var(--surface2);color:var(--text);border-color:var(--border)">${k.wynik}/10</div>
+
         </div>
       </div>
       <div class="card-body">
@@ -1807,7 +1807,7 @@ function renderScreen(result){
           ${flag}
         </div>
       </div>
-      <div class="ai-disclaimer">⚠️ Wynik wygenerowany przez AI. Narzędzie wspiera proces rekrutacji — ostateczna decyzja należy zawsze do rekrutera. Kandydaci powinni być poinformowani o wykorzystaniu AI w procesie rekrutacji.</div>
+      <div class="ai-disclaimer">⚠️ Wyniki mają charakter orientacyjny — AI wspiera decyzję rekrutera, nie zastępuje jej. Numeryczne dopasowanie jest przybliżeniem, nie obiektywną oceną. Kandydaci powinni być poinformowani o wykorzystaniu AI.</div>
     </div>`;
   });
   body.innerHTML=html;
@@ -1819,11 +1819,11 @@ function screenColor(rec){
 }
 function exportScreenCSV(){
   if(!_lastScreen) return;
-  const h='Kandydat,Wynik,Dopasowanie %,Rekomendacja,Mocne strony,Czego brakuje,Czerwona flaga,Podsumowanie\n';
+  const h='Kandydat,Orientacyjne dopasowanie,Rekomendacja,Mocne strony,Czego brakuje,Czerwona flaga,Podsumowanie\n';
   const rows=_lastScreen.map(k=>[
     escCsv(k.imie_nazwisko),
-    escCsv((k.wynik||'')+'/10'),
-    escCsv((k.procent_dopasowania||'')+'%'),
+    escCsv((k.procent_dopasowania||'')+'% (orientacyjne)'),
+
     escCsv(k.rekomendacja),
     escCsv((k.mocne_strony||[]).join('; ')),
     escCsv((k.czego_brakuje||[]).join('; ')),
@@ -2340,7 +2340,7 @@ function renderReverse(data) {
           <div class="csummary">${esc(o.podsumowanie)}</div>
           <div class="zgodnosc-block">
             <div>
-              <div class="zgodnosc-label">ZGODNOŚĆ</div>
+              <div class="zgodnosc-label">Orientacyjne dopasowanie</div>
               <div class="zgodnosc-pct" style="color:${barColor}">${pct}%</div>
             </div>
             <div class="zgodnosc-bar"><div class="zgodnosc-fill" style="width:${pct}%;background:${barColor}"></div></div>
@@ -2354,7 +2354,7 @@ function renderReverse(data) {
         <div>${pasuje ? `<div class="col-label" style="color:var(--green)">Co pasuje</div>${pasuje}` : ''}</div>
         <div>${brakuje ? `<div class="brakuje-block"><div class="brakuje-label">BRAKUJE</div>${brakuje}</div>` : ''}</div>
       </div>
-      <div class="ai-disclaimer">⚠️ Wynik wygenerowany przez AI. Traktuj jako wskazówkę, nie jako ostateczną decyzję o aplikacji.</div>
+      <div class="ai-disclaimer">⚠️ Wynik orientacyjny — AI wskazuje kierunek, nie podejmuje decyzji. Dopasowanie procentowe jest przybliżeniem opartym na treści CV i ogłoszenia.</div>
     </div>`;
   });
 
