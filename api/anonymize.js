@@ -56,13 +56,15 @@ async function callAnthropic(body, retries = 3, delayMs = 2000) {
 
 export default async function handler(req, res) {
   const origin = req.headers['origin'] || '';
-  // Allow: configured origin, any vercel.app preview, localhost dev
-  const allowed = (process.env.ALLOWED_ORIGIN || 'https://skrenio.com').split(',').map(s => s.trim());
-  const originOk = !origin
-    || allowed.some(a => origin === a)
-    || origin.endsWith('.vercel.app')
-    || origin.startsWith('http://localhost')
-    || origin.startsWith('http://127.0.0.1');
+  const allowed = (process.env.ALLOWED_ORIGIN || 'https://skrenio.com,https://www.skrenio.com').split(',').map(s => s.trim());
+  const originOk = !origin                              // no origin header = same-origin or server-to-server
+    || origin === 'null'                                // file:// protocol sends literal "null"
+    || allowed.some(a => origin === a)                  // exact match on configured domains
+    || origin.endsWith('.vercel.app')                   // any Vercel preview
+    || origin.includes('.vercel.app')                   // Vercel preview with subdomain prefix
+    || origin.startsWith('http://localhost')            // local dev
+    || origin.startsWith('http://127.0.0.1')            // local dev
+    || origin.startsWith('https://localhost');          // local dev with https
   if (!originOk) {
     return res.status(403).json({ error: 'Forbidden' });
   }
