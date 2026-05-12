@@ -1,3 +1,5 @@
+import { validateLicense, checkDevice } from './licenseValidator.js';
+
 const SYSTEM_PROMPT = `Jesteś narzędziem do anonimizacji CV. Twoim zadaniem jest usunięcie wszystkich danych osobowych z CV kandydatów.
 
 Zasady anonimizacji:
@@ -65,13 +67,30 @@ export default async function handler(req, res) {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
-  // Block headless/bot user-agents
+  // Block obvious bots only — don't block browsers with modified UA strings
   const ua = req.headers['user-agent'] || '';
-  if (!ua || ua.toLowerCase().includes('python-requests') || ua.toLowerCase().includes('curl/') || ua.toLowerCase().includes('go-http') || ua.toLowerCase().includes('axios/')) {
+  const isBot = ua.toLowerCase().includes('python-requests') || ua.toLowerCase().includes('go-http');
+  if (isBot) {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
+  // License validation
+  const licenseKey   = req.headers['x-license-key'] || '';
+  const deviceToken  = req.headers['x-device-token'] || '';
+  const license      = await validateLicense(licenseKey);
+  let isLicensed     = license.valid;
+
+  // Device token check — prevents key sharing
+  if (isLicensed && licenseKey) {
+    const deviceOk = await checkDevice(licenseKey, deviceToken);
+    if (!deviceOk) {
+      return res.status(402).json({ error: 'To urządzenie nie jest zarejestrowane dla tej licencji. Aktywuj licencję ponownie lub skontaktuj się z kontakt@skrenio.com.' });
+    }
+  }
+
+  const freeLimit = 5;
 
   const { cvsText } = req.body || {};
   if (!cvsText) return res.status(400).json({ error: 'Brak tekstu CV.' });
