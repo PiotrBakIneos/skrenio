@@ -1,14 +1,15 @@
 import { validateLicense } from './licenseValidator.js';
 
 export default async function handler(req, res) {
-  // CORS
+  // CORS — permissive for activation endpoint
   const origin = req.headers['origin'] || '';
   const allowed = (process.env.ALLOWED_ORIGIN || 'https://skrenio.com').split(',').map(s => s.trim());
   const originOk = !origin
     || allowed.some(a => origin === a)
-    || origin.endsWith('.vercel.app')
+    || origin.includes('vercel.app')
     || origin.startsWith('http://localhost')
-    || origin.startsWith('http://127.0.0.1');
+    || origin.startsWith('http://127.0.0.1')
+    || origin.includes('skrenio');
   if (!originOk) return res.status(403).json({ error: 'Forbidden' });
 
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
