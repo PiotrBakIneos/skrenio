@@ -1,3 +1,5 @@
+import { validateLicense, checkDevice } from './licenseValidator.js';
+
 const SYSTEM_PROMPT = `Jesteś ekspertem rekrutera z 15-letnim doświadczeniem w Polsce. Analizujesz CV kandydata względem ogłoszenia o pracę.
 
 Zwróć WYŁĄCZNIE obiekt JSON (bez żadnego tekstu przed ani po):
@@ -156,19 +158,37 @@ export default async function handler(req, res) {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
-  // Block headless/bot user-agents
+  // Block obvious bots only — don't block browsers with modified UA strings
   const ua = req.headers['user-agent'] || '';
-  if (!ua || ua.toLowerCase().includes('python-requests') || ua.toLowerCase().includes('curl/') || ua.toLowerCase().includes('go-http') || ua.toLowerCase().includes('axios/')) {
+  const isBot = ua.toLowerCase().includes('python-requests') || ua.toLowerCase().includes('go-http');
+  if (isBot) {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
+  // License validation
+  const licenseKey   = req.headers['x-license-key'] || '';
+  const deviceToken  = req.headers['x-device-token'] || '';
+  const license      = await validateLicense(licenseKey);
+  let isLicensed     = license.valid;
+
+  // Device token check — prevents key sharing
+  if (isLicensed && licenseKey) {
+    const deviceOk = await checkDevice(licenseKey, deviceToken);
+    if (!deviceOk) {
+      return res.status(402).json({ error: 'To urządzenie nie jest zarejestrowane dla tej licencji. Aktywuj licencję ponownie lub skontaktuj się z kontakt@skrenio.com.' });
+    }
+  }
+
+  const freeLimit = 5;
+
   const { jobDesc, cvsText } = req.body || {};
   if (!jobDesc || !cvsText) return res.status(400).json({ error: 'Brak danych wejściowych.' });
   if (jobDesc.length > 15000 || cvsText.length > 80000) return res.status(400).json({ error: 'Za dużo danych wejściowych.' });
 
-  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  // Skip rate limiting for licensed users
+  if (!isLicensed && process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
     const ip = (req.headers['x-forwarded-for'] || 'unknown').split(',')[0].trim();
     const key = `znalezieni_ip:${ip}`;
     const upstashUrl = process.env.UPSTASH_REDIS_REST_URL;
