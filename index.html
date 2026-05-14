@@ -446,9 +446,11 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
     <a href="#pricing" class="nav-link" onclick="navScrollTo('pricing');return false">Cennik</a>
   </div>
   <div style="display:flex;align-items:center;gap:8px">
-    <button onclick="loginWithGoogle()" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:.8rem;font-weight:600;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif">
-      <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-      Zaloguj
+    <!-- User info when logged in -->
+    <div id="nav-user-info" style="display:none;align-items:center;gap:8px"></div>
+    <!-- Login button when not logged in -->
+    <button id="nav-login-btn" onclick="document.getElementById('magic-link-form').style.display='block';document.getElementById('magic-link-sent').style.display='none';document.getElementById('magic-email').value='';document.getElementById('login-overlay').style.display='flex'" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:.8rem;font-weight:600;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif">
+      Zaloguj się
     </button>
     <button class="nav-cta" id="cta-nav" onclick="showApp()">Zacznij →</button>
   </div>
@@ -1118,6 +1120,48 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
   </div>
 </div>
 
+<!-- ═══════════════════════ LOGIN MODAL ═══════════════════════ -->
+<div id="login-overlay" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(12px);z-index:10000;align-items:center;justify-content:center;padding:2rem" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:2rem;max-width:400px;width:100%;box-shadow:0 8px 40px rgba(15,23,42,.15)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+      <div style="font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text)">Zaloguj się do Skrenio</div>
+      <button onclick="document.getElementById('login-overlay').style.display='none'" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text3)">✕</button>
+    </div>
+
+    <!-- Google -->
+    <button onclick="loginWithGoogle()" style="width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;background:var(--surface);border:1px solid var(--border2);border-radius:10px;cursor:pointer;font-size:.9rem;font-weight:600;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:12px">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Kontynuuj z Google
+    </button>
+
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <div style="flex:1;height:1px;background:var(--border)"></div>
+      <span style="font-size:.72rem;color:var(--text3)">lub przez email</span>
+      <div style="flex:1;height:1px;background:var(--border)"></div>
+    </div>
+
+    <!-- Magic link form -->
+    <div id="magic-link-form">
+      <input type="email" id="magic-email" placeholder="twoj@email.pl" autocomplete="email"
+        style="width:100%;padding:11px 14px;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-size:.88rem;outline:none;margin-bottom:10px;font-family:'Plus Jakarta Sans',sans-serif;box-sizing:border-box"
+        onkeydown="if(event.key==='Enter') sendMagicLink(document.getElementById('magic-email').value)">
+      <button id="magic-link-btn" onclick="sendMagicLink(document.getElementById('magic-email').value)"
+        style="width:100%;padding:12px;background:var(--grad);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
+        Wyślij link logowania →
+      </button>
+    </div>
+
+    <!-- Sent confirmation -->
+    <div id="magic-link-sent" style="display:none;text-align:center;padding:1rem">
+      <div style="font-size:2rem;margin-bottom:8px">📧</div>
+      <div style="font-weight:700;color:var(--text);margin-bottom:4px">Sprawdź swoją skrzynkę</div>
+      <div style="font-size:.82rem;color:var(--text2)">Wysłaliśmy link logowania na Twój email. Link jest ważny przez 15 minut.</div>
+    </div>
+
+    <p style="font-size:.72rem;color:var(--text3);text-align:center;margin-top:1rem">Logując się akceptujesz <a href="#" onclick="openPrivacy();return false" style="color:var(--blue)">politykę prywatności</a></p>
+  </div>
+</div>
+
 <!-- ═══════════════════════ COOKIE BANNER ═══════════════════════ -->
 <div id="cookie-banner" style="display:none">
   <p>Ta strona używa plików cookie do celów analitycznych (Google Analytics). Nie zbieramy danych osobowych bez Twojej zgody. <a onclick="openPrivacy();return false" href="#">Polityka prywatności</a>.</p>
@@ -1173,25 +1217,26 @@ let uploadedCvTexts = []; // [{name, text}]
 let pipelineRunning = false;
 let _lastScreen = null, _lastQuestions = null;
 
-// ── License key ──────────────────────────────────────────────
-const LICENSE_KEY = 'skrenio_license';
-const DEVICE_KEY  = 'skrenio_device_token';
+// ── Session / Auth ───────────────────────────────────────────
+const SESSION_KEY = 'skrenio_session';
+const EMAIL_KEY   = 'skrenio_email';
+const PLAN_KEY    = 'skrenio_plan';
 
-function getLicense(){ return localStorage.getItem(LICENSE_KEY)||''; }
-function setLicense(k){ localStorage.setItem(LICENSE_KEY, k.trim().toUpperCase()); }
-function clearLicense(){ localStorage.removeItem(LICENSE_KEY); localStorage.removeItem(DEVICE_KEY); }
-function hasLicense(){ return !!getLicense(); }
+function getSession(){ return localStorage.getItem(SESSION_KEY)||''; }
+function getEmail(){   return localStorage.getItem(EMAIL_KEY)||''; }
+function getPlan(){    return localStorage.getItem(PLAN_KEY)||''; }
+function isLoggedIn(){ return !!getSession() && !!getEmail(); }
+function hasActivePlan(){ return isLoggedIn() && !!getPlan(); }
 
-function getDeviceToken(){
-  let t = localStorage.getItem(DEVICE_KEY);
-  if(!t){
-    // Generate a random 32-char token on first use
-    const arr = new Uint8Array(16);
-    crypto.getRandomValues(arr);
-    t = Array.from(arr).map(b=>b.toString(16).padStart(2,'0')).join('');
-    localStorage.setItem(DEVICE_KEY, t);
-  }
-  return t;
+function setAuth(email, session, plan){
+  localStorage.setItem(EMAIL_KEY,   email);
+  localStorage.setItem(SESSION_KEY, session);
+  localStorage.setItem(PLAN_KEY,    plan||'');
+}
+function clearAuth(){
+  localStorage.removeItem(SESSION_KEY);
+  localStorage.removeItem(EMAIL_KEY);
+  localStorage.removeItem(PLAN_KEY);
 }
 
 // ── Usage helpers ────────────────────────────────────────────
@@ -1199,7 +1244,7 @@ function getUsage(){ return parseInt(localStorage.getItem(USAGE_KEY)||'0'); }
 function incUsage(){ if(!isDevMode() && !hasLicense()) localStorage.setItem(USAGE_KEY, getUsage()+1); }
 function hasTrial(){ return !!localStorage.getItem(TRIAL_KEY); }
 function isDevMode(){ return localStorage.getItem(DEV_KEY)==='1'; }
-function isLimited(){ return !isDevMode() && !hasLicense() && getUsage() >= FREE_LIMIT && !hasTrial(); }
+function isLimited(){ return !isDevMode() && !hasActivePlan() && getUsage() >= FREE_LIMIT; }
 
 function updateUsageBar(){
   const used = getUsage();
@@ -1220,12 +1265,25 @@ function updateUsageBar(){
     if(glbActive) glbActive.style.display = 'none';
   }
 
-  if(hasLicense()){
+  // Update nav user info
+  const navUser = document.getElementById('nav-user-info');
+  if(navUser){
+    if(isLoggedIn()){
+      navUser.innerHTML = `<span style="font-size:.75rem;color:var(--text2)">${getEmail()}</span>${getPlan()?`<span style="font-size:.7rem;font-weight:700;color:#16A34A;background:rgba(22,163,74,.1);border-radius:5px;padding:2px 8px">${getPlan().toUpperCase()}</span>`:''}<button onclick="logOut()" style="font-size:.72rem;color:var(--text3);background:none;border:none;cursor:pointer">Wyloguj</button>`;
+      navUser.style.display = 'flex';
+      document.getElementById('nav-login-btn')?.style && (document.getElementById('nav-login-btn').style.display='none');
+    } else {
+      navUser.style.display = 'none';
+      if(document.getElementById('nav-login-btn')) document.getElementById('nav-login-btn').style.display='flex';
+    }
+  }
+
+  if(hasActivePlan()){
     document.getElementById('license-bar').style.display = 'flex';
     document.getElementById('license-form').style.display = 'none';
     document.getElementById('usage-bar').style.display = 'none';
-    document.getElementById('license-key-display').textContent = getLicense();
-    // Update CTA button text when licensed
+    const kd = document.getElementById('license-key-display');
+    if(kd) kd.textContent = getEmail() + ' · Plan ' + getPlan();
     ['cta-hero','cta-bottom'].forEach(id=>{
       const btn = document.getElementById(id);
       if(btn) btn.innerHTML = 'Rozpocznij analizę <span>→</span>';
@@ -1234,11 +1292,11 @@ function updateUsageBar(){
   }
 
   document.getElementById('license-bar').style.display = 'none';
-  document.getElementById('license-form').style.display = 'block';
+  document.getElementById('license-form').style.display = isLoggedIn() ? 'none' : 'block';
   document.getElementById('usage-bar').style.display = 'flex';
   ['cta-hero','cta-bottom'].forEach(id=>{
     const btn = document.getElementById(id);
-    if(btn) btn.innerHTML = 'Analizuj rekrutację za darmo <span>→</span>';
+    if(btn) btn.innerHTML = isLoggedIn() ? 'Przejdź do analizy <span>→</span>' : 'Analizuj rekrutację za darmo <span>→</span>';
   });
 
   if(isDevMode() || hasTrial()){
@@ -1270,10 +1328,39 @@ function loginWithGoogle(){
   window.location.href = '/api/auth';
 }
 
+function logOut(){
+  clearAuth();
+  updateUsageBar();
+  showHome();
+}
+
+async function sendMagicLink(email){
+  if(!email || !email.includes('@')){ alert('Podaj poprawny adres email.'); return; }
+  const btn = document.getElementById('magic-link-btn');
+  if(btn){ btn.disabled=true; btn.textContent='Wysyłam…'; }
+  try {
+    const resp = await fetch('/api/auth', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ email })
+    });
+    const data = await resp.json();
+    if(data.sent){
+      document.getElementById('magic-link-sent').style.display = 'block';
+      document.getElementById('magic-link-form').style.display = 'none';
+    } else {
+      alert(data.error || 'Błąd wysyłania. Spróbuj ponownie.');
+    }
+  } catch(e){
+    alert('Błąd sieci.');
+  } finally {
+    if(btn){ btn.disabled=false; btn.textContent='Wyślij link →'; }
+  }
+}
+
 async function buyPlan(plan){
-  const email = localStorage.getItem('skrenio_user_email') || prompt('Podaj adres email:');
+  const email = getEmail() || prompt('Podaj adres email (lub zaloguj się przez Google):');
   if(!email) return;
-  localStorage.setItem('skrenio_user_email', email);
   try {
     const resp = await fetch('/api/create-checkout', {
       method: 'POST',
@@ -1607,7 +1694,7 @@ document.getElementById('anon-toggle').addEventListener('change', async function
     for(let i=0; i<uploadedCvTexts.length; i+=CHUNK){
       const chunk = uploadedCvTexts.slice(i, i+CHUNK);
       const chunkText = chunk.map(cv=>`--- CV: ${cv.name} ---\n${cv.text.trim()}`).join('\n\n');
-      const resp = await fetch('/api/anonymize',{method:'POST',headers:{'Content-Type':'application/json','x-license-key':getLicense(),'x-device-token':getDeviceToken()},body:JSON.stringify({cvsText:chunkText})});
+      const resp = await fetch('/api/anonymize',{method:'POST',headers:{'Content-Type':'application/json','x-session-token':getSession()},body:JSON.stringify({cvsText:chunkText})});
       if(!resp.ok){ const e=await resp.json().catch(()=>({})); throw new Error(e.error||`HTTP ${resp.status}`); }
       const data = await resp.json();
       const u = data.usunieto||{};
@@ -1736,7 +1823,7 @@ async function executeAnalysis(jobDesc, cvsText){
 async function callAPI(url, body){
   const resp = await fetch(url, {
     method:'POST',
-    headers:{'Content-Type':'application/json','x-license-key':getLicense(),'x-device-token':getDeviceToken()},
+    headers:{'Content-Type':'application/json','x-session-token':getSession()},
     body: JSON.stringify(body)
   });
   if(!resp.ok){
@@ -2124,13 +2211,12 @@ updateUsageBar();
   const params = new URLSearchParams(window.location.search);
   if(params.get('auth') === 'success'){
     const email = params.get('email');
-    const key   = params.get('key');
     const sess  = params.get('session');
-    if(email) localStorage.setItem('skrenio_user_email', email);
-    if(sess)  localStorage.setItem('skrenio_session', sess);
-    if(key)   { setLicense(key); }
+    const plan  = params.get('plan');
+    if(email && sess) setAuth(email, sess, plan);
     updateUsageBar();
     history.replaceState({}, '', '/');
+    if(plan) showApp(); // Auto-enter app if they have a plan
   }
   if(params.get('payment') === 'success'){
     history.replaceState({}, '', '/');
@@ -2198,7 +2284,7 @@ if (_ranonToggle) _ranonToggle.addEventListener('change', async function(){
   spinner.style.display = 'block';
   this.disabled = true;
   try {
-    const resp = await fetch('/api/anonymize', {method:'POST', headers:{'Content-Type':'application/json','x-license-key':getLicense(),'x-device-token':getDeviceToken()}, body: JSON.stringify({cvsText: cvText})});
+    const resp = await fetch('/api/anonymize', {method:'POST', headers:{'Content-Type':'application/json','x-session-token':getSession()}, body: JSON.stringify({cvsText: cvText})});
     if (!resp.ok) { const e = await resp.json().catch(()=>({})); throw new Error(e.error || `HTTP ${resp.status}`); }
     const data = await resp.json();
     _ranonOriginalText = cvText; // save original only after successful call
@@ -2346,7 +2432,7 @@ async function runReverse() {
   try {
     const resp = await fetch('/api/reverse', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-license-key': getLicense(), 'x-device-token': getDeviceToken() },
+      headers: { 'Content-Type': 'application/json', 'x-session-token': getSession() },
       body: JSON.stringify({ cvText: cv, jobsText: jobs })
     });
     if (!resp.ok) { const e = await resp.json().catch(() => ({})); throw new Error(e.error || `HTTP ${resp.status}`); }
