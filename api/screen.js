@@ -1,4 +1,4 @@
-import { validateLicense, checkDevice } from './licenseValidator.js';
+import { validateSession } from './sessionValidator.js';
 
 const SYSTEM_PROMPT = `Jesteś ekspertem rekrutera z 15-letnim doświadczeniem w Polsce. Analizujesz CV kandydata względem ogłoszenia o pracę.
 
@@ -169,21 +169,11 @@ export default async function handler(req, res) {
 
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  // License validation
-  const licenseKey   = req.headers['x-license-key'] || '';
-  const deviceToken  = req.headers['x-device-token'] || '';
-  const license      = await validateLicense(licenseKey);
-  let isLicensed     = license.valid;
-
-  // Device token check — prevents key sharing
-  if (isLicensed && licenseKey) {
-    const deviceOk = await checkDevice(licenseKey, deviceToken);
-    if (!deviceOk) {
-      return res.status(402).json({ error: 'To urządzenie nie jest zarejestrowane dla tej licencji. Aktywuj licencję ponownie lub skontaktuj się z kontakt@skrenio.com.' });
-    }
-  }
-
-  const freeLimit = 5;
+  // Session validation — check if user is logged in with active subscription
+  const sessionToken = req.headers['x-session-token'] || '';
+  const session      = await validateSession(sessionToken);
+  const isLicensed   = session.valid;
+  const freeLimit    = 5;
 
   const { jobDesc, cvsText } = req.body || {};
   if (!jobDesc || !cvsText) return res.status(400).json({ error: 'Brak danych wejściowych.' });
