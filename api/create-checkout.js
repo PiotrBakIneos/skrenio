@@ -1,6 +1,4 @@
 // api/create-checkout.js
-// Creates a Stripe Checkout session and returns the URL
-
 export default async function handler(req, res) {
   const origin = req.headers['origin'] || '';
   const allowed = (process.env.ALLOWED_ORIGIN || 'https://skrenio.com,https://www.skrenio.com').split(',').map(s => s.trim());
@@ -20,6 +18,8 @@ export default async function handler(req, res) {
   const priceId = PRICES[plan];
   if (!priceId) return res.status(400).json({ error: 'Nieprawidłowy plan.' });
 
+  const siteUrl = process.env.SITE_URL || 'https://skrenio.com';
+
   try {
     const stripeRes = await fetch('https://api.stripe.com/v1/checkout/sessions', {
       method: 'POST',
@@ -28,23 +28,23 @@ export default async function handler(req, res) {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
-        'mode': 'subscription',
-        'customer_email': email,
-        'line_items[0][price]': priceId,
-        'line_items[0][quantity]': '1',
-        'success_url': `${process.env.SITE_URL || 'https://skrenio.com'}/?payment=success&session_id={CHECKOUT_SESSION_ID}`,
-        'cancel_url': `${process.env.SITE_URL || 'https://skrenio.com'}/?payment=cancelled`,
-        'metadata[plan]': plan,
-        'metadata[email]': email,
+        'mode':                        'subscription',
+        'customer_email':              email,
+        'line_items[0][price]':        priceId,
+        'line_items[0][quantity]':     '1',
+        'success_url':                 `${siteUrl}/?payment=success&session_id={CHECKOUT_SESSION_ID}`,
+        'cancel_url':                  `${siteUrl}/?payment=cancelled`,
+        'metadata[plan]':              plan,
+        'metadata[email]':             email,
+        'allow_promotion_codes':       'true',
       }).toString(),
     });
 
     const session = await stripeRes.json();
     if (!stripeRes.ok) throw new Error(session.error?.message || 'Stripe error');
-
     return res.status(200).json({ url: session.url });
   } catch (err) {
     console.error('Checkout error:', err);
-    return res.status(500).json({ error: 'Błąd tworzenia sesji płatności.' });
+    return res.status(500).json({ error: 'Błąd: ' + err.message });
   }
 }
