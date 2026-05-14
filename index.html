@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Skrenio — AI Screening dla Rekruterów</title>
-<meta name="description" content="Analizuj CV kandydatów w 60 sekund. Ranking, dopasowanie, pytania screeningowe. Bez rejestracji. RODO-compliant.">
+<meta name="description" content="Analizuj CV kandydatów w 60 sekund. Ranking, dopasowanie, pytania screeningowe. RODO-compliant.">
 <meta property="og:title" content="Skrenio — AI Screening dla Rekruterów">
 <meta property="og:description" content="Analizuj CV kandydatów w 60 sekund. Ranking, dopasowanie, pytania screeningowe.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%237C3AED'/%3E%3Cstop offset='60%25' stop-color='%233B82F6'/%3E%3Cstop offset='100%25' stop-color='%23EC4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M8 8 L56 32 L8 56 Z' rx='6' fill='url(%23g)'/%3E%3Ccircle cx='26' cy='26' r='7' fill='white' opacity='0.9'/%3E%3Cpath d='M19 44 Q26 36 33 40 Q40 44 44 50' fill='white' opacity='0.9'/%3E%3C/svg%3E">
@@ -48,7 +48,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .nav-link:hover{color:var(--text)}
 .nav-cta{background:var(--grad);color:#fff;padding:8px 20px;border-radius:8px;font-size:.85rem;font-weight:600;text-decoration:none;transition:all .2s;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}
 .nav-cta:hover{background:var(--blue);transform:translateY(-1px)}
-@media(max-width:640px){.nav-links{display:none}#nav-license-input{display:none!important}#nav-license-active{display:none!important}}
+@media(max-width:640px){.nav-links{display:none}}
 
 /* ── HERO ─── */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 2rem 80px;position:relative;overflow:hidden}
@@ -182,7 +182,7 @@ footer a:hover{color:var(--text2)}
 /* ══════════════════════════════════════════
    TOOL APP (unified pipeline)
 ══════════════════════════════════════════ */
-#app-view{display:none;min-height:100vh;background:var(--bg);padding-top:105px}
+#app-view{display:none;min-height:100vh;background:var(--bg);padding-top:68px}
 .app-inner{max-width:1000px;margin:0 auto;padding:3rem 1.5rem 5rem}
 
 /* APP HEADER */
@@ -456,39 +456,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
   </div>
 </nav>
 
-<!-- ═══ PERSISTENT LICENSE BAR — always visible below nav ═══ -->
-<div id="global-license-bar" style="position:fixed;top:68px;left:0;right:0;z-index:190;background:var(--surface);border-bottom:1px solid var(--border);padding:6px 2rem;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 1px 3px rgba(15,23,42,.06)">
-  <!-- No license: show input -->
-  <div id="glb-input" style="display:flex;align-items:center;gap:8px">
-    <span style="font-size:.75rem;color:var(--text3);white-space:nowrap">🔑 Kod licencji:</span>
-    <input id="glb-key" type="text" placeholder="SKR-XXXX-XXXX" maxlength="20"
-      style="width:160px;padding:5px 10px;background:var(--bg2);border:1px solid var(--border2);border-radius:7px;color:var(--text);font-family:monospace;font-size:.78rem;outline:none;letter-spacing:.05em;transition:border-color .2s"
-      onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border2)'"
-      oninput="this.value=this.value.toUpperCase()"
-      onkeydown="if(event.key==='Enter') activateGlobalLicense()">
-    <button onclick="activateGlobalLicense()"
-      style="padding:5px 14px;background:var(--grad);color:#fff;border:none;border-radius:7px;font-weight:700;font-size:.75rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap">
-      Aktywuj
-    </button>
-    <span id="glb-error" style="font-size:.72rem;color:var(--red);display:none">Nieprawidłowy kod</span>
-  </div>
-  <!-- Has license: show status -->
-  <div id="glb-active" style="display:none;align-items:center;gap:10px">
-    <span style="font-size:.75rem;font-weight:700;color:#16A34A">✓ Licencja aktywna</span>
-    <span id="glb-key-display" style="font-family:monospace;font-size:.72rem;color:var(--text2)"></span>
-    <button onclick="deactivateLicense()" style="font-size:.72rem;color:var(--text3);background:none;border:1px solid var(--border2);border-radius:5px;padding:2px 8px;cursor:pointer">Usuń</button>
-  </div>
 
-  <!-- Transfer panel — shown when seats are full -->
-  <div id="glb-transfer" style="display:none;align-items:center;gap:10px;background:rgba(217,119,6,.08);border:1px solid rgba(217,119,6,.25);border-radius:8px;padding:6px 14px;width:100%;justify-content:center">
-    <span style="font-size:.75rem;color:#D97706">⚠ To urządzenie nie jest zarejestrowane.</span>
-    <button onclick="confirmTransfer()" style="font-size:.75rem;font-weight:700;color:#fff;background:#D97706;border:none;border-radius:6px;padding:4px 14px;cursor:pointer">Przenieś licencję na to urządzenie</button>
-    <span style="font-size:.72rem;color:var(--text3)">Poprzednie urządzenie straci dostęp</span>
-    <button onclick="document.getElementById('glb-transfer').style.display='none'" style="font-size:.72rem;color:var(--text3);background:none;border:none;cursor:pointer;margin-left:4px">✕</button>
-  </div>
-</div>
-<!-- push page content below the license bar -->
-<div style="height:37px"></div>
 
 <!-- ═══════════════════════ HOMEPAGE ═══════════════════════ -->
 <div id="home-view">
@@ -519,7 +487,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
   <div class="section-inner">
     <div class="section-tag">Podgląd platformy</div>
     <h2 class="section-h2 f-sora">Dwa narzędzia AI.<br>Jeden prosty interfejs.</h2>
-    <p class="section-sub">Ranking i analiza kandydatów do roli lub dopasowanie CV do wielu ofert. Bez rejestracji, bez konfiguracji.</p>
+    <p class="section-sub">Ranking i analiza kandydatów do roli lub dopasowanie CV do wielu ofert. Szybka rejestracja, zero konfiguracji.</p>
     <div class="mockup-wrap">
       <div class="mockup-bar">
         <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
@@ -824,34 +792,6 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
       <div class="usage-text" id="usage-text">Załaduj pliki i uruchom analizę.</div>
     </div>
 
-    <!-- LICENSE KEY BAR -->
-    <div id="license-bar" style="display:none;align-items:center;gap:8px;background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.25);border-radius:10px;padding:8px 14px;margin-bottom:1rem;font-size:.78rem">
-      <span style="color:#16A34A;font-weight:700">✓ Licencja aktywna</span>
-      <span id="license-key-display" style="color:var(--text2);font-family:monospace"></span>
-      <button onclick="deactivateLicense()" style="margin-left:auto;font-size:.72rem;color:var(--text3);background:none;border:none;cursor:pointer;text-decoration:underline">Usuń</button>
-    </div>
-
-    <!-- LICENSE ACTIVATION — always visible, prominent -->
-    <div id="license-form" style="margin-bottom:1.25rem;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1rem 1.25rem">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-        <span style="font-size:1rem">🔑</span>
-        <span style="font-size:.85rem;font-weight:700;color:var(--text)">Kod licencji</span>
-        <span style="font-size:.73rem;color:var(--text3);margin-left:auto">Otrzymasz go po zakupie na email</span>
-      </div>
-      <div style="display:flex;gap:8px">
-        <input id="license-input" type="text" placeholder="SKR-XXXX-XXXX" maxlength="20"
-          style="flex:1;padding:10px 12px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:monospace;font-size:.85rem;outline:none;letter-spacing:.06em;transition:border-color .2s"
-          onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border2)'"
-          oninput="this.value=this.value.toUpperCase()"
-          onkeydown="if(event.key==='Enter') activateLicense()">
-        <button onclick="activateLicense()" style="padding:10px 20px;background:var(--grad);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap">Aktywuj</button>
-      </div>
-      <div id="license-error" style="display:none;margin-top:6px;font-size:.75rem;color:var(--red)"></div>
-      <div style="margin-top:8px;font-size:.73rem;color:var(--text3)">
-        Nie masz kodu? <button onclick="navScrollTo('pricing')" style="background:none;border:none;color:var(--blue);cursor:pointer;font-weight:600;font-size:.73rem;padding:0;text-decoration:underline">Zobacz cennik →</button>
-      </div>
-    </div>
-
     <!-- ERROR BOX -->
     <div class="error-box" id="main-error"></div>
 
@@ -1093,20 +1033,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
       <!-- Option A: Buy -->
       <button class="gate-submit" style="margin-bottom:10px" onclick="closeGate();buyPlan('solo')">Kup dostęp — od 149 PLN/mies. →</button>
 
-      <!-- Option B: License key -->
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
-        <div style="flex:1;height:1px;background:var(--border)"></div>
-        <span style="font-size:.72rem;color:var(--text3)">lub masz już kod licencji?</span>
-        <div style="flex:1;height:1px;background:var(--border)"></div>
-      </div>
-      <div style="display:flex;gap:8px;margin-bottom:14px">
-        <input class="gate-input" id="gate-license-input" type="text" placeholder="SKR-XXXX-XXXX" maxlength="20"
-          style="margin-bottom:0;font-family:monospace;letter-spacing:.05em"
-          oninput="this.value=this.value.toUpperCase()"
-          onkeydown="if(event.key==='Enter') activateGateLicense()">
-        <button onclick="activateGateLicense()" style="padding:0 16px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:.8rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;flex-shrink:0">Aktywuj</button>
-      </div>
-      <div id="gate-license-error" style="color:var(--red);font-size:.78rem;margin-bottom:.75rem;display:none"></div>
+
 
       <!-- hidden inputs kept for JS compatibility -->
       <input id="gate-email" type="hidden">
@@ -1136,7 +1063,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
 
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
       <div style="flex:1;height:1px;background:var(--border)"></div>
-      <span style="font-size:.72rem;color:var(--text3)">lub przez email</span>
+      <span style="font-size:.72rem;color:var(--text3)">lub przez email (bez hasła)</span>
       <div style="flex:1;height:1px;background:var(--border)"></div>
     </div>
 
@@ -1145,6 +1072,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px)}
       <input type="email" id="magic-email" placeholder="twoj@email.pl" autocomplete="email"
         style="width:100%;padding:11px 14px;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-size:.88rem;outline:none;margin-bottom:10px;font-family:'Plus Jakarta Sans',sans-serif;box-sizing:border-box"
         onkeydown="if(event.key==='Enter') sendMagicLink(document.getElementById('magic-email').value)">
+      <p style="font-size:.75rem;color:var(--text3);margin-bottom:8px">Wyślemy Ci link — kliknij go i jesteś zalogowany. Bez hasła.</p>
       <button id="magic-link-btn" onclick="sendMagicLink(document.getElementById('magic-email').value)"
         style="width:100%;padding:12px;background:var(--grad);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
         Wyślij link logowania →
@@ -1241,7 +1169,7 @@ function clearAuth(){
 
 // ── Usage helpers ────────────────────────────────────────────
 function getUsage(){ return parseInt(localStorage.getItem(USAGE_KEY)||'0'); }
-function incUsage(){ if(!isDevMode() && !hasLicense()) localStorage.setItem(USAGE_KEY, getUsage()+1); }
+function incUsage(){ if(!isDevMode() && !hasActivePlan()) localStorage.setItem(USAGE_KEY, getUsage()+1); }
 function hasTrial(){ return !!localStorage.getItem(TRIAL_KEY); }
 function isDevMode(){ return localStorage.getItem(DEV_KEY)==='1'; }
 function isLimited(){ return !isDevMode() && !hasActivePlan() && getUsage() >= FREE_LIMIT; }
@@ -1279,11 +1207,7 @@ function updateUsageBar(){
   }
 
   if(hasActivePlan()){
-    document.getElementById('license-bar').style.display = 'flex';
-    document.getElementById('license-form').style.display = 'none';
     document.getElementById('usage-bar').style.display = 'none';
-    const kd = document.getElementById('license-key-display');
-    if(kd) kd.textContent = getEmail() + ' · Plan ' + getPlan();
     ['cta-hero','cta-bottom'].forEach(id=>{
       const btn = document.getElementById(id);
       if(btn) btn.innerHTML = 'Rozpocznij analizę <span>→</span>';
@@ -1291,8 +1215,6 @@ function updateUsageBar(){
     return;
   }
 
-  document.getElementById('license-bar').style.display = 'none';
-  document.getElementById('license-form').style.display = isLoggedIn() ? 'none' : 'block';
   document.getElementById('usage-bar').style.display = 'flex';
   ['cta-hero','cta-bottom'].forEach(id=>{
     const btn = document.getElementById(id);
