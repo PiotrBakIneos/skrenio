@@ -34,7 +34,6 @@ export default async function handler(req, res) {
         'line_items[0][quantity]': '1',
         'success_url': `${process.env.SITE_URL || 'https://skrenio.com'}/?payment=success&session_id={CHECKOUT_SESSION_ID}`,
         'cancel_url': `${process.env.SITE_URL || 'https://skrenio.com'}/?payment=cancelled`,
-        'subscription_data[trial_period_days]': '0',
         'metadata[plan]': plan,
         'metadata[email]': email,
       }).toString(),
